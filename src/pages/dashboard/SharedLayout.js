@@ -2,13 +2,11 @@ import { Outlet } from 'react-router-dom'
 
 import Sidebar from './Sidebar'
 import styled from 'styled-components'
-import Dummy from './Dummy'
 
 const SharedLayout = () => {
   return (
     <Wrapper>
-      <Dummy />
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Outlet />
     </Wrapper>
   )

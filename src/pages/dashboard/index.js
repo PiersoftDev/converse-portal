@@ -6,6 +6,7 @@ import Orders from './Orders'
 import ASN from './ASN'
 import GRN from './GRN'
 import User from './User'
+import Projects from './Project'
 
 export {
   SharedLayout,
@@ -16,4 +17,5 @@ export {
   ASN,
   GRN,
   User,
+  Projects,
 }
