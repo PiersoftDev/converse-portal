@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import {
+  ProjectImpInfoComponent,
+  ProjectTabsComponent,
+} from '../../components/projectPage'
 
 const Projects = () => {
   const [authenticated, setAuthenticated] = useState(
@@ -12,8 +16,12 @@ const Projects = () => {
   }
 
   return (
-    <Wrapper>
-      <h2>Projects page not yet implemented</h2>
+    <Wrapper className="Projects-page">
+      <div className="header">
+        <h4>Projects page nav header</h4>
+      </div>
+      <ProjectImpInfoComponent />
+      <ProjectTabsComponent />
     </Wrapper>
   )
 }
@@ -22,14 +30,15 @@ export default Projects
 const Wrapper = styled.div`
   background-color: var(--grey-50);
   border-top-left-radius: 2rem;
-  padding: 2rem;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: grid;
-  place-items: center;
-  color: var(--grey-400);
+  grid-template-rows: auto auto 1fr;
 
-  h2 {
-    letter-spacing: 0.1rem;
+  .header h4 {
+    color: var(--grey-600);
+    background-color: var(--white);
+    padding: 2rem;
+    margin-bottom: 0;
   }
 `

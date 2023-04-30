@@ -342,3 +342,17 @@ input:focus {
   place-items: center;
   color: var(--grey-600);
 }
+
+/* Progress bar in projects page */
+
+@property --progress-value {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes progress {
+  to {
+    --progress-value: 67;
+  }
+}
