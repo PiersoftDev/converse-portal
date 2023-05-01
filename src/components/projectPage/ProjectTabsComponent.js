@@ -21,41 +21,47 @@ const ProjectTabsComponent = () => {
             Items
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Documents
+            Criteria
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Reports
+            Bidders
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Compliance
+            Price Comparisons
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Members
+            Negotiations
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Settings
+            Approvals
+          </Tab>
+          <Tab selectedClassName="selected-tab" className="tab">
+            Conversion Details
           </Tab>
         </TabList>
         <TabPanel className="tab-panel">
           <h4>Overview</h4>
         </TabPanel>
-        <TabPanel className="tab-panel">
+        <TabPanel>
           <ItemsComponent />
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Iteme componsent</h4>
+          <h4>Criteria</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Reports</h4>
+          <h4>Bidders</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Compliance</h4>
+          <h4>Price Comparisons</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Members</h4>
+          <h4>Negotiations</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Settings</h4>
+          <h4>Approvals</h4>
+        </TabPanel>
+        <TabPanel className="tab-panel">
+          <h4>Conversion Details</h4>
         </TabPanel>
       </Tabs>
     </Wrapper>
@@ -84,18 +90,16 @@ const Wrapper = styled.div`
     color: var(--primary-500);
     border-bottom: 2px solid var(--primary-500);
   }
-  .header {
-    margin-bottom: 0;
-    color: var(--primary-700);
-  }
-  .sub-header {
-    color: var(--grey-400);
-    font-size: 0.9rem;
-  }
 
   .tab {
     color: var(--grey-400);
     font-weight: 600;
     padding-bottom: 1rem;
+  }
+
+  .tab-panel h4 {
+    text-align: center;
+    color: var(--grey-600);
+    margin-top: 5rem;
   }
 `
