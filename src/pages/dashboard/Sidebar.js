@@ -73,6 +73,7 @@ const Wrapper = styled.div`
     transition: var(--transition);
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
 
   .page span {
