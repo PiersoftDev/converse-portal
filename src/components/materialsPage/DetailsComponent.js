@@ -98,5 +98,6 @@ const Wrapper = styled.div`
     top: 0.3rem;
     color: rgba(224, 73, 3, 0.964);
     transition: var(--transition);
+    cursor: pointer;
   }
 `

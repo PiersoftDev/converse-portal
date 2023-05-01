@@ -1,5 +1,6 @@
 import { RiShareBoxLine } from 'react-icons/ri'
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 const CardComponent = () => {
   return (
@@ -9,9 +10,9 @@ const CardComponent = () => {
           <h5>PO-0642</h5>
           <p>Active</p>
         </div>
-        <span>
+        <NavLink className="project-page-icon" to="/projects">
           <RiShareBoxLine />
-        </span>
+        </NavLink>
       </div>
 
       <div className="card-details">
@@ -36,9 +37,7 @@ const Wrapper = styled.div`
   border-radius: 0.5rem;
 
   .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
   }
 
   .header-left-wrapper {
@@ -58,12 +57,15 @@ const Wrapper = styled.div`
     padding-bottom: 0.2rem;
   }
 
-  .card-header span {
+  .project-page-icon {
     color: var(--grey-400);
     transition: var(--transition);
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  .card-header span:hover {
+  .project-page-icon:hover {
     color: var(--grey-700);
   }
 

@@ -122,7 +122,7 @@ const LoginForm = () => {
 
         <p className="forgot-password">Forgot password?</p>
 
-        <button type="submit" onClick={handleSubmit} className=" btn login-btn">
+        <button type="submit" onClick={handleSubmit} className="btn login-btn">
           Login
         </button>
       </form>
@@ -220,6 +220,24 @@ const Wrapper = styled.div`
   .input-container .password {
     color: var(--grey-700);
     background: transparent;
+  }
+
+  .btn {
+    cursor: pointer;
+    color: var(--white);
+    background: var(--primary-500);
+    border: transparent;
+    border-radius: var(--borderRadius);
+    letter-spacing: var(--letterSpacing);
+    padding: 0.375rem 0.75rem;
+    box-shadow: var(--shadow-2);
+    transition: var(--transition);
+    text-transform: capitalize;
+    display: inline-block;
+  }
+  .btn:hover {
+    background: var(--primary-700);
+    box-shadow: var(--shadow-3);
   }
 
   .login-btn {

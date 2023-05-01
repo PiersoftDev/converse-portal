@@ -11,6 +11,7 @@ import {
   ASN,
   GRN,
   User,
+  Projects,
 } from './pages/dashboard'
 
 import { ToastContainer } from 'react-toastify'
@@ -29,6 +30,7 @@ function App() {
           <Route path="asn" element={<ASN />} />
           <Route path="grn" element={<GRN />} />
           <Route path="user" element={<User />} />
+          <Route path="projects" element={<Projects />} />
         </Route>
         <Route index path="/login" element={<LoginPage />} />
         <Route path="*" element={<ErrorPage />} />
