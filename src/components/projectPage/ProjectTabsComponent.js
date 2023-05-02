@@ -14,9 +14,9 @@ const ProjectTabsComponent = () => {
         className="tabs-container"
       >
         <TabList className="account-tabs">
-          <Tab selectedClassName="selected-tab" className="tab">
+          {/* <Tab selectedClassName="selected-tab" className="tab">
             Overview
-          </Tab>
+          </Tab> */}
           <Tab selectedClassName="selected-tab" className="tab">
             Items
           </Tab>

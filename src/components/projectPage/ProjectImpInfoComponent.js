@@ -8,6 +8,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import NumbersIcon from "@mui/icons-material/Numbers";
 
 const ProjectImpInfoComponent = () => {
   return (
@@ -15,6 +16,12 @@ const ProjectImpInfoComponent = () => {
       <div className="left-wrapper">
         <div className="left-header">ESI_Plumbing_30062023</div>
         <div className="left-content">
+          <div className="project-value">
+            <span>
+              <NumbersIcon />
+            </span>
+            <p>RFQ123456</p>
+          </div>
           <div className="location">
             <span>
               <RoofingIcon />
@@ -247,7 +254,7 @@ const Wrapper = styled.div`
     border-radius: 5px;
     display: flex;
     gap: 0.5rem;
-    color: #E74646;
+    color: #e74646;
     cursor: pointer;
   }
 
