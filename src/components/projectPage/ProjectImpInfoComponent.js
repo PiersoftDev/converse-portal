@@ -68,7 +68,7 @@ const ProjectImpInfoComponent = () => {
             </span>
             Approve
           </button>
-          <button className="btn-newContact">
+          <button className="btn-decline">
             <span>
               <ThumbDownAltIcon />
             </span>
@@ -236,6 +236,28 @@ const Wrapper = styled.div`
   }
 
   .btn-newContact:hover {
+    background-color: var(--primary-600);
+    transform: scale(1.05);
+  }
+
+  .btn-decline {
+    padding: 0.4rem 0.5rem;
+    background: var(--primary-500);
+    border: 1px solid var(--grey-100);
+    border-radius: 5px;
+    display: flex;
+    gap: 0.5rem;
+    color: #E74646;
+    cursor: pointer;
+  }
+
+  .btn-decline span {
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+  }
+
+  .btn-decline:hover {
     background-color: var(--primary-600);
     transform: scale(1.05);
   }
