@@ -1,30 +1,48 @@
-import { IoLocationOutline } from 'react-icons/io5'
-import { HiOutlineCurrencyRupee } from 'react-icons/hi'
-import { AiOutlineCloudUpload, AiOutlinePlus } from 'react-icons/ai'
-import styled from 'styled-components'
+import { IoLocationOutline } from "react-icons/io5";
+import { HiOutlineCurrencyRupee } from "react-icons/hi";
+import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
+import styled from "styled-components";
+import RoofingIcon from "@mui/icons-material/Roofing";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import WarehouseIcon from "@mui/icons-material/Warehouse";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 
 const ProjectImpInfoComponent = () => {
   return (
     <Wrapper>
       <div className="left-wrapper">
-        <div className="left-header">Park Towers south</div>
+        <div className="left-header">ESI_Plumbing_30062023</div>
         <div className="left-content">
           <div className="location">
             <span>
-              <IoLocationOutline />
+              <RoofingIcon />
             </span>
-            <p>315 W 52 St Newyork , Ny 1009 </p>
+            <p>ESI, Sanath Nagar</p>
           </div>
           <div className="project-value">
             <span>
-              <HiOutlineCurrencyRupee />
+              <ConstructionIcon />
             </span>
-            <p>Total Project value : &#8377;12,50,5000</p>
+            <p>Plumbing</p>
+          </div>
+          <div className="project-value">
+            <span>
+              <CalendarTodayIcon />
+            </span>
+            <p>30062023</p>
+          </div>
+          <div className="project-value">
+            <span>
+              <WarehouseIcon />
+            </span>
+            <p>123456</p>
           </div>
         </div>
       </div>
       <div className="right-wrapper">
-        <div className="complete-container">
+        {/* <div className="complete-container">
           <div className="complete">
             <div>$ Complete</div>
             <p></p>
@@ -36,26 +54,32 @@ const ProjectImpInfoComponent = () => {
             aria-valuemin="0"
             aria-valuemax="100"
           ></div>
-        </div>
+        </div> */}
         <div className="btns-container">
-          <button className="btn-upload ">
+          {/* <button className="btn-upload ">
             <span>
               <AiOutlineCloudUpload />
             </span>
             Bulk Upload
+          </button> */}
+          <button className="btn-newContact">
+            <span>
+              <ThumbUpIcon />
+            </span>
+            Approve
           </button>
           <button className="btn-newContact">
             <span>
-              <AiOutlinePlus />
+              <ThumbDownAltIcon />
             </span>
-            New Contract
+            Decline
           </button>
         </div>
       </div>
     </Wrapper>
-  )
-}
-export default ProjectImpInfoComponent
+  );
+};
+export default ProjectImpInfoComponent;
 
 const Wrapper = styled.div`
   display: flex;
@@ -151,7 +175,7 @@ const Wrapper = styled.div`
 
   .complete p::before {
     counter-reset: percentage var(--progress-value);
-    content: counter(percentage) '%';
+    content: counter(percentage) "%";
     animation: progress 2s 1 forwards;
   }
 
@@ -215,4 +239,4 @@ const Wrapper = styled.div`
     background-color: var(--primary-600);
     transform: scale(1.05);
   }
-`
+`;

@@ -18,7 +18,7 @@ const Projects = () => {
   return (
     <Wrapper className="Projects-page">
       <div className="header">
-        <h4>Projects page nav header</h4>
+        <h4>RFQ Details</h4>
       </div>
       <ProjectImpInfoComponent />
       <ProjectTabsComponent />
