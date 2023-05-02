@@ -39,9 +39,9 @@ const ProjectTabsComponent = () => {
             Conversion Details
           </Tab>
         </TabList>
-        <TabPanel className="tab-panel">
+        {/* <TabPanel className="tab-panel">
           <h4>Overview</h4>
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
           <ItemsComponent />
         </TabPanel>
