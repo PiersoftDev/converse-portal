@@ -15,11 +15,11 @@ const Quotations = () => {
 
   return (
     <Wrapper className="quotations-page">
-      <h3 className="header">Quotations page nav header</h3>
+      {/* <h3 className="header">Quotations page nav header</h3> */}
 
       <div className="content-header">
         <div className="left-wrapper">
-          <h4>Quotations</h4>
+          <h3>Quotations</h3>
           <p>All Quotations in current month</p>
         </div>
         <span className="add-card">
@@ -30,19 +30,23 @@ const Quotations = () => {
       <div className="filters">
         <div className="filter selected">
           <p>All</p>
-          <span>50</span>
+          <span>100</span>
         </div>
         <div className="filter">
-          <p>Started</p>
-          <span>20</span>
+          <p>Created</p>
+          <span>25</span>
         </div>
         <div className="filter">
-          <p>Approval</p>
-          <span>15</span>
+          <p>In Progress</p>
+          <span>25</span>
         </div>
         <div className="filter">
-          <p>Completed</p>
-          <span>24</span>
+          <p>Negotiation</p>
+          <span>25</span>
+        </div>
+        <div className="filter">
+          <p>Converted</p>
+          <span>25</span>
         </div>
       </div>
 
