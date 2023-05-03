@@ -37,7 +37,7 @@ const ItemsComponent = () => {
         </div>
       </div>
       <div className="table-container">
-        <Table bordered size="big">
+        <Table bordered>
           <thead>
             <tr>
               <th>#</th>
@@ -192,6 +192,7 @@ const Wrapper = styled.div`
   .table-container {
     background-color: var(--white);
     border-radius: 10px;
+    margin: 1rem 0;
   }
 
   th,

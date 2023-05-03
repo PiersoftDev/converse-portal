@@ -1,14 +1,12 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { HiOutlineCurrencyRupee } from "react-icons/hi";
-import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
-import styled from "styled-components";
-import RoofingIcon from "@mui/icons-material/Roofing";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import WarehouseIcon from "@mui/icons-material/Warehouse";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import NumbersIcon from "@mui/icons-material/Numbers";
+import styled from 'styled-components'
+import RoofingIcon from '@mui/icons-material/Roofing'
+import ConstructionIcon from '@mui/icons-material/Construction'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import WarehouseIcon from '@mui/icons-material/Warehouse'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
+import NumbersIcon from '@mui/icons-material/Numbers'
+import { Tooltip } from '@mui/material'
 
 const ProjectImpInfoComponent = () => {
   return (
@@ -16,12 +14,31 @@ const ProjectImpInfoComponent = () => {
       <div className="left-wrapper">
         <div className="left-header">ESI_Plumbing_30062023</div>
         <div className="left-content">
-          <div className="project-value">
-            <span>
-              <NumbersIcon />
-            </span>
-            <p>RFQ123456</p>
-          </div>
+          <Tooltip
+            title="Category"
+            placement="top"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  top: '1rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <NumbersIcon />
+              </span>
+              <p>RFQ123456</p>
+            </div>
+          </Tooltip>
+
           <div className="location">
             <span>
               <RoofingIcon />
@@ -84,9 +101,9 @@ const ProjectImpInfoComponent = () => {
         </div>
       </div>
     </Wrapper>
-  );
-};
-export default ProjectImpInfoComponent;
+  )
+}
+export default ProjectImpInfoComponent
 
 const Wrapper = styled.div`
   display: flex;
@@ -113,6 +130,7 @@ const Wrapper = styled.div`
     display: flex;
     color: var(--grey-400);
     gap: 1rem;
+    margin-top: 0.5rem;
   }
 
   .location {
@@ -182,7 +200,7 @@ const Wrapper = styled.div`
 
   .complete p::before {
     counter-reset: percentage var(--progress-value);
-    content: counter(percentage) "%";
+    content: counter(percentage) '%';
     animation: progress 2s 1 forwards;
   }
 
@@ -268,4 +286,4 @@ const Wrapper = styled.div`
     background-color: var(--primary-600);
     transform: scale(1.05);
   }
-`;
+`

@@ -50,6 +50,7 @@ const Wrapper = styled.div`
   padding-top: 5rem;
   transition: var(--transition);
   border: 1px solid transparent;
+  cursor: pointer;
 
   h4 {
     color: var(--grey-800);
