@@ -1,3 +1,4 @@
 import { carousalItems } from './carousalItems'
+import data from './dummyDeliveryLinesData'
 
-export { carousalItems }
+export { carousalItems, data }

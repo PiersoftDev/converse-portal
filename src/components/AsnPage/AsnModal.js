@@ -20,6 +20,17 @@ const AsnModal = ({ showModal, setShowModal }) => {
           >
             <ImCross />
           </button>
+          <div className="btns-container">
+            <button className="discard-btn">Discard</button>
+            <button
+              className="submit-btn"
+              onClick={() => {
+                setShowModal(false)
+              }}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -75,5 +86,39 @@ const Wrapper = styled.div`
 
   .close-modal-btn:hover {
     color: #b52c37;
+  }
+
+  .btns-container {
+    display: flex;
+    justify-content: right;
+    margin: 2rem 0;
+    gap: 1rem;
+  }
+
+  .submit-btn,
+  .discard-btn {
+    background-color: transparent;
+    border: 1px solid var(--grey-200);
+    border-radius: 5px;
+    padding: 0.25rem 1rem;
+    letter-spacing: 0.1rem;
+    transition: var(--transition);
+  }
+
+  .submit-btn {
+    background-color: var(--primary-400);
+    color: var(--white);
+  }
+
+  .submit-btn:hover {
+    background-color: var(--primary-500);
+    transform: scale(1.05);
+  }
+
+  .discard-btn:hover {
+    background-color: var(--red-light);
+    color: var(--red-dark);
+    transform: scale(1.05);
+    border: 1px solid var(--grey-100);
   }
 `

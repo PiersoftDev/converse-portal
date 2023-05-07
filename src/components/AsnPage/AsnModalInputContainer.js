@@ -113,7 +113,7 @@ const Wrapper = styled.div`
   .input-item input {
     display: block;
     width: 100%;
-    border: 1px solid var(--grey-200);
+    border: 1px solid var(--grey-100);
     border-radius: 5px;
     margin-top: 0.2rem;
     padding: 0.25rem 0.7rem;
@@ -122,8 +122,8 @@ const Wrapper = styled.div`
     transition: var(--transition);
   }
 
-  .input-item input:hover {
-    border: 1px solid var(--grey-400);
+  .input-item input:focus {
+    border: 1px solid var(--grey-300);
   }
 
   .shipment-date-container label {

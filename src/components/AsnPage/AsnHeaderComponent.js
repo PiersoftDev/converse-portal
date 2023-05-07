@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const AsnHeaderComponent = ({ setShowModal }) => {
   return (
     <Wrapper>
-      <div className="left-wrapper">ASN</div>
+      <div className="left-wrapper">ASN Page</div>
       <div className="right-wrapper">
         <div className="search-container">
           <label htmlFor="search" className="search-label">
@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   align-items: center;
 
   .left-wrapper {
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: var(--grey-600);
   }
 
@@ -61,7 +61,7 @@ const Wrapper = styled.div`
     gap: 0.5rem;
     align-items: center;
     border: 2px solid var(--grey-200);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0.25rem 0.5rem;
     color: var(--grey-700);
     transition: var(--transition);
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
   .search {
     padding: 0.25rem 0;
     border: transparent;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     color: var(--grey-700);
   }
 
@@ -88,8 +88,9 @@ const Wrapper = styled.div`
   .filter-btn {
     background-color: transparent;
     border: 1px solid var(--grey-200);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0.25rem 1rem;
+    font-size: 0.8rem;
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -101,14 +102,14 @@ const Wrapper = styled.div`
   .filter-btn span {
     display: gird;
     place-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     position: relative;
     top: -2px;
   }
 
   .filter-btn p {
     margin-bottom: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .filter-btn:hover {
@@ -119,7 +120,7 @@ const Wrapper = styled.div`
   .create-btn {
     background-color: transparent;
     border: 1px solid var(--grey-200);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0.25rem 1rem;
     display: flex;
     gap: 0.5rem;
@@ -131,14 +132,14 @@ const Wrapper = styled.div`
   .create-btn span {
     display: gird;
     place-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     position: relative;
     top: -2px;
   }
 
   .create-btn p {
     margin-bottom: 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .create-btn:hover {

@@ -15,8 +15,8 @@ const ProjectImpInfoComponent = () => {
         <div className="left-header">ESI_Plumbing_30062023</div>
         <div className="left-content">
           <Tooltip
-            title="Category"
-            placement="top"
+            title="project id"
+            placement="bottom-start"
             PopperProps={{
               sx: {
                 '& .MuiTooltip-tooltip': {
@@ -26,7 +26,7 @@ const ProjectImpInfoComponent = () => {
                   backgroundColor: '#334e68',
                   position: 'relative',
                   margin: '0',
-                  top: '1rem',
+                  bottom: '0.75rem',
                 },
               },
             }}
@@ -39,30 +39,105 @@ const ProjectImpInfoComponent = () => {
             </div>
           </Tooltip>
 
-          <div className="location">
-            <span>
-              <RoofingIcon />
-            </span>
-            <p>ESI, Sanath Nagar</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <ConstructionIcon />
-            </span>
-            <p>Plumbing</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <CalendarTodayIcon />
-            </span>
-            <p>30062023</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <WarehouseIcon />
-            </span>
-            <p>123456</p>
-          </div>
+          <Tooltip
+            title="location"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="location">
+              <span>
+                <RoofingIcon />
+              </span>
+              <p>ESI, Sanath Nagar</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Category"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <ConstructionIcon />
+              </span>
+              <p>Plumbing</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Calendar"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <CalendarTodayIcon />
+              </span>
+              <p>30062023</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Category"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <WarehouseIcon />
+              </span>
+              <p>123456</p>
+            </div>
+          </Tooltip>
         </div>
       </div>
       <div className="right-wrapper">
@@ -130,7 +205,6 @@ const Wrapper = styled.div`
     display: flex;
     color: var(--grey-400);
     gap: 1rem;
-    margin-top: 0.5rem;
   }
 
   .location {
@@ -267,12 +341,12 @@ const Wrapper = styled.div`
 
   .btn-decline {
     padding: 0.4rem 0.5rem;
-    background: var(--primary-500);
+    background: #e23140;
     border: 1px solid var(--grey-100);
     border-radius: 5px;
     display: flex;
     gap: 0.5rem;
-    color: #e74646;
+    color: var(--white);
     cursor: pointer;
   }
 
@@ -283,7 +357,7 @@ const Wrapper = styled.div`
   }
 
   .btn-decline:hover {
-    background-color: var(--primary-600);
+    background: #d62e3c;
     transform: scale(1.05);
   }
 `

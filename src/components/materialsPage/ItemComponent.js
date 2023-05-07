@@ -23,8 +23,6 @@ const ItemComponent = (props) => {
               PopperProps={{
                 sx: {
                   '& .MuiTooltip-tooltip': {
-                    // border: 'solid skyblue 1px',
-                    // color: 'deepskyblue',
                     backgroundColor: 'f0f4f8',
                     letterSpacing: '0.1rem',
                     padding: `0.5 1`,
@@ -120,11 +118,11 @@ const Wrapper = styled.div`
 
   .desc-info {
     margin: 0 0.3rem;
-    position: relative;
-    top: 0.3rem;
     color: var(--primary-400);
     transition: all 0.1s;
     font-size: 0.5rem;
+    position: relative;
+    top: -0.2rem;
   }
 
   .desc-info:hover {
@@ -133,8 +131,6 @@ const Wrapper = styled.div`
 
   .quantity-icon {
     margin: 0 0.3rem;
-    position: relative;
-    top: 0.3rem;
     color: green;
   }
 

@@ -105,4 +105,9 @@ const Wrapper = styled.div`
   .table {
     margin-bottom: 0;
   }
+
+  td,
+  th {
+    text-align: center;
+  }
 `

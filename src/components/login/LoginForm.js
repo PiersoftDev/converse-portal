@@ -293,6 +293,7 @@ const Wrapper = styled.div`
     letter-spacing: var(--letterSpacing);
     color: var(--grey-600);
     transition: var(--transition);
+    text-decoration: none;
   }
 
   .google-btn:hover,
