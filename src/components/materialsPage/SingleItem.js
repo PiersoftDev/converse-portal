@@ -12,7 +12,7 @@ const SingleItem = ({ item }) => {
     activityDesc,
     inventory,
     createdDate,
-    procurredTillDate,
+    procuredTillDate,
     budgetedQty,
     variance,
   } = item
@@ -24,7 +24,7 @@ const SingleItem = ({ item }) => {
     createdDate,
     budgetedQty,
     inventory,
-    procurredTillDate,
+    procuredTillDate,
     variance,
   }
 

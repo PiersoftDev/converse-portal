@@ -16,6 +16,14 @@ const MaterialPageItems = () => {
   }, [])
 
   console.log(isLoading, items)
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <h4>Still Loading ...</h4>
+      </LoadingWrapper>
+    )
+  }
   return (
     <Wrapper>
       {items.map((item) => {
@@ -25,5 +33,12 @@ const MaterialPageItems = () => {
   )
 }
 export default MaterialPageItems
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`
 
 const Wrapper = styled.div``

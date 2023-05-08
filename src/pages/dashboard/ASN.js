@@ -13,7 +13,7 @@ const ASN = () => {
     localStorage.getItem('auth')
   )
 
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   if (!authenticated) {
     return <Navigate to="/login" />

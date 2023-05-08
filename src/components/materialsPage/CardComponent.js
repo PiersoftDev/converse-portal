@@ -1,8 +1,13 @@
-import { RiShareBoxLine } from "react-icons/ri";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { RiShareBoxLine } from 'react-icons/ri'
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
-const CardComponent = () => {
+const CardComponent = ({
+  category,
+  plannedDate,
+  projectCode,
+  warehouseCode,
+}) => {
   return (
     <Wrapper>
       <div className="card-header">
@@ -16,21 +21,19 @@ const CardComponent = () => {
       </div>
 
       <div className="card-details">
-        <div className="card-side-header">RFQ No :</div>
-        <div className="card-side-value">RFQ123456</div>
-        <div className="card-side-header">Project :</div>
-        <div className="card-side-value">ESI Sanath Nagar</div>
+        <div className="card-side-header">Project Code :</div>
+        <div className="card-side-value">{projectCode}</div>
         <div className="card-side-header">Category :</div>
-        <div className="card-side-value">Plumbing</div>
+        <div className="card-side-value">{category}</div>
         <div className="card-side-header">Planned Date :</div>
-        <div className="card-side-value"> 12/06/2024</div>
-        <div className="card-side-header">Warehouse Details :</div>
-        <div className="card-side-value">ESI Sanath Nagar</div>
+        <div className="card-side-value">{plannedDate}</div>
+        <div className="card-side-header">Warehouse Code:</div>
+        <div className="card-side-value"> {warehouseCode}</div>
       </div>
     </Wrapper>
-  );
-};
-export default CardComponent;
+  )
+}
+export default CardComponent
 
 const Wrapper = styled.div`
   margin: 0.75rem 1rem;
@@ -83,4 +86,4 @@ const Wrapper = styled.div`
   .card-side-value {
     color: var(--grey-700);
   }
-`;
+`
