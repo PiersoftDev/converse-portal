@@ -4,26 +4,27 @@ import axios from 'axios'
 
 const initialState = {
   isLoading: false,
+  isError: false,
   items: [],
   rfqList: [
-    {
-      category: 'Category123',
-      plannedDate: '2023-11-03',
-      projectCode: 'Sai123',
-      warehouseCode: '123Warehouse',
-    },
-    {
-      category: 'Category123',
-      plannedDate: '2023-11-03',
-      projectCode: 'Sai123',
-      warehouseCode: '123Warehouse',
-    },
-    {
-      category: 'Category123',
-      plannedDate: '2023-11-03',
-      projectCode: 'Sai123',
-      warehouseCode: '123Warehouse',
-    },
+    // {
+    //   category: 'Category123',
+    //   plannedDate: '2023-11-03',
+    //   projectCode: 'Sai123',
+    //   warehouseCode: '123Warehouse',
+    // },
+    // {
+    //   category: 'Category123',
+    //   plannedDate: '2023-11-03',
+    //   projectCode: 'Sai123',
+    //   warehouseCode: '123Warehouse',
+    // },
+    // {
+    //   category: 'Category123',
+    //   plannedDate: '2023-11-03',
+    //   projectCode: 'Sai123',
+    //   warehouseCode: '123Warehouse',
+    // },
   ],
 }
 
@@ -34,11 +35,16 @@ const url = 'http://13.232.221.196:8081/v1/purchase/material-indent/'
 
 export const getMaterialItems = createAsyncThunk(
   'MaterialIndent/getMaterialItems',
-  () =>
-    axios
-      .get(url)
-      .then((resp) => resp.data)
-      .catch((err) => console.log(err))
+  async (_, thunkApi) => {
+    try {
+      const resp = await axios.get(url)
+      return resp.data
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        'Some thing went wrong while fetching data'
+      )
+    }
+  }
 )
 
 const materialSlice = createSlice({
@@ -60,8 +66,10 @@ const materialSlice = createSlice({
       state.isLoading = false
       state.items = action.payload
     },
-    [getMaterialItems.rejected]: (state) => {
+    [getMaterialItems.rejected]: (state, action) => {
       state.isLoading = false
+      state.isError = true
+      console.log(`${action.payload} for the url : ${url} `)
     },
   },
 })

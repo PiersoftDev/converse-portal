@@ -62,6 +62,21 @@ const EmptyListWrapper = styled.div`
     text-align: center;
     color: var(--grey-300);
   }
+
+  .add-btn {
+    background-color: var(--primary-400);
+    border: 1px solid var(--grey-200);
+    color: var(--white);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .add-btn:hover {
+    background-color: var(--primary-500);
+    transform: scale(1.05);
+  }
 `
 
 const Wrapper = styled.div`
@@ -79,5 +94,20 @@ const Wrapper = styled.div`
     color: var(--grey-300);
     justify-self: center;
     margin-bottom: 1rem;
+  }
+
+  .add-btn {
+    background-color: var(--primary-400);
+    border: 1px solid var(--grey-200);
+    color: var(--white);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .add-btn:hover {
+    background-color: var(--primary-500);
+    transform: scale(1.05);
   }
 `

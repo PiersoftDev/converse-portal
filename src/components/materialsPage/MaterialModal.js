@@ -1,16 +1,33 @@
-import { ImCross } from 'react-icons/im'
-import AsnModalInputContainer from '../AsnPage/AsnModalInputContainer'
-import DeliveryContainer from '../AsnPage/DeliveryContainer'
 import styled from 'styled-components'
 import MaterialModalInputContainer from './MaterialModalInputContainer'
+import { useState } from 'react'
 
 const MaterialModal = ({ showModal, setShowModal }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  const loadingAndErrorStates = {
+    isLoading,
+    isError,
+    setIsLoading,
+    setIsError,
+  }
+
   return (
     <Wrapper>
       <div className={`material-modal ${showModal ? 'show' : ''} `}>
         <div className="material-modal-content">
+          {isLoading && (
+            <div className="create-rfq-loading">
+              <h4>Loading ...</h4>
+            </div>
+          )}
+
           <h4 className="material-modal-header">New RFQ</h4>
-          <MaterialModalInputContainer setShowModal={setShowModal} />
+          <MaterialModalInputContainer
+            setShowModal={setShowModal}
+            loadingAndErrorStates={loadingAndErrorStates}
+          />
         </div>
       </div>
     </Wrapper>
@@ -67,5 +84,19 @@ const Wrapper = styled.div`
 
   .close-modal-btn:hover {
     color: #b52c37;
+  }
+
+  .create-rfq-loading {
+    color: var(--white);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 32;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
   }
 `

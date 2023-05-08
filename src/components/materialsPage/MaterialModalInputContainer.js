@@ -9,12 +9,17 @@ import { useDispatch } from 'react-redux'
 
 const url = 'http://13.232.221.196:8081/v1/purchase/rfq/create-rfq'
 
-const MaterialModalInputContainer = ({ setShowModal }) => {
+const MaterialModalInputContainer = ({
+  setShowModal,
+  loadingAndErrorStates,
+}) => {
   const dispatch = useDispatch()
   const [projectCode, setProjectCode] = useState('')
   const [category, setCategory] = useState('')
   const [plannedDate, setPlannedDate] = useState('')
   const [warehouseCode, setWarehouseCode] = useState('')
+
+  const { setIsError, setIsLoading } = loadingAndErrorStates
 
   const createRFQ = async () => {
     if (!projectCode || !category || !plannedDate || !warehouseCode) {
@@ -38,15 +43,26 @@ const MaterialModalInputContainer = ({ setShowModal }) => {
 
     try {
       console.log(reqBody)
+      setIsLoading(true)
+      setIsError(false)
       await axios.post(url, reqBody)
+      setIsLoading(false)
       setCategory('')
       setProjectCode('')
       setWarehouseCode('')
       setPlannedDate('')
       dispatch(addRFQToList(reqBody))
       setShowModal(false)
+      toast.success('A New RFQ is created')
     } catch (error) {
-      console.log(error)
+      setIsLoading(false)
+      setIsError(true)
+      setCategory('')
+      setProjectCode('')
+      setWarehouseCode('')
+      setPlannedDate('')
+      setShowModal(false)
+      toast.error('An error while creating a new RFQ')
     }
   }
 
@@ -160,6 +176,7 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 1rem;
   margin: 1rem 0;
+  position: relative;
 
   .input-item {
     /* max-width: 400px; */
