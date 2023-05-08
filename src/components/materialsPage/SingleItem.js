@@ -3,15 +3,43 @@ import DetailsComponent from './DetailsComponent'
 import ItemComponent from './ItemComponent'
 import styled from 'styled-components'
 
-const SingleItem = () => {
+const SingleItem = ({ item }) => {
+  const {
+    itemDesc,
+    quantity,
+    plannedDate,
+    projectDesc,
+    activityDesc,
+    inventory,
+    createdDate,
+    procurredTillDate,
+    budgetedQty,
+    variance,
+  } = item
+
+  const itemComponentValues = { itemDesc, quantity, plannedDate }
+  const detailsComponentValues = {
+    projectDesc,
+    activityDesc,
+    createdDate,
+    budgetedQty,
+    inventory,
+    procurredTillDate,
+    variance,
+  }
+
   const [showDetails, setShowDetails] = useState(false)
+
   return (
     <Wrapper>
       <ItemComponent
         showDetails={showDetails}
         setShowDetails={setShowDetails}
+        itemComponentValues={itemComponentValues}
       />
-      {showDetails && <DetailsComponent />}
+      {showDetails && (
+        <DetailsComponent detailsComponentValues={detailsComponentValues} />
+      )}
     </Wrapper>
   )
 }

@@ -1,12 +1,19 @@
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri'
-
 import VerifiedIcon from '@mui/icons-material/Verified'
 import InfoIcon from '@mui/icons-material/Info'
 import { Tooltip } from '@mui/material'
 import styled from 'styled-components'
+import LocationUpdateModal from './LocationUpdateModal'
+import locationUpdateIcon from '../../assets/images/location-update-icon.png'
+import { useState } from 'react'
 
 const ItemComponent = (props) => {
-  const { showDetails, setShowDetails } = props
+  const { showDetails, setShowDetails, itemComponentValues } = props
+  const { itemDesc, quantity, plannedDate } = itemComponentValues
+
+  const planDate = `${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]} `
+
+  const [showLocationModal, setShowLocationModal] = useState(false)
   return (
     <Wrapper>
       <div className="item-column item-description">
@@ -15,7 +22,7 @@ const ItemComponent = (props) => {
         </div>
 
         <p className="item-value">
-          Steel 5mm rods
+          {itemDesc}
           <span className="desc-info">
             <Tooltip
               title="Category : Steel"
@@ -41,7 +48,7 @@ const ItemComponent = (props) => {
           Quantity <div className="line"></div>
         </div>
         <p className="item-value">
-          10mts
+          {quantity}
           <span className="quantity-icon">
             <VerifiedIcon style={{ fontSize: '1.1rem' }} />
           </span>
@@ -51,7 +58,7 @@ const ItemComponent = (props) => {
         <div className="item-header">
           Planned Date <div className="line"></div>
         </div>
-        <p className="item-value">24/10/2023</p>
+        <p className="item-value">{planDate}</p>
       </div>
       {/* 
       <div className="item-column item-planned-date">
@@ -83,6 +90,16 @@ const ItemComponent = (props) => {
           )}
         </button>
       </div>
+      <button
+        className="locationUpdate"
+        onClick={() => setShowLocationModal(!showLocationModal)}
+      >
+        <img src={locationUpdateIcon} alt="icon" />
+      </button>
+      <LocationUpdateModal
+        showLocationModal={showLocationModal}
+        setShowLocationModal={setShowLocationModal}
+      />
     </Wrapper>
   )
 }
@@ -92,6 +109,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  position: relative;
 
   .item-column {
     margin-left: 1rem;
@@ -169,5 +187,25 @@ const Wrapper = styled.div`
     border-radius: 5px;
     letter-spacing: 0.1rem;
     color: var(--white);
+  }
+
+  .locationUpdate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    width: 25px;
+    transition: var(--transition);
+  }
+
+  .locationUpdate img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .locationUpdate:hover {
+    transform: scale(1.05);
   }
 `
