@@ -66,7 +66,7 @@ const LoginForm = () => {
     <Wrapper>
       <h4 className="header">Welcomeback!</h4>
       <p className="sub-header">
-        Start managing your finance faster and better{' '}
+        Start managing your finance faster and better
       </p>
 
       <form className="login-form">
@@ -293,6 +293,7 @@ const Wrapper = styled.div`
     letter-spacing: var(--letterSpacing);
     color: var(--grey-600);
     transition: var(--transition);
+    text-decoration: none;
   }
 
   .google-btn:hover,

@@ -1,14 +1,12 @@
-import { IoLocationOutline } from "react-icons/io5";
-import { HiOutlineCurrencyRupee } from "react-icons/hi";
-import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
-import styled from "styled-components";
-import RoofingIcon from "@mui/icons-material/Roofing";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import WarehouseIcon from "@mui/icons-material/Warehouse";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import NumbersIcon from "@mui/icons-material/Numbers";
+import styled from 'styled-components'
+import RoofingIcon from '@mui/icons-material/Roofing'
+import ConstructionIcon from '@mui/icons-material/Construction'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import WarehouseIcon from '@mui/icons-material/Warehouse'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
+import NumbersIcon from '@mui/icons-material/Numbers'
+import { Tooltip } from '@mui/material'
 
 const ProjectImpInfoComponent = () => {
   return (
@@ -16,36 +14,130 @@ const ProjectImpInfoComponent = () => {
       <div className="left-wrapper">
         <div className="left-header">ESI_Plumbing_30062023</div>
         <div className="left-content">
-          <div className="project-value">
-            <span>
-              <NumbersIcon />
-            </span>
-            <p>RFQ123456</p>
-          </div>
-          <div className="location">
-            <span>
-              <RoofingIcon />
-            </span>
-            <p>ESI, Sanath Nagar</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <ConstructionIcon />
-            </span>
-            <p>Plumbing</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <CalendarTodayIcon />
-            </span>
-            <p>30062023</p>
-          </div>
-          <div className="project-value">
-            <span>
-              <WarehouseIcon />
-            </span>
-            <p>123456</p>
-          </div>
+          <Tooltip
+            title="project id"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <NumbersIcon />
+              </span>
+              <p>RFQ123456</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="location"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="location">
+              <span>
+                <RoofingIcon />
+              </span>
+              <p>ESI, Sanath Nagar</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Category"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <ConstructionIcon />
+              </span>
+              <p>Plumbing</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Calendar"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <CalendarTodayIcon />
+              </span>
+              <p>30062023</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Category"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <WarehouseIcon />
+              </span>
+              <p>123456</p>
+            </div>
+          </Tooltip>
         </div>
       </div>
       <div className="right-wrapper">
@@ -84,9 +176,9 @@ const ProjectImpInfoComponent = () => {
         </div>
       </div>
     </Wrapper>
-  );
-};
-export default ProjectImpInfoComponent;
+  )
+}
+export default ProjectImpInfoComponent
 
 const Wrapper = styled.div`
   display: flex;
@@ -182,7 +274,7 @@ const Wrapper = styled.div`
 
   .complete p::before {
     counter-reset: percentage var(--progress-value);
-    content: counter(percentage) "%";
+    content: counter(percentage) '%';
     animation: progress 2s 1 forwards;
   }
 
@@ -249,12 +341,12 @@ const Wrapper = styled.div`
 
   .btn-decline {
     padding: 0.4rem 0.5rem;
-    background: var(--primary-500);
+    background: #e23140;
     border: 1px solid var(--grey-100);
     border-radius: 5px;
     display: flex;
     gap: 0.5rem;
-    color: #e74646;
+    color: var(--white);
     cursor: pointer;
   }
 
@@ -265,7 +357,7 @@ const Wrapper = styled.div`
   }
 
   .btn-decline:hover {
-    background-color: var(--primary-600);
+    background: #d62e3c;
     transform: scale(1.05);
   }
-`;
+`

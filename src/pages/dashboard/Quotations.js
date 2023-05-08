@@ -28,7 +28,7 @@ const Quotations = () => {
       </div>
 
       <div className="filters">
-        <div className="filter selected">
+        <div className="filter">
           <p>All</p>
           <span>100</span>
         </div>
@@ -36,7 +36,7 @@ const Quotations = () => {
           <p>Created</p>
           <span>25</span>
         </div>
-        <div className="filter">
+        <div className="filter selected">
           <p>In Progress</p>
           <span>25</span>
         </div>
@@ -67,7 +67,7 @@ export default Quotations
 const Wrapper = styled.div`
   background-color: var(--grey-50);
   border-top-left-radius: 2rem;
-  padding: 2rem 3rem;
+  /* padding: 2rem 3rem; */
   width: 100%;
   height: 100%;
   overflow: scroll;
@@ -81,11 +81,13 @@ const Wrapper = styled.div`
 
   .content-header {
     padding: 1rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--grey-100);
+    /* border-bottom: 1px solid var(--grey-100); */
+    box-shadow: var(--shadow-1);
+    padding: 2rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--white);
   }
 
   .left-wrapper h4 {
@@ -118,8 +120,8 @@ const Wrapper = styled.div`
     display: flex;
     gap: 2rem;
     align-items: center;
-    padding: 1rem 0;
     padding-bottom: 4rem;
+    padding: 1rem 3rem;
   }
 
   .filter {
@@ -145,23 +147,23 @@ const Wrapper = styled.div`
     font-size: 0.8rem;
     font-weight: 500;
     border: 2px solid transparent;
+    transition: var(--transition);
   }
 
   .selected span {
-    border: 2px solid var(--primary-400);
-    color: var(--primary-400);
-    background-color: var(--grey-50);
+    color: var(--white);
+    background-color: var(--primary-400);
   }
 
   .filter span:hover {
-    border: 2px solid var(--primary-400);
-    color: var(--primary-400);
-    background-color: var(--grey-50);
+    color: var(--white);
+    background-color: var(--primary-400);
   }
 
   .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 4rem 2rem;
+    padding: 2rem 3rem;
   }
 `
