@@ -17,17 +17,19 @@ const LocationUpdateModal = ({ showLocationModal, setShowLocationModal }) => {
         >
           <div className="location-modal-header">
             <div className="location-header">
-              <div className="source">Hyderabad</div>
-              <span>
-                <HiOutlineArrowsRightLeft />
-              </span>
-              <div className="destination">Mumbai</div>
+              <div className="source">MI0000001</div>
+              
             </div>
             <div className="location-subheader">
               <p>
-                Your Itinerary: <span>1 Adult</span>
+                Project: <span>ESI</span>
               </p>
-              <p>All departure/arrival times are in local time</p>
+              <p>
+                Category: <span>Plumbing</span>
+              </p>
+              <p>
+                Created Date: <span>2023/01/01</span>
+              </p>
             </div>
           </div>
           <div className="location-modal-content">
@@ -53,9 +55,9 @@ const LocationUpdateModal = ({ showLocationModal, setShowLocationModal }) => {
               onScroll={() => console.log('scroll event happend')}
             >
               <div className="location">
-                <span className="time"> 14:10</span>
+                <span className="time">01-01-2023 01:30</span>
                 <span className="dot"></span>
-                <p>IDA Dulles International Airport </p>
+                <p>Created</p>
               </div>
               <div className="travel-information-wrapper">
                 <span className="travel-duration"> 3h 25m</span>
@@ -400,7 +402,7 @@ const Wrapper = styled.div`
   }
 
   .time {
-    width: 4rem;
+    width: 5rem;
     text-align: right;
     font-size: 0.9rem;
   }
