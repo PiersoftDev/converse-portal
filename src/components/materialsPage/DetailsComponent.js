@@ -11,8 +11,13 @@ const DetailsComponent = ({ detailsComponentValues }) => {
   const [nextStep, setNextStep] = useState("");
   useEffect(() => {
     if (nextStep) {
-      console.log({ projectId, categoryId });
-      dispatch(getRFQByCategoryAndCode({ projectId, categoryId }));
+      switch (nextStep) {
+        case "addToRFQ":
+          dispatch(getRFQByCategoryAndCode({ projectId, categoryId }));
+          break;
+        default:
+          break;
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextStep]);

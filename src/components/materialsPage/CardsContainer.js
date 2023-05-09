@@ -1,16 +1,16 @@
-import CardComponent from './CardComponent'
-import styled from 'styled-components'
-import { useState } from 'react'
-import MaterialModal from './MaterialModal'
+import CardComponent from "./CardComponent";
+import styled from "styled-components";
+import { useState } from "react";
+import MaterialModal from "./MaterialModal";
 
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 
 const CardsContainer = () => {
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
-  const { rfqList } = useSelector((store) => store.material)
+  const { rfqList } = useSelector((store) => store.material);
 
-  if (rfqList.length == 0) {
+  if (rfqList.length === 0) {
     return (
       <EmptyListWrapper>
         <div className="content">
@@ -21,17 +21,17 @@ const CardsContainer = () => {
         </div>
         <MaterialModal showModal={showModal} setShowModal={setShowModal} />
       </EmptyListWrapper>
-    )
+    );
   }
 
-  console.log(rfqList)
-  console.log('this is in container')
+  console.log(rfqList);
+  console.log("this is in container");
 
   return (
     <Wrapper>
       <div className="cards">
         {rfqList.map((rfq) => {
-          return <CardComponent {...rfq} />
+          return <CardComponent {...rfq} key={rfq.id} />;
         })}
       </div>
 
@@ -44,9 +44,9 @@ const CardsContainer = () => {
 
       <MaterialModal showModal={showModal} setShowModal={setShowModal} />
     </Wrapper>
-  )
-}
-export default CardsContainer
+  );
+};
+export default CardsContainer;
 
 const EmptyListWrapper = styled.div`
   background-color: var(--white);
@@ -77,7 +77,7 @@ const EmptyListWrapper = styled.div`
     background-color: var(--primary-500);
     transform: scale(1.05);
   }
-`
+`;
 
 const Wrapper = styled.div`
   background-color: var(--white);
@@ -110,4 +110,4 @@ const Wrapper = styled.div`
     background-color: var(--primary-500);
     transform: scale(1.05);
   }
-`
+`;

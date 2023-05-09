@@ -79,7 +79,10 @@ const materialSlice = createSlice({
     },
     [getRFQByCategoryAndCode.fulfilled]: (state, action) => {
       state.isLoading = false;
-      addRFQToList(state, action);
+      action.payload.forEach((p) => {
+        const exists = state.rfqList.find((s) => s.id === p.id);
+        if (!exists) state.rfqList.push(p);
+      });
     },
   },
 });

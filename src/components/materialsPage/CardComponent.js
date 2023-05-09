@@ -1,13 +1,8 @@
-import { RiShareBoxLine } from 'react-icons/ri'
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { RiShareBoxLine } from "react-icons/ri";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-const CardComponent = ({
-  category,
-  plannedDate,
-  projectCode,
-  warehouseCode,
-}) => {
+const CardComponent = ({ category, plannedDate, projectCode, warehouseCode }) => {
   return (
     <Wrapper>
       <div className="card-header">
@@ -26,14 +21,14 @@ const CardComponent = ({
         <div className="card-side-header">Category :</div>
         <div className="card-side-value">{category}</div>
         <div className="card-side-header">Planned Date :</div>
-        <div className="card-side-value">{plannedDate}</div>
+        <div className="card-side-value">{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</div>
         <div className="card-side-header">Warehouse Code:</div>
         <div className="card-side-value"> {warehouseCode}</div>
       </div>
     </Wrapper>
-  )
-}
-export default CardComponent
+  );
+};
+export default CardComponent;
 
 const Wrapper = styled.div`
   margin: 0.75rem 1rem;
@@ -86,4 +81,4 @@ const Wrapper = styled.div`
   .card-side-value {
     color: var(--grey-700);
   }
-`
+`;
