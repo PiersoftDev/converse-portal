@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import { getMaterialItems } from '../../features/MaterialIndent/MaterialSlice'
 
 import {
   FiltersComponent,

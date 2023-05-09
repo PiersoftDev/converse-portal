@@ -7,12 +7,18 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
 import NumbersIcon from '@mui/icons-material/Numbers'
 import { Tooltip } from '@mui/material'
+import { useLocation } from 'react-router-dom'
 
-const ProjectImpInfoComponent = () => {
+const ProjectImpInfoComponent = ({
+  category,
+  plannedDate,
+  projectCode,
+  warehouseCode,
+}) => {
   return (
     <Wrapper>
       <div className="left-wrapper">
-        <div className="left-header">ESI_Plumbing_30062023</div>
+        <div className="left-header">{projectCode}</div>
         <div className="left-content">
           <Tooltip
             title="project id"
@@ -85,7 +91,7 @@ const ProjectImpInfoComponent = () => {
               <span>
                 <ConstructionIcon />
               </span>
-              <p>Plumbing</p>
+              <p>{warehouseCode}</p>
             </div>
           </Tooltip>
 
@@ -110,7 +116,7 @@ const ProjectImpInfoComponent = () => {
               <span>
                 <CalendarTodayIcon />
               </span>
-              <p>30062023</p>
+              <p>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</p>
             </div>
           </Tooltip>
 
@@ -135,7 +141,7 @@ const ProjectImpInfoComponent = () => {
               <span>
                 <WarehouseIcon />
               </span>
-              <p>123456</p>
+              <p>{category}</p>
             </div>
           </Tooltip>
         </div>

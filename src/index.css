@@ -356,3 +356,59 @@ input:focus {
     --progress-value: 67;
   }
 }
+
+/* Projects page */
+
+.right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.drop-down-btn {
+  margin-right: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.date-column {
+  position: relative;
+}
+
+.add-items-btn {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  font-size: 0.8rem;
+  background-color: #22c77a;
+  border: 1px solid var(--grey-100);
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  padding-bottom: 0.2rem;
+  color: var(--white);
+  transition: var(--transition);
+}
+
+.add-items-btn:hover {
+  background-color: #25ae6e;
+  transform: scale(1.05);
+}
+
+.save-btn,
+.add-all-items-btn {
+  font-size: 0.9rem;
+  background-color: var(--primary-400);
+  border: 1px solid var(--grey-100);
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  color: var(--white);
+  transition: var(--transition);
+}
+
+.save-btn:hover,
+.add-all-items-btn:hover {
+  background-color: var(--primary-500);
+  transform: scale(1.05);
+}

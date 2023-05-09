@@ -1,8 +1,10 @@
-import { RiShareBoxLine } from "react-icons/ri";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { RiShareBoxLine } from 'react-icons/ri'
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
-const CardComponent = ({ category, plannedDate, projectCode, warehouseCode }) => {
+const CardComponent = ({ rfq }) => {
+  const { category, plannedDate, projectCode, warehouseCode } = rfq
+
   return (
     <Wrapper>
       <div className="card-header">
@@ -10,7 +12,13 @@ const CardComponent = ({ category, plannedDate, projectCode, warehouseCode }) =>
           <h5>PO-0642</h5>
           <p>Active</p>
         </div>
-        <NavLink className="project-page-icon" to="/projects">
+        <NavLink
+          className="project-page-icon"
+          to="/projects"
+          state={{
+            ...rfq,
+          }}
+        >
           <RiShareBoxLine />
         </NavLink>
       </div>
@@ -26,9 +34,9 @@ const CardComponent = ({ category, plannedDate, projectCode, warehouseCode }) =>
         <div className="card-side-value"> {warehouseCode}</div>
       </div>
     </Wrapper>
-  );
-};
-export default CardComponent;
+  )
+}
+export default CardComponent
 
 const Wrapper = styled.div`
   margin: 0.75rem 1rem;
@@ -81,4 +89,4 @@ const Wrapper = styled.div`
   .card-side-value {
     color: var(--grey-700);
   }
-`;
+`
