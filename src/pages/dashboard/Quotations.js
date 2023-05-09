@@ -1,16 +1,37 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { QuoteCardComponent } from '../../components/QuotationsPage'
+import { useDispatch, useSelector } from 'react-redux'
+import { getRfqList } from '../../features/Quotations/QuotationsSlice'
 
 const Quotations = () => {
+  const { rfqList, isError, isLoading } = useSelector(
+    (store) => store.quotation
+  )
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
   )
 
   if (!authenticated) {
     return <Navigate to="/login" />
+  }
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <h4>Still Loading ...</h4>
+      </LoadingWrapper>
+    )
+  }
+
+  if (isError) {
+    return (
+      <ErrorWrapper>
+        <h4>Something went wrong while fetching data ...</h4>
+      </ErrorWrapper>
+    )
   }
 
   return (
@@ -51,18 +72,30 @@ const Quotations = () => {
       </div>
 
       <div className="cards-container">
-        <QuoteCardComponent />
-        <QuoteCardComponent />
-        <QuoteCardComponent />
-        <QuoteCardComponent />
-        <QuoteCardComponent />
-        <QuoteCardComponent />
-        <QuoteCardComponent />
+        {rfqList.map((item) => {
+          return <QuoteCardComponent key={item.id} quote={item} />
+        })}
       </div>
     </Wrapper>
   )
 }
 export default Quotations
+
+const ErrorWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
 
 const Wrapper = styled.div`
   background-color: var(--grey-50);

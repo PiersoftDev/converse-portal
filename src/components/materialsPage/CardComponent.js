@@ -14,7 +14,7 @@ const CardComponent = ({ rfq }) => {
         </div>
         <NavLink
           className="project-page-icon"
-          to="/projects"
+          to="/rfqdetails"
           state={{
             ...rfq,
           }}

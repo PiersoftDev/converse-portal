@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 const ItemComponent = (props) => {
   const { showDetails, setShowDetails, itemComponentValues } = props
-  const { itemDesc, quantity, plannedDate } = itemComponentValues
+  const { itemDesc, quantity, plannedDate, category } = itemComponentValues
 
   const planDate = `${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]} `
 
@@ -25,7 +25,7 @@ const ItemComponent = (props) => {
           {itemDesc}
           <span className="desc-info">
             <Tooltip
-              title="Category : Steel"
+              title={`Category: ${category}`}
               placement="top-start"
               PopperProps={{
                 sx: {

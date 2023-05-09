@@ -4,6 +4,10 @@ import axios from 'axios'
 const initialState = {
   isLoading: false,
   isError: false,
+  isGetRfqByCodeLoading: false,
+  isGetRfqByCodeError: false,
+  isGetPurchaseLinesLoading: false,
+  isGetPurchaseLinesError: false,
   items: [],
   rfqList: [],
   rfqNewLines: [],
@@ -67,6 +71,10 @@ const materialSlice = createSlice({
     addRFQToList: (state, action) => {
       state.rfqList = [...state.rfqList, action.payload]
     },
+    makeAddtoRfqErrorStatusBackToNormal: (state, action) => {
+      state.isGetRfqByCodeError = false
+      state.isGetPurchaseLinesLoading = false
+    },
     addToItemsList: (state, action) => {
       state.rfqNewLines = state.rfqNewLines.filter(
         (item) => item.id !== action.payload.id
@@ -96,20 +104,41 @@ const materialSlice = createSlice({
       state.isError = true
       console.log(`${action.payload} for the url : ${url} `)
     },
+    [getRFQByCategoryAndCode.pending]: (state, action) => {
+      state.isGetRfqByCodeLoading = true
+    },
     [getRFQByCategoryAndCode.fulfilled]: (state, action) => {
+      state.isGetRfqByCodeLoading = false
       action.payload.forEach((p) => {
         const exists = state.rfqList.find((s) => s.id === p.id)
         if (!exists) state.rfqList.push(p)
       })
     },
+    [getRFQByCategoryAndCode.rejected]: (state, action) => {
+      state.isGetRfqByCodeLoading = false
+      state.isGetRfqByCodeError = true
+    },
+    [getPurchaseLines.pending]: (state, action) => {
+      state.isGetPurchaseLinesLoading = true
+    },
+
     [getPurchaseLines.fulfilled]: (state, action) => {
+      state.isGetPurchaseLinesLoading = false
       console.log(action.payload)
       state.rfqNewLines = action.payload
+    },
+    [getPurchaseLines.rejected]: (state, action) => {
+      state.isGetPurchaseLinesLoading = false
+      state.isGetPurchaseLinesError = true
     },
   },
 })
 
-export const { addRFQToList, addToItemsList, addAllItems } =
-  materialSlice.actions
+export const {
+  addRFQToList,
+  addToItemsList,
+  addAllItems,
+  makeAddtoRfqErrorStatusBackToNormal,
+} = materialSlice.actions
 
 export default materialSlice.reducer

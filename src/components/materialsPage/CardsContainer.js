@@ -3,12 +3,24 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import MaterialModal from './MaterialModal'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
+import { makeAddtoRfqErrorStatusBackToNormal } from '../../features/MaterialIndent/MaterialSlice'
 
 const CardsContainer = () => {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
-  const { rfqList } = useSelector((store) => store.material)
+  const { rfqList, isGetRfqByCodeLoading, isGetRfqByCodeError } = useSelector(
+    (store) => store.material
+  )
+
+  if (isGetRfqByCodeError) {
+    dispatch(makeAddtoRfqErrorStatusBackToNormal())
+    toast.error('Could not add the item to RFQ')
+    return
+  }
 
   if (rfqList.length === 0) {
     return (
