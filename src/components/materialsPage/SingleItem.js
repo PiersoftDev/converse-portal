@@ -1,23 +1,12 @@
-import { useState } from 'react'
-import DetailsComponent from './DetailsComponent'
-import ItemComponent from './ItemComponent'
-import styled from 'styled-components'
+import { useState } from "react";
+import DetailsComponent from "./DetailsComponent";
+import ItemComponent from "./ItemComponent";
+import styled from "styled-components";
 
 const SingleItem = ({ item }) => {
-  const {
-    itemDesc,
-    quantity,
-    plannedDate,
-    projectDesc,
-    activityDesc,
-    inventory,
-    createdDate,
-    procuredTillDate,
-    budgetedQty,
-    variance,
-  } = item
+  const { itemDesc, quantity, plannedDate, projectDesc, activityDesc, inventory, createdDate, procuredTillDate, budgetedQty, variance, projectId, categoryId } = item;
 
-  const itemComponentValues = { itemDesc, quantity, plannedDate }
+  const itemComponentValues = { itemDesc, quantity, plannedDate };
   const detailsComponentValues = {
     projectDesc,
     activityDesc,
@@ -26,24 +15,20 @@ const SingleItem = ({ item }) => {
     inventory,
     procuredTillDate,
     variance,
-  }
+    projectId,
+    categoryId,
+  };
 
-  const [showDetails, setShowDetails] = useState(false)
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <Wrapper>
-      <ItemComponent
-        showDetails={showDetails}
-        setShowDetails={setShowDetails}
-        itemComponentValues={itemComponentValues}
-      />
-      {showDetails && (
-        <DetailsComponent detailsComponentValues={detailsComponentValues} />
-      )}
+      <ItemComponent showDetails={showDetails} setShowDetails={setShowDetails} itemComponentValues={itemComponentValues} />
+      {showDetails && <DetailsComponent detailsComponentValues={detailsComponentValues} />}
     </Wrapper>
-  )
-}
-export default SingleItem
+  );
+};
+export default SingleItem;
 
 const Wrapper = styled.div`
   background-color: var(--white);
@@ -51,4 +36,4 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   margin: 0.5rem 0;
   padding-bottom: 0;
-`
+`;

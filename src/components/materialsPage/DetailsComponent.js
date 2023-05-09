@@ -1,17 +1,21 @@
-import RotateLeftIcon from '@mui/icons-material/RotateLeft'
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getRFQByCategoryAndCode } from "../../features/MaterialIndent/MaterialSlice";
 
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const DetailsComponent = ({ detailsComponentValues }) => {
-  const {
-    projectDesc,
-    activityDesc,
-    createdDate,
-    budgetedQty,
-    inventory,
-    procuredTillDate,
-    variance,
-  } = detailsComponentValues
+  const dispatch = useDispatch();
+  const { projectDesc, activityDesc, createdDate, budgetedQty, inventory, procuredTillDate, variance, projectId, categoryId } = detailsComponentValues;
+  const [nextStep, setNextStep] = useState("");
+  useEffect(() => {
+    if (nextStep) {
+      console.log({ projectId, categoryId });
+      dispatch(getRFQByCategoryAndCode({ projectId, categoryId }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextStep]);
 
   return (
     <Wrapper>
@@ -23,14 +27,10 @@ const DetailsComponent = ({ detailsComponentValues }) => {
         <div className="detail-value">{activityDesc}</div>
 
         <div className="detail-header">Created Date :</div>
-        <div className="detail-value">{createdDate || '23/04/2023'}</div>
+        <div className="detail-value">{createdDate || "23/04/2023"}</div>
 
-        <select
-          name="nextSteps"
-          placeholder="Next steps"
-          className="next-steps"
-        >
-          <option value="" disabled selected hidden>
+        <select name="nextSteps" placeholder="Next steps" className="next-steps" value={nextStep} onChange={(e) => setNextStep(e.target.value)}>
+          <option value="" disabled hidden>
             Next steps ...
           </option>
           <option value="addToRFQ">Add to RFQ</option>
@@ -47,7 +47,7 @@ const DetailsComponent = ({ detailsComponentValues }) => {
         <div className="detail-value avail-inventory">
           {inventory}
           <span className="refresh-icon">
-            <RotateLeftIcon style={{ fontSize: '1.2rem' }} />
+            <RotateLeftIcon style={{ fontSize: "1.2rem" }} />
           </span>
         </div>
 
@@ -65,9 +65,9 @@ const DetailsComponent = ({ detailsComponentValues }) => {
         <div className="detail-value">{variance} </div>
       </div>
     </Wrapper>
-  )
-}
-export default DetailsComponent
+  );
+};
+export default DetailsComponent;
 
 const Wrapper = styled.div`
   border-top: 1px solid var(--grey-50);
@@ -137,4 +137,4 @@ const Wrapper = styled.div`
     position: relative;
     top: -0.5rem;
   }
-`
+`;
