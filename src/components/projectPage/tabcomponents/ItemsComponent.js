@@ -3,19 +3,110 @@ import { HiOutlineCurrencyRupee } from 'react-icons/hi'
 import { RxCube } from 'react-icons/rx'
 import { Table } from 'react-bootstrap'
 import styled from 'styled-components'
+import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
 import 'bootstrap/dist/css/bootstrap.css'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPurchaseLines } from '../../../features/MaterialIndent/MaterialSlice'
+
+import {
+  addToItemsList,
+  addAllItems,
+} from '../../../features/MaterialIndent/MaterialSlice'
+
+const dataOfAddItems = [
+  {
+    id: 1,
+    itemDesc: 'Amaravthi Project',
+    quantity: '200 tons',
+    plannedDate: '22/04/2023',
+  },
+  {
+    id: 2,
+    itemDesc: 'Polavaram Project',
+    quantity: '1000 tons',
+    plannedDate: '3/09/2023',
+  },
+  {
+    id: 3,
+    itemDesc: 'Srisailam Project',
+    quantity: '20 tons',
+    plannedDate: '27/05/2023',
+  },
+  {
+    id: 4,
+    itemDesc: 'Nagarjuna Project',
+    quantity: '2000 tons',
+    plannedDate: '24/08/2024',
+  },
+]
+
+const dataOfNewLines = [
+  {
+    id: 1,
+    itemDesc: 'Amaravthi Project',
+    quantity: '200 tons',
+    plannedDate: '22/04/2023',
+  },
+  {
+    id: 2,
+    itemDesc: 'Polavaram Project',
+    quantity: '1000 tons',
+    plannedDate: '3/09/2023',
+  },
+  {
+    id: 3,
+    itemDesc: 'Srisailam Project',
+    quantity: '20 tons',
+    plannedDate: '27/05/2023',
+  },
+  {
+    id: 4,
+    itemDesc: 'Nagarjuna Project',
+    quantity: '2000 tons',
+    plannedDate: '24/08/2024',
+  },
+]
 
 const ItemsComponent = () => {
+  const dispatch = useDispatch()
+  const { rfqNewLines, rfqAddItems } = useSelector((store) => store.material)
+  const [showAddItems, setShowAddItems] = useState(false)
+  const [showNewLines, setShowNewLines] = useState(false)
+
+  const [addItems, setAdditems] = useState([...dataOfAddItems])
+  const [newLines, setNewLines] = useState([...dataOfNewLines])
+
+  const addItemsToAddItemsList = (newLine) => {
+    dispatch(addToItemsList(newLine))
+  }
+
+  const addAllItemsToAddItemList = () => {
+    dispatch(addAllItems())
+  }
+
   return (
     <Wrapper>
       <div className="payments-container">
         <div className="payments-header">
-          <span>
-            <BsReceiptCutoff />
-          </span>
-          <h4>Payments Requested</h4>
+          <div className="left-wrapper">
+            <span>
+              <BsReceiptCutoff />
+            </span>
+            <h4>Add items</h4>
+          </div>
+
+          <div className="right-wrapper">
+            <button className="save-btn">Save</button>
+            <button
+              className="drop-down-btn"
+              onClick={() => setShowAddItems(!showAddItems)}
+            >
+              {showAddItems ? <AiOutlineUp /> : <AiOutlineDown />}
+            </button>
+          </div>
         </div>
-        <div className="payment-content">
+        {/* <div className="payment-content">
           <div className="payment-left-wrapper">
             <span className="cube-icon">
               <RxCube />
@@ -34,42 +125,119 @@ const ItemsComponent = () => {
               <button className="approve-btn">Approve</button>
             </div>
           </div>
+        </div> */}
+      </div>
+      {showAddItems && (
+        <div className="table-container">
+          <Table bordered>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Item Description</th>
+                <th>Quantity</th>
+                <th>PlannedDate</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rfqAddItems.map(
+                ({ id, itemDesc, quantity, plannedDate }, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{id}</td>
+                      <td>{itemDesc}</td>
+                      <td>{quantity}</td>
+                      <td>{plannedDate}</td>
+                    </tr>
+                  )
+                }
+              )}
+            </tbody>
+          </Table>
         </div>
+      )}
+
+      <div className="payments-container">
+        <div className="payments-header">
+          <div className="left-wrapper">
+            <span>
+              <BsReceiptCutoff />
+            </span>
+            <h4>New Lines</h4>
+          </div>
+
+          <div className="right-wrapper">
+            <button
+              className="add-all-items-btn"
+              onClick={addAllItemsToAddItemList}
+            >
+              Add All items
+            </button>
+
+            <button
+              className="drop-down-btn"
+              onClick={() => setShowNewLines(!showNewLines)}
+            >
+              {showNewLines ? <AiOutlineUp /> : <AiOutlineDown />}
+            </button>
+          </div>
+        </div>
+        {/* <div className="payment-content">
+          <div className="payment-left-wrapper">
+            <span className="cube-icon">
+              <RxCube />
+            </span>
+            <p>Acme Corp</p>
+            <span className="numbers">15-500</span>
+          </div>
+          <div className="payment-right-wrapper">
+            <span className="rupee-icon">
+              <HiOutlineCurrencyRupee />
+            </span>
+            <p>&#8377;65,000</p>
+
+            <div className="payment-btns-container">
+              <button className="view-details-btn">View Details</button>
+              <button className="approve-btn">Approve</button>
+            </div>
+          </div>
+        </div> */}
       </div>
-      <div className="table-container">
-        <Table bordered>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Cost Code</th>
-              <th>Description</th>
-              <th>Subcontractor</th>
-              <th>Scheduled Values</th>
-              <th>Previously Billed</th>
-              <th>Current Period Work</th>
-              <th>Materials Stored</th>
-              <th>Total Completed & Stored</th>
-              <th>Remaining Balance</th>
-              <th>Retainage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>15-1500</td>
-              <td>concrete</td>
-              <td>Acm</td>
-              <td>&#8377; 10,000</td>
-              <td>&#8377; 2,000</td>
-              <td>&#8377; 3,000</td>
-              <td>&#8377; 1,000</td>
-              <td>Total Completed & Stored</td>
-              <td>Remaining Balance</td>
-              <td>Retainage</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
+
+      {showNewLines && (
+        <div className="table-container">
+          <Table bordered>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Item Description</th>
+                <th>Quantity</th>
+                <th>PlannedDate</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rfqNewLines.map((newline, index) => {
+                const { id, itemDesc, quantity, plannedDate } = newline
+                return (
+                  <tr key={index}>
+                    <td>{id}</td>
+                    <td>{itemDesc}</td>
+                    <td>{quantity}</td>
+                    <td className="date-column">
+                      <span>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</span>
+                      <button
+                        className="add-items-btn"
+                        onClick={() => addItemsToAddItemsList(newline)}
+                      >
+                        Add to items
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </Wrapper>
   )
 }
@@ -86,19 +254,24 @@ const Wrapper = styled.div`
 
   .payments-header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .left-wrapper {
+    display: flex;
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-    border-bottom: 1px solid var(--grey-100);
   }
 
-  .payments-header span {
+  .left-wrapper span {
     display: grid;
     place-items: center;
     color: goldenrod;
   }
 
-  .payments-header h4 {
+  .left-wrapper h4 {
     font-size: 1.3rem;
     margin-bottom: 0;
   }

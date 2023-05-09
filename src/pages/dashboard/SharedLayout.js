@@ -3,7 +3,17 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import styled from 'styled-components'
 
+import { useDispatch } from 'react-redux'
+import { getMaterialItems } from '../../features/MaterialIndent/MaterialSlice'
+import { useEffect } from 'react'
+
 const SharedLayout = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getMaterialItems())
+  }, [])
+
   return (
     <Wrapper>
       <Sidebar />

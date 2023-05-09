@@ -1,15 +1,27 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import {
   ProjectImpInfoComponent,
   ProjectTabsComponent,
 } from '../../components/projectPage'
+import { useLocation } from 'react-router-dom'
+import { getPurchaseLines } from '../../features/MaterialIndent/MaterialSlice'
+import { useDispatch } from 'react-redux'
 
 const Projects = () => {
+  const location = useLocation()
+  const dispatch = useDispatch()
+
+  const { projectId, categoryId } = location.state
+
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
   )
+
+  useEffect(() => {
+    dispatch(getPurchaseLines({ categoryId, projectId }))
+  }, [])
 
   if (!authenticated) {
     return <Navigate to="/login" />
@@ -20,7 +32,7 @@ const Projects = () => {
       <div className="header">
         <h4>RFQ Details</h4>
       </div>
-      <ProjectImpInfoComponent />
+      <ProjectImpInfoComponent {...location.state} />
       <ProjectTabsComponent />
     </Wrapper>
   )

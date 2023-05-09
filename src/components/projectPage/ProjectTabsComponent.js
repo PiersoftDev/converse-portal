@@ -10,7 +10,7 @@ const ProjectTabsComponent = () => {
       <Tabs
         defaultIndex={0}
         onSelect={(index) => setIndex(index)}
-        focusTabOnClick="false"
+        // focusTabOnClick=false
         className="tabs-container"
       >
         <TabList className="account-tabs">
