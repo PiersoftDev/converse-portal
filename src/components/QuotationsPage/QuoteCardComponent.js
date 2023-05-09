@@ -5,37 +5,39 @@ import { FaRunning } from 'react-icons/fa'
 import { GiArchBridge } from 'react-icons/gi'
 import styled from 'styled-components'
 
-const QuoteCardComponent = () => {
+const QuoteCardComponent = ({ quote }) => {
   const navigate = useNavigate()
 
+  const { id, projectId, category, plannedDate } = quote
+
   const handleCardClick = () => {
-    navigate('/projects')
+    navigate('/rfqdetails', { state: { ...quote } })
   }
   return (
     <Wrapper onClick={handleCardClick}>
       <span className="icon">
         <GiArchBridge />
       </span>
-      <h4>Building Bridge</h4>
+      <h4>{`RFQ_${id}`}</h4>
       <div className="sub-content">
         <span>
           <FiTarget />
         </span>
-        <p>marketing team</p>
+        <p>{projectId}</p>
       </div>
 
       <div className="sub-content">
         <span>
           <MdAccessAlarms />
         </span>
-        <p>1 Week left</p>
+        <p>{`${plannedDate[2]}-${plannedDate[1]}-${plannedDate[0]}`}</p>
       </div>
 
       <div className="sub-content">
         <span>
           <FaRunning />
         </span>
-        <p>Agile and fast</p>
+        <p>{category}</p>
       </div>
     </Wrapper>
   )

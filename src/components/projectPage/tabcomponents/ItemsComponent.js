@@ -70,7 +70,12 @@ const dataOfNewLines = [
 
 const ItemsComponent = () => {
   const dispatch = useDispatch()
-  const { rfqNewLines, rfqAddItems } = useSelector((store) => store.material)
+  const {
+    rfqNewLines,
+    rfqAddItems,
+    isGetPurchaseLinesLoading,
+    isGetPurchaseLinesError,
+  } = useSelector((store) => store.material)
   const [showAddItems, setShowAddItems] = useState(false)
   const [showNewLines, setShowNewLines] = useState(false)
 
@@ -85,6 +90,22 @@ const ItemsComponent = () => {
     dispatch(addAllItems())
   }
 
+  if (isGetPurchaseLinesLoading) {
+    return (
+      <LoadingWrapper>
+        <h4>Still Loading ...</h4>
+      </LoadingWrapper>
+    )
+  }
+
+  if (isGetPurchaseLinesError) {
+    return (
+      <ErrorWrapper>
+        <h4>Something went wrong while fetching data ...</h4>
+      </ErrorWrapper>
+    )
+  }
+
   return (
     <Wrapper>
       <div className="payments-container">
@@ -93,18 +114,20 @@ const ItemsComponent = () => {
             <span>
               <BsReceiptCutoff />
             </span>
-            <h4>Add items</h4>
+            <h4>{rfqAddItems.length > 0 ? 'Added items' : 'No Added items'}</h4>
           </div>
 
-          <div className="right-wrapper">
-            <button className="save-btn">Save</button>
-            <button
-              className="drop-down-btn"
-              onClick={() => setShowAddItems(!showAddItems)}
-            >
-              {showAddItems ? <AiOutlineUp /> : <AiOutlineDown />}
-            </button>
-          </div>
+          {rfqAddItems.length > 0 && (
+            <div className="right-wrapper">
+              <button className="save-btn">Save</button>
+              <button
+                className="drop-down-btn"
+                onClick={() => setShowAddItems(!showAddItems)}
+              >
+                {showAddItems ? <AiOutlineUp /> : <AiOutlineDown />}
+              </button>
+            </div>
+          )}
         </div>
         {/* <div className="payment-content">
           <div className="payment-left-wrapper">
@@ -127,7 +150,8 @@ const ItemsComponent = () => {
           </div>
         </div> */}
       </div>
-      {showAddItems && (
+
+      {rfqAddItems.length > 0 && showAddItems && (
         <div className="table-container">
           <Table bordered>
             <thead>
@@ -146,7 +170,7 @@ const ItemsComponent = () => {
                       <td>{id}</td>
                       <td>{itemDesc}</td>
                       <td>{quantity}</td>
-                      <td>{plannedDate}</td>
+                      <td>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</td>
                     </tr>
                   )
                 }
@@ -162,24 +186,26 @@ const ItemsComponent = () => {
             <span>
               <BsReceiptCutoff />
             </span>
-            <h4>New Lines</h4>
+            <h4>{rfqNewLines.length > 0 ? 'New Lines' : 'No New Lines'}</h4>
           </div>
 
-          <div className="right-wrapper">
-            <button
-              className="add-all-items-btn"
-              onClick={addAllItemsToAddItemList}
-            >
-              Add All items
-            </button>
+          {rfqNewLines.length > 0 && (
+            <div className="right-wrapper">
+              <button
+                className="add-all-items-btn"
+                onClick={addAllItemsToAddItemList}
+              >
+                Add All items
+              </button>
 
-            <button
-              className="drop-down-btn"
-              onClick={() => setShowNewLines(!showNewLines)}
-            >
-              {showNewLines ? <AiOutlineUp /> : <AiOutlineDown />}
-            </button>
-          </div>
+              <button
+                className="drop-down-btn"
+                onClick={() => setShowNewLines(!showNewLines)}
+              >
+                {showNewLines ? <AiOutlineUp /> : <AiOutlineDown />}
+              </button>
+            </div>
+          )}
         </div>
         {/* <div className="payment-content">
           <div className="payment-left-wrapper">
@@ -203,45 +229,69 @@ const ItemsComponent = () => {
         </div> */}
       </div>
 
-      {showNewLines && (
-        <div className="table-container">
-          <Table bordered>
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Item Description</th>
-                <th>Quantity</th>
-                <th>PlannedDate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rfqNewLines.map((newline, index) => {
-                const { id, itemDesc, quantity, plannedDate } = newline
-                return (
-                  <tr key={index}>
-                    <td>{id}</td>
-                    <td>{itemDesc}</td>
-                    <td>{quantity}</td>
-                    <td className="date-column">
-                      <span>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</span>
-                      <button
-                        className="add-items-btn"
-                        onClick={() => addItemsToAddItemsList(newline)}
-                      >
-                        Add to items
-                      </button>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </Table>
-        </div>
-      )}
+      {rfqNewLines.length > 0 &&
+        showNewLines &&
+        (isGetPurchaseLinesLoading ? (
+          <h4>Still Loading ...</h4>
+        ) : isGetPurchaseLinesError ? (
+          <h4 style={{ color: 'var(--grey-400)' }}>
+            Some error occured while fetching new lines
+          </h4>
+        ) : (
+          <div className="table-container">
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Item Description</th>
+                  <th>Quantity</th>
+                  <th>PlannedDate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rfqNewLines.map((newline, index) => {
+                  const { id, itemDesc, quantity, plannedDate } = newline
+                  return (
+                    <tr key={index}>
+                      <td>{id}</td>
+                      <td>{itemDesc}</td>
+                      <td>{quantity}</td>
+                      <td className="date-column">
+                        <span>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</span>
+                        <button
+                          className="add-items-btn"
+                          onClick={() => addItemsToAddItemsList(newline)}
+                        >
+                          Add to items
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </Table>
+          </div>
+        ))}
     </Wrapper>
   )
 }
 export default ItemsComponent
+
+const ErrorWrapper = styled.div`
+  width: 100%%;
+  height: 20rem;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 20rem;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
 
 const Wrapper = styled.div`
   padding: 2rem;
