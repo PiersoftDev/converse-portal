@@ -45,7 +45,7 @@ export const getMaterialItems = createAsyncThunk("MaterialIndent/getMaterialItem
 
 export const getRFQByCategoryAndCode = createAsyncThunk("MaterialIndex/getRFQByCategoryAndCode", async ({ categoryId, projectId }, thunkApi) => {
   try {
-    const getRFQDetailsUrl = `${url}/rfq/${categoryId}/${projectId}`;
+    const getRFQDetailsUrl = `${url}/rfq/${projectId}/${categoryId}`;
     const resp = await axios.get(getRFQDetailsUrl);
     return resp.data;
   } catch (error) {
