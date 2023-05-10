@@ -73,7 +73,7 @@ const ItemComponent = (props) => {
         </div>
         <p className="item-value">Created</p>
       </div> */}
-      <div className="item-column">
+      <div className="item-column details-btn-column">
         <button
           className="details-btn"
           onClick={() => setShowDetails(!showDetails)}
@@ -106,14 +106,27 @@ const ItemComponent = (props) => {
 export default ItemComponent
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  /* display: flex;
+
+  justify-content: space-between; */
   position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  align-items: flex-end;
 
   .item-column {
     margin-left: 1rem;
+    /* width: 25%; */
+    /* text-align: center; */
     /* border: 1px solid red; */
+  }
+
+  /* .item-description {
+    min-width: 25%;
+  } */
+
+  .details-btn-column {
+    justify-self: right;
   }
 
   .item-header {
@@ -130,7 +143,7 @@ const Wrapper = styled.div`
   }
 
   .item-value {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     font-size: 1.2rem;
   }
 
@@ -164,7 +177,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     transition: var(--transition);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     letter-spacing: 0.1rem;
   }
 
