@@ -115,11 +115,11 @@ const Wrapper = styled.div`
     bottom: 2rem;
     left: 2.5rem;
     transform: translateX(-50%);
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: var(--grey-200);
     display: grid;
     place-items: center;
-    padding: 0.5rem;
+    padding: 0.4rem;
     border: 1px solid var(--grey-500);
     border-radius: 5px;
   }
