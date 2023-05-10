@@ -15,7 +15,10 @@ const Sidebar = () => {
   }
 
   return (
-    <motion.div layout="position" style={{ width: isOpen ? '17rem' : '5rem' }}>
+    <motion.div
+      layout="position"
+      style={{ width: isOpen ? '15rem' : '4.5rem' }}
+    >
       <Wrapper>
         <NavLink to="/" className="logo-container">
           <img src={logo} alt="logo" className="logo" />
@@ -53,7 +56,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 
   .logo {
-    width: 4rem;
+    width: 3.5rem;
     padding-left: 0.5rem;
     margin-top: 0.5rem;
   }
@@ -68,7 +71,7 @@ const Wrapper = styled.div`
 
   .page {
     color: var(--grey-200);
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: 1px solid transparent;
     transition: var(--transition);
     display: flex;
@@ -83,7 +86,7 @@ const Wrapper = styled.div`
   }
 
   .page div {
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin-left: 1rem;
   }
 
