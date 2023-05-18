@@ -5,6 +5,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MdOutlineLocalShipping } from 'react-icons/md'
 import { BsReceiptCutoff } from 'react-icons/bs'
 import { MdOutlineAssignmentInd } from 'react-icons/md'
+import { BsShop } from 'react-icons/bs'
 
 const navLinks = [
   {
@@ -27,24 +28,31 @@ const navLinks = [
   },
   {
     id: 4,
+    path: '/vendors',
+    text: 'Vendors',
+    icon: <BsShop />,
+  },
+
+  {
+    id: 5,
     path: '/orders',
     text: 'Orders',
     icon: <AiOutlineShoppingCart />,
   },
   {
-    id: 5,
+    id: 6,
     path: '/asn',
     text: 'ASN',
     icon: <MdOutlineLocalShipping />,
   },
   {
-    id: 6,
+    id: 7,
     path: '/grn',
     text: 'GRN',
     icon: <BsReceiptCutoff />,
   },
   {
-    id: 7,
+    id: 8,
     path: '/user',
     text: 'UserName',
     icon: <MdOutlineAssignmentInd />,
