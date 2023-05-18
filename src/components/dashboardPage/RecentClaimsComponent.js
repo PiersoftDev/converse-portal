@@ -143,6 +143,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: auto auto auto 1fr;
   gap: 1rem;
+  margin-bottom: 1rem;
 
   .right-top-content {
     position: absolute;
@@ -293,6 +294,10 @@ const Wrapper = styled.div`
 
   .table-container {
     margin-top: 1rem;
+  }
+
+  .table {
+    margin-bottom: 0;
   }
 
   thead {

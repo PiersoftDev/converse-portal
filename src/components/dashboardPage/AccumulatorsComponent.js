@@ -100,6 +100,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: 1rem;
+  margin-bottom: 1rem;
 
   h4 {
     color: var(--grey-700);
