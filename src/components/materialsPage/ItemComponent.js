@@ -120,8 +120,8 @@ const Wrapper = styled.div`
     /* text-align: center; */
     /* border: 1px solid red; */
   }
-
-  /* .item-description {
+  /* 
+  .item-description {
     min-width: 25%;
   } */
 

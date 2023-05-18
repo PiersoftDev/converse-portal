@@ -65,7 +65,7 @@ const EmptyListWrapper = styled.div`
   margin-top: 0.5rem;
   border-radius: 1rem;
   padding-top: 0.25rem;
-  min-height: 450px;
+  height: 450px;
 
   display: grid;
   place-items: center;
@@ -97,6 +97,7 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   padding-top: 0.25rem;
   min-height: 450px;
+  align-self: flex-start;
 
   display: grid;
   grid-template-rows: 1fr auto;
@@ -106,6 +107,7 @@ const Wrapper = styled.div`
     color: var(--grey-300);
     justify-self: center;
     margin-bottom: 1rem;
+    margin-top: 2rem;
   }
 
   .add-btn {

@@ -39,6 +39,7 @@ export default AsnHeaderComponent
 
 const Wrapper = styled.div`
   background-color: var(--white);
+  border-top-left-radius: 2rem;
   padding: 3rem 2rem;
   border-bottom: 1px solid var(--grey-100);
   box-shadow: var(--shadow-1);

@@ -345,7 +345,13 @@ input:focus {
 
 /* Progress bar in projects page */
 
-@property --progress-value {
+@property --progress-value-1 {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --progress-value-2 {
   syntax: '<integer>';
   initial-value: 0;
   inherits: false;
@@ -353,7 +359,8 @@ input:focus {
 
 @keyframes progress {
   to {
-    --progress-value: 67;
+    --progress-value-1: 85;
+    --progress-value-2: 67;
   }
 }
 
