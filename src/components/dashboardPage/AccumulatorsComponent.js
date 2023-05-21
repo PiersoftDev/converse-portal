@@ -43,7 +43,7 @@ const AccumulatorsComponent = () => {
 
         <div className="progress-bar"></div>
         <div
-          class="progress-bar-1"
+          className="progress-bar-1"
           role="progressbar"
           aria-valuenow="75"
           aria-valuemin="0"
@@ -51,7 +51,7 @@ const AccumulatorsComponent = () => {
         ></div>
 
         <div
-          class="progress-bar-2"
+          className="progress-bar-2"
           role="progressbar"
           aria-valuenow="75"
           aria-valuemin="0"

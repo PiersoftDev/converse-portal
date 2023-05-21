@@ -2,83 +2,62 @@ import { Table } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import styled from 'styled-components'
 
-const VendorTableComponent = () => {
+const VendorTableComponent = ({ vendorsList }) => {
+  if (vendorsList?.length < 1) {
+    return (
+      <NoVendorsWrapper>
+        <h4>No Vendors are there </h4>
+      </NoVendorsWrapper>
+    )
+  }
+
   return (
     <Wrapper>
       <Table responsive>
         <thead>
           <tr>
             <th>Id</th>
-            <th>Partner</th>
-            <th>Project</th>
-            <th>Category</th>
-            <th>Warehouse</th>
-            <th>Expected Date</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>gst</th>
+            <th>aadhaar</th>
+            <th>pan</th>
+            <th>pocName</th>
+            <th>pocWhatsappNo</th>
+            <th>pocEmail</th>
+            <th>businessName</th>
+            <th>address</th>
+            <th>state</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>#1234-cde</td>
-            <td>Samsung</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
-          <tr>
-            <td>15674</td>
-            <td>Apple</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
-          <tr>
-            <td>4536</td>
-            <td>Google</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
-          <tr>
-            <td>53672</td>
-            <td>Tesla</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
-          <tr>
-            <td>879</td>
-            <td>Oracle</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
-          <tr>
-            <td>879</td>
-            <td>Oracle</td>
-            <td>Project algolia</td>
-            <td>infrastructure</td>
-            <td>alogolia warehouse</td>
-            <td>12/24/2023</td>
-            <td>On the way</td>
-            <td>Inform</td>
-          </tr>
+          {vendorsList.map(
+            ({
+              id,
+              gst,
+              aadhaar,
+              pan,
+              pocName,
+              pocWhatsappNo,
+              pocEmail,
+              businessName,
+              address,
+              state,
+            }) => {
+              return (
+                <tr key={id}>
+                  <td>{id}</td>
+                  <td>{gst}</td>
+                  <td>{aadhaar}</td>
+                  <td>{pan}</td>
+                  <td>{pocName}</td>
+                  <td>{pocWhatsappNo}</td>
+                  <td>{pocEmail}</td>
+                  <td>{businessName}</td>
+                  <td>{address}</td>
+                  <td>{state}</td>
+                </tr>
+              )
+            }
+          )}
         </tbody>
       </Table>
     </Wrapper>
@@ -86,10 +65,13 @@ const VendorTableComponent = () => {
 }
 export default VendorTableComponent
 
+const NoVendorsWrapper = styled.div`
+  margin: 2rem;
+`
+
 const Wrapper = styled.div`
   background-color: var(--white);
   border-radius: 10px;
-  margin: 2rem;
 
   th,
   td {
