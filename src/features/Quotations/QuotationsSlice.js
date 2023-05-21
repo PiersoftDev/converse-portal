@@ -32,7 +32,6 @@ const quotationsSlice = createSlice({
     [getRfqList.fulfilled]: (state, action) => {
       state.isLoading = false
       state.rfqList = action.payload
-      console.log(state.rfqList)
     },
     [getRfqList.rejected]: (state, action) => {
       state.isLoading = false

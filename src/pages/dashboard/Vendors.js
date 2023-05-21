@@ -7,25 +7,69 @@ import {
   VendorTableComponent,
   VendorHeaderComponent,
 } from '../../components/vendorsPage'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getVendors } from '../../features/vendors/VendorSlice'
 const Vendors = () => {
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
   )
-
   const [showModal, setShowModal] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const { vendorsList, isLoading, isError } = useSelector(
+    (store) => store.vendor
+  )
+
+  useEffect(() => {
+    dispatch(getVendors())
+  }, [])
 
   if (!authenticated) {
     return <Navigate to="/login" />
   }
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <h4>Still Loading ...</h4>
+      </LoadingWrapper>
+    )
+  }
+
+  if (isError) {
+    return (
+      <ErrorWrapper>
+        <h4>Something went wrong while fetching data ... </h4>
+      </ErrorWrapper>
+    )
+  }
   return (
     <Wrapper>
       <VendorHeaderComponent setShowModal={setShowModal} />
-      <VendorTableComponent />
+      <VendorTableComponent vendorsList={vendorsList} />
       <VendorModal showModal={showModal} setShowModal={setShowModal} />
     </Wrapper>
   )
 }
 export default Vendors
+
+const ErrorWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: var(--grey-50);
+`
 
 const Wrapper = styled.div`
   background-color: var(--grey-50);

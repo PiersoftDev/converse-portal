@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { ImCross } from 'react-icons/im'
 import { toast } from 'react-toastify'
@@ -5,16 +6,21 @@ import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
 const initial = {
-  gstin: '',
   aadhaar: '',
+  gst: '',
   pan: '',
-  name: '',
-  whatsappNumber: '',
-  email: '',
+  pocEmail: '',
+  pocName: '',
+  pocWhatsappNo: '',
 }
+
+const url = 'https://13.232.221.196/v1/vm/onboard'
 
 const VendorModal = ({ showModal, setShowModal }) => {
   const [vendorInfo, setVendorInfo] = useState(initial)
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -22,7 +28,7 @@ const VendorModal = ({ showModal, setShowModal }) => {
     setVendorInfo({ ...vendorInfo, [name]: value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     for (let prop in vendorInfo) {
@@ -32,9 +38,21 @@ const VendorModal = ({ showModal, setShowModal }) => {
       }
     }
 
-    toast.success(`Successfully onboarded  ${vendorInfo.name}`)
-    setVendorInfo(initial)
-    setShowModal(false)
+    try {
+      console.log(vendorInfo)
+      setIsLoading(true)
+      setIsError(false)
+      await axios.post(url, vendorInfo)
+      setIsLoading(false)
+      setIsError(false)
+      toast.success(`Successfully onboarded  ${vendorInfo.name}`)
+      setVendorInfo(initial)
+      setShowModal(false)
+    } catch (error) {
+      setIsLoading(false)
+      setIsError(true)
+      toast.error(`Some error occured while onboarding ${vendorInfo.name} `)
+    }
   }
 
   const handleClose = () => {
@@ -61,8 +79,8 @@ const VendorModal = ({ showModal, setShowModal }) => {
                 <input
                   type="text"
                   id="gstin"
-                  name="gstin"
-                  value={vendorInfo.gstin}
+                  name="gst"
+                  value={vendorInfo.gst}
                   onChange={handleChange}
                 />
               </div>
@@ -103,8 +121,8 @@ const VendorModal = ({ showModal, setShowModal }) => {
                 <input
                   type="text"
                   id="name"
-                  name="name"
-                  value={vendorInfo.name}
+                  name="pocName"
+                  value={vendorInfo.pocName}
                   onChange={handleChange}
                 />
               </div>
@@ -116,8 +134,8 @@ const VendorModal = ({ showModal, setShowModal }) => {
                 <input
                   type="text"
                   id="whatsappNumber"
-                  name="whatsappNumber"
-                  value={vendorInfo.whatsappNumber}
+                  name="pocWhatsappNo"
+                  value={vendorInfo.pocWhatsappNo}
                   onChange={handleChange}
                 />
               </div>
@@ -129,8 +147,8 @@ const VendorModal = ({ showModal, setShowModal }) => {
                 <input
                   type="text"
                   id="email"
-                  name="email"
-                  value={vendorInfo.email}
+                  name="pocEmail"
+                  value={vendorInfo.pocEmail}
                   onChange={handleChange}
                 />
               </div>

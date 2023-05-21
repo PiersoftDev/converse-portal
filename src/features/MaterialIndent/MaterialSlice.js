@@ -54,7 +54,6 @@ export const getPurchaseLines = createAsyncThunk(
   async ({ categoryId, projectId }, thunkApi) => {
     try {
       const getPurchaseLinesUrl = `${url}/material-indent/${projectId}/${categoryId}`
-      console.log(getPurchaseLinesUrl)
       const resp = await axios.get(getPurchaseLinesUrl)
       return resp.data
     } catch (error) {
@@ -71,7 +70,7 @@ const materialSlice = createSlice({
     addRFQToList: (state, action) => {
       state.rfqList = [...state.rfqList, action.payload]
     },
-    makeAddtoRfqErrorStatusBackToNormal: (state, action) => {
+    makeAddToRfqErrorStatusBackToNormal: (state, action) => {
       state.isGetRfqByCodeError = false
       state.isGetPurchaseLinesLoading = false
     },
@@ -81,13 +80,12 @@ const materialSlice = createSlice({
       )
 
       let addItems = [...state.rfqAddItems, action.payload]
-      console.log(addItems)
       state.rfqAddItems = addItems.sort((a, b) => a.id - b.id)
     },
     addAllItems: (state, action) => {
-      let newAdditems = [...state.rfqAddItems, ...state.rfqNewLines]
-      console.log(newAdditems)
-      state.rfqAddItems = newAdditems.sort((a, b) => a.id - b.id)
+      let newAddItems = [...state.rfqAddItems, ...state.rfqNewLines]
+      console.log(newAddItems)
+      state.rfqAddItems = newAddItems.sort((a, b) => a.id - b.id)
       state.rfqNewLines = []
     },
   },
@@ -138,7 +136,7 @@ export const {
   addRFQToList,
   addToItemsList,
   addAllItems,
-  makeAddtoRfqErrorStatusBackToNormal,
+  makeAddToRfqErrorStatusBackToNormal,
 } = materialSlice.actions
 
 export default materialSlice.reducer

@@ -6,7 +6,7 @@ import MaterialModal from './MaterialModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
-import { makeAddtoRfqErrorStatusBackToNormal } from '../../features/MaterialIndent/MaterialSlice'
+import { makeAddToRfqErrorStatusBackToNormal } from '../../features/MaterialIndent/MaterialSlice'
 
 const CardsContainer = () => {
   const dispatch = useDispatch()
@@ -17,7 +17,7 @@ const CardsContainer = () => {
   )
 
   if (isGetRfqByCodeError) {
-    dispatch(makeAddtoRfqErrorStatusBackToNormal())
+    dispatch(makeAddToRfqErrorStatusBackToNormal())
     toast.error('Could not add the item to RFQ')
     return
   }
