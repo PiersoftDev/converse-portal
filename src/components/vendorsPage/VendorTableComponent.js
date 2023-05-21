@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import styled from 'styled-components'
 
 const VendorTableComponent = ({ vendorsList }) => {
+  console.log(vendorsList)
   if (vendorsList?.length < 1) {
     return (
       <NoVendorsWrapper>
@@ -72,6 +73,7 @@ const NoVendorsWrapper = styled.div`
 const Wrapper = styled.div`
   background-color: var(--white);
   border-radius: 10px;
+  margin: 2rem;
 
   th,
   td {

@@ -38,7 +38,7 @@ const vendorsSlice = createSlice({
     },
     [getVendors.fulfilled]: (state, action) => {
       state.isLoading = false
-      state.rfqList = action.payload
+      state.vendorsList = action.payload
     },
     [getVendors.rejected]: (state, action) => {
       state.isLoading = false

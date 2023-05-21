@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { getMaterialItems } from '../../features/MaterialIndent/MaterialSlice'
 import { getRfqList } from '../../features/Quotations/QuotationsSlice'
+import { getVendors } from '../../features/vendors/VendorSlice'
 import { useEffect } from 'react'
 
 const SharedLayout = () => {
@@ -14,6 +15,7 @@ const SharedLayout = () => {
   useEffect(() => {
     dispatch(getMaterialItems())
     dispatch(getRfqList())
+    dispatch(getVendors())
   }, [])
 
   return (
