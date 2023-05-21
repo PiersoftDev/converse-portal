@@ -8,8 +8,6 @@ import {
   VendorHeaderComponent,
 } from '../../components/vendorsPage'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getVendors } from '../../features/vendors/VendorSlice'
 const Vendors = () => {
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
@@ -21,10 +19,6 @@ const Vendors = () => {
   const { vendorsList, isLoading, isError } = useSelector(
     (store) => store.vendor
   )
-
-  useEffect(() => {
-    dispatch(getVendors())
-  }, [])
 
   if (!authenticated) {
     return <Navigate to="/login" />
