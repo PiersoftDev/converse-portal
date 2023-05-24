@@ -18,7 +18,6 @@ const LocationUpdateModal = ({ showLocationModal, setShowLocationModal }) => {
           <div className="location-modal-header">
             <div className="location-header">
               <div className="source">MI0000001</div>
-              
             </div>
             <div className="location-subheader">
               <p>
@@ -61,7 +60,7 @@ const LocationUpdateModal = ({ showLocationModal, setShowLocationModal }) => {
               </div>
               <div className="travel-information-wrapper">
                 <span className="travel-duration"> 3h 25m</span>
-                <span className="travel-info-line"></span>
+                <span className="travel-info-line travel-start-line"></span>
                 <div className="travel-info">
                   <span className="travel-info-dot"></span>
                   <div className="travel-info-content">
@@ -397,8 +396,8 @@ const Wrapper = styled.div`
 
   .location {
     display: flex;
-    gap: 1rem;
     align-items: center;
+    gap: 1rem;
   }
 
   .time {
@@ -428,7 +427,7 @@ const Wrapper = styled.div`
 
   .travel-duration {
     color: var(--grey-200);
-    width: 4rem;
+    width: 5rem;
     font-size: 0.9rem;
     text-align: right;
   }
@@ -439,6 +438,10 @@ const Wrapper = styled.div`
     /* transform: translateX(-50%); */
     width: 2px;
     background-color: var(--grey-200);
+  }
+
+  .travel-start-line {
+    height: 7rem !important;
   }
 
   .travel-info {

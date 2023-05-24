@@ -8,6 +8,8 @@ import GRN from './GRN'
 import User from './User'
 import Projects from './Project'
 import Vendors from './Vendors'
+import Bidders from './Bidders'
+import PaymentAdviseSlip from './PaymentAdviseSlip'
 
 export {
   SharedLayout,
@@ -20,4 +22,6 @@ export {
   User,
   Projects,
   Vendors,
+  Bidders,
+  PaymentAdviseSlip,
 }

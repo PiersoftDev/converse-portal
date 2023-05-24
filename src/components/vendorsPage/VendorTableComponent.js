@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import styled from 'styled-components'
 
 const VendorTableComponent = ({ vendorsList }) => {
-  console.log(vendorsList)
   if (vendorsList?.length < 1) {
     return (
       <NoVendorsWrapper>
