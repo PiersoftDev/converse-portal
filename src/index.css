@@ -388,7 +388,3 @@ input:focus {
 .details-container.details-hide {
   display: none;
 }
-
-.travel-start-line {
-  height: 7rem !important;
-}
