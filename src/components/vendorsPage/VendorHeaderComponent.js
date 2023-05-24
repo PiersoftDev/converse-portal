@@ -1,14 +1,23 @@
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiFilterAlt } from 'react-icons/bi'
 import { IoAddCircleSharp } from 'react-icons/io5'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { makeShowMultipleGstUnderSamePanModalFalse } from '../../features/vendors/VendorSlice'
 
 const VendorHeaderComponent = ({ setShowModal }) => {
+  const dispatch = useDispatch()
+
+  const handleOnboard = () => {
+    dispatch(makeShowMultipleGstUnderSamePanModalFalse())
+    setShowModal(true)
+  }
+
   return (
     <Wrapper>
       <div className="left-wrapper">Vendor Page</div>
       <div className="right-wrapper">
-        <button className="create-btn" onClick={() => setShowModal(true)}>
+        <button className="create-btn" onClick={handleOnboard}>
           <span>
             <IoAddCircleSharp />
           </span>

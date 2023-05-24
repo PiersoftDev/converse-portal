@@ -14,8 +14,6 @@ const Vendors = () => {
   )
   const [showModal, setShowModal] = useState(false)
 
-  const dispatch = useDispatch()
-
   const { vendorsList, isLoading, isError } = useSelector(
     (store) => store.vendor
   )

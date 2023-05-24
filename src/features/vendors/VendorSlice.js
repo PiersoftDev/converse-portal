@@ -5,6 +5,8 @@ const initialState = {
   vendorsList: [],
   isLoading: false,
   isError: false,
+  showMultipleGstUnderSamePanModal: false,
+  onBoardAll: false,
 }
 
 const url = 'https://13.232.221.196/v1/vm/list'
@@ -31,7 +33,20 @@ export const getVendors = createAsyncThunk(
 const vendorsSlice = createSlice({
   name: 'vendors',
   initialState,
-  reducers: {},
+  reducers: {
+    makeShowMultipleGstUnderSamePanModalFalse: (state) => {
+      state.showMultipleGstUnderSamePanModal = false
+    },
+    makeShowMultipleGstUnderSamePanModalTrue: (state) => {
+      state.showMultipleGstUnderSamePanModal = true
+    },
+    makeOnBoardAllNo: (state) => {
+      state.onBoardAll = 'No'
+    },
+    makeOnBoardAllYes: (state) => {
+      state.onBoardAll = 'Yes'
+    },
+  },
   extraReducers: {
     [getVendors.pending]: (state, action) => {
       state.isLoading = true
@@ -46,5 +61,12 @@ const vendorsSlice = createSlice({
     },
   },
 })
+
+export const {
+  makeShowMultipleGstUnderSamePanModalFalse,
+  makeShowMultipleGstUnderSamePanModalTrue,
+  makeOnBoardAllNo,
+  makeOnBoardAllYes,
+} = vendorsSlice.actions
 
 export default vendorsSlice.reducer

@@ -1,26 +1,43 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { ImCross } from 'react-icons/im'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import styled from 'styled-components'
+import {
+  makeOnBoardAllNo,
+  makeOnBoardAllYes,
+  makeShowMultipleGstUnderSamePanModalTrue,
+} from '../../features/vendors/VendorSlice'
+
+// const initial = {
+//   aadhaar: '',
+//   gst: '',
+//   pan: '',
+//   pocEmail: '',
+//   pocName: '',
+//   pocWhatsappNo: '',
+// }
 
 const initial = {
-  aadhaar: '',
-  gst: '',
-  pan: '',
-  pocEmail: '',
-  pocName: '',
-  pocWhatsappNo: '',
+  gst: '30AAACR5055K1ZK',
+  aadhaar: '670258073448',
+  pan: 'AAACR5055',
+  pocName: 'Sai',
+  pocWhatsappNo: '919945014010',
+  pocEmail: 'gsmreddy3@gmail.com',
 }
 
 const url = 'https://13.232.221.196/v1/vm/onboard'
 
 const VendorModal = ({ showModal, setShowModal }) => {
+  const dispatch = useDispatch()
   const [vendorInfo, setVendorInfo] = useState(initial)
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const { showMultipleGstUnderSamePanModal, onBoardAll } = useSelector(
+    (store) => store.vendor
+  )
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -39,20 +56,32 @@ const VendorModal = ({ showModal, setShowModal }) => {
     }
 
     try {
-      console.log(vendorInfo)
-      setIsLoading(true)
-      setIsError(false)
-      await axios.post(url, vendorInfo)
-      setIsLoading(false)
-      setIsError(false)
-      toast.success(`Successfully onboarded  ${vendorInfo.name}`)
-      setVendorInfo(initial)
-      setShowModal(false)
+      const resp = await axios.post(url, vendorInfo)
+      console.log(resp.data)
+
+      const { data, ['message_code']: message } = resp.data
+
+      if (
+        message.includes(
+          'Multiple GSTs found under PAN, would you like to onboard them all'
+        )
+      ) {
+        dispatch(makeShowMultipleGstUnderSamePanModalTrue())
+      } else {
+        toast.success(`Successfully onboarded  ${vendorInfo.pocName}`)
+        setVendorInfo(initial)
+        setShowModal(false)
+      }
     } catch (error) {
-      setIsLoading(false)
-      setIsError(true)
-      toast.error(`Some error occured while onboarding ${vendorInfo.name} `)
+      console.log(error)
+      toast.error(`Some error occured while onboarding ${vendorInfo.pocName} `)
     }
+  }
+
+  const handleMultipleGst = (e) => {
+    e.preventDefault()
+    setVendorInfo(initial)
+    setShowModal(false)
   }
 
   const handleClose = () => {
@@ -64,102 +93,144 @@ const VendorModal = ({ showModal, setShowModal }) => {
     <Wrapper>
       <div className={`vendor-modal ${showModal ? 'show' : ''} `}>
         <div className="vendor-modal-content">
-          <h4 className="vendor-modal-header">Onboard Business Partner</h4>
-          <button onClick={handleClose} className="close-modal-btn">
-            <ImCross />
-          </button>
-
-          <form className="vendor-form">
-            <div className="business-credentials">
-              <div className="header">Business Credentials</div>
-              <div className="input-container">
-                <label htmlFor="gstin">
-                  GSTIN <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="gstin"
-                  name="gst"
-                  value={vendorInfo.gst}
-                  onChange={handleChange}
-                />
+          {showMultipleGstUnderSamePanModal ? (
+            <div>
+              <div className="header">
+                Multiple GSTs found under PAN, would you like to onboard them
+                all ?
               </div>
+              <form className="content">
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    id="yes"
+                    name="onBoardAll"
+                    value="Yes"
+                    checked={onBoardAll === 'Yes'}
+                    onChange={() => dispatch(makeOnBoardAllYes())}
+                  />
+                  <label htmlFor="yes">Yes</label>
+                </div>
 
-              <div className="input-container">
-                <label htmlFor="aadhaar">
-                  Aadhaar <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="aadhaar"
-                  name="aadhaar"
-                  value={vendorInfo.aadhaar}
-                  onChange={handleChange}
-                />
-              </div>
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    id="no"
+                    name="onBoardAll"
+                    value="No"
+                    checked={onBoardAll === 'No'}
+                    onChange={() => dispatch(makeOnBoardAllNo())}
+                  />
+                  <label htmlFor="no">No</label>
+                </div>
 
-              <div className="input-container">
-                <label htmlFor="pan">
-                  PAN <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="pan"
-                  name="pan"
-                  value={vendorInfo.pan}
-                  onChange={handleChange}
-                />
+                <div className="btns-container">
+                  <button className="submit-btn" onClick={handleMultipleGst}>
+                    OnBoard
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <h4 className="vendor-modal-header">Onboard Business Partner</h4>
+              <button onClick={handleClose} className="close-modal-btn">
+                <ImCross />
+              </button>
+
+              <form className="vendor-form">
+                <div className="business-credentials">
+                  <div className="header">Business Credentials</div>
+                  <div className="input-container">
+                    <label htmlFor="gstin">
+                      GSTIN <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="gstin"
+                      name="gst"
+                      value={vendorInfo.gst}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="input-container">
+                    <label htmlFor="aadhaar">
+                      Aadhaar <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="aadhaar"
+                      name="aadhaar"
+                      value={vendorInfo.aadhaar}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="input-container">
+                    <label htmlFor="pan">
+                      PAN <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="pan"
+                      name="pan"
+                      value={vendorInfo.pan}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="point-of-contact">
+                  <div className="header">Point of Contact</div>
+                  <div className="input-container">
+                    <label htmlFor="name">
+                      Name <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="pocName"
+                      value={vendorInfo.pocName}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="input-container">
+                    <label htmlFor="whatsappNumber">
+                      Whatsapp Number <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="whatsappNumber"
+                      name="pocWhatsappNo"
+                      value={vendorInfo.pocWhatsappNo}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="input-container">
+                    <label htmlFor="email">
+                      Email <span className="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="pocEmail"
+                      value={vendorInfo.pocEmail}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </form>
+
+              <div className="btns-container">
+                <button className="submit-btn" onClick={handleSubmit}>
+                  Onboard
+                </button>
               </div>
             </div>
-
-            <div className="point-of-contact">
-              <div className="header">Point of Contact</div>
-              <div className="input-container">
-                <label htmlFor="name">
-                  Name <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="pocName"
-                  value={vendorInfo.pocName}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="whatsappNumber">
-                  Whatsapp Number <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="whatsappNumber"
-                  name="pocWhatsappNo"
-                  value={vendorInfo.pocWhatsappNo}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="email">
-                  Email <span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="email"
-                  name="pocEmail"
-                  value={vendorInfo.pocEmail}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </form>
-
-          <div className="btns-container">
-            <button className="submit-btn" onClick={handleSubmit}>
-              Onboard
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </Wrapper>
@@ -303,5 +374,16 @@ const Wrapper = styled.div`
     color: var(--red-dark);
     transform: scale(1.05);
     border: 1px solid var(--grey-100);
+  }
+
+  .content {
+    margin-top: 1rem;
+  }
+
+  .radio-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 `
