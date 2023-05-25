@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const DetailsContainerComponent = ({ openDetails }) => {
+const InvoiceDetailsComponent = ({ openDetails, setOpenDetails }) => {
   return (
     <Wrapper
       className={
@@ -8,42 +8,43 @@ const DetailsContainerComponent = ({ openDetails }) => {
       }
     >
       <div className="details-header">
-        <h4>BP Details</h4>
+        <h4>Invoice Details</h4>
+        <button onClick={() => setOpenDetails(false)}>Close</button>
       </div>
       <div className="details-content-container">
         <div className="details-left-wrapper">
           <div className="details-content">
-            <p>BP Code : </p>
+            <p>Invoice No : </p>
             <div className="details-content-value"></div>
           </div>
           <div className="details-content">
-            <p>BP Name : </p>
+            <p>Invoice Date : </p>
             <div className="details-content-value"></div>
           </div>
           <div className="details-content">
-            <p>BP Address : </p>
-            <div className="details-content-value"></div>
-          </div>
-          <div className="details-content">
-            <p>BP Roles : </p>
-            <div className="details-content-value"></div>
-          </div>
-        </div>
-        <div className="details-right-wrapper">
-          <div className="details-content">
-            <p>ADhaar Details : </p>
-            <div className="details-content-value"></div>
-          </div>
-          <div className="details-content">
-            <p>Pan Details : </p>
+            <p>Towards BP : </p>
             <div className="details-content-value"></div>
           </div>
           <div className="details-content">
             <p>GST Details : </p>
             <div className="details-content-value"></div>
           </div>
+        </div>
+        <div className="details-right-wrapper">
           <div className="details-content">
             <p>Bank Details : </p>
+            <div className="details-content-value"></div>
+          </div>
+          <div className="details-content">
+            <p>Towards Materials : </p>
+            <div className="details-content-value"></div>
+          </div>
+          <div className="details-content">
+            <p>Basic Amount : </p>
+            <div className="details-content-value"></div>
+          </div>
+          <div className="details-content">
+            <p>Terms & Conditions : </p>
             <div className="details-content-value"></div>
           </div>
         </div>
@@ -51,16 +52,37 @@ const DetailsContainerComponent = ({ openDetails }) => {
     </Wrapper>
   )
 }
-export default DetailsContainerComponent
+export default InvoiceDetailsComponent
 
 const Wrapper = styled.div`
   .details-header {
     border-bottom: 1px solid var(--grey-100);
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
   }
 
   .details-header h4 {
     color: var(--grey-800);
+    margin-bottom: 0;
+  }
+
+  .details-header button {
+    background-color: transparent;
+    border: 1px solid var(--grey-100);
+    border-radius: 5px;
+    margin-right: 2rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    transition: var(--transition);
+  }
+
+  .details-header button:hover {
+    transform: scale(1.1);
+    background-color: var(--red-light);
+    color: var(--red-dark);
+    border: 1px solid var(--red-light);
   }
 
   .details-content-container {
