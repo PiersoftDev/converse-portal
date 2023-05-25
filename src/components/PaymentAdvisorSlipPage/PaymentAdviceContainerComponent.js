@@ -3,7 +3,32 @@ import { AiOutlineSearch } from 'react-icons/ai'
 
 import styled from 'styled-components'
 
-const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
+const BP_ACCOUNT_BTN = 'BpAccount'
+const BP_DETAILS_BTN = 'BpDetails'
+const GRN_DETAILS_BTN = 'GrnDetails'
+const INVOICE_DETAILS_BTN = 'InvoiceDetails'
+const PO_WO_DETAILS_BTN = 'PoWoDetails'
+
+const baseState = {
+  BpAccount: false,
+  BpDetails: false,
+  GrnDetails: false,
+  InvoiceDetails: false,
+  PoWoDetails: false,
+}
+
+const PaymentAdviceContainerComponent = ({
+  openDetails,
+  setOpenDetails,
+  detailsComponent,
+  setDetailsComponent,
+}) => {
+  const handleClick = (btn) => {
+    setOpenDetails(true)
+
+    setDetailsComponent({ ...baseState, [btn]: true })
+  }
+
   return (
     <Wrapper
       className={
@@ -51,7 +76,7 @@ const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
 
             <button
               className="details-btn"
-              onClick={() => setOpenDetails(!openDetails)}
+              onClick={() => handleClick(BP_DETAILS_BTN)}
             >
               <span>
                 <AiOutlineSearch />
@@ -78,7 +103,10 @@ const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
                 <BsCheckCircle />
               </span>
             </div>
-            <button className="details-btn">
+            <button
+              className="details-btn"
+              onClick={() => handleClick(INVOICE_DETAILS_BTN)}
+            >
               <span>
                 <AiOutlineSearch />
               </span>
@@ -95,7 +123,10 @@ const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
                 <BsCheckCircle />
               </span>
             </div>
-            <button className="details-btn">
+            <button
+              className="details-btn"
+              onClick={() => handleClick(PO_WO_DETAILS_BTN)}
+            >
               <span>
                 <AiOutlineSearch />
               </span>
@@ -112,7 +143,10 @@ const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
                 <BsCheckCircle />
               </span>
             </div>
-            <button className="details-btn">
+            <button
+              className="details-btn"
+              onClick={() => handleClick(GRN_DETAILS_BTN)}
+            >
               <span>
                 <AiOutlineSearch />
               </span>
@@ -174,7 +208,10 @@ const PaymentAdviceContainerComponent = ({ openDetails, setOpenDetails }) => {
                 <BsCheckCircle />
               </span>
             </div>
-            <button className="details-btn">
+            <button
+              className="details-btn"
+              onClick={() => handleClick(BP_ACCOUNT_BTN)}
+            >
               <span>
                 <AiOutlineSearch />
               </span>
