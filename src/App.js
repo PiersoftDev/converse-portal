@@ -15,6 +15,7 @@ import {
   Vendors,
   Bidders,
   PaymentAdviseSlip,
+  MaterialsV2,
 } from './pages/dashboard'
 
 import { ToastContainer } from 'react-toastify'
@@ -38,6 +39,7 @@ function App() {
             <Route path="vendors" element={<Vendors />} />
             <Route path="bidders" element={<Bidders />} />
             <Route path="paymentAdviceSlip" element={<PaymentAdviseSlip />} />
+            <Route path="materialsv2" element={<MaterialsV2 />} />
           </Route>
           <Route index path="/login" element={<LoginPage />} />
           <Route path="*" element={<ErrorPage />} />
