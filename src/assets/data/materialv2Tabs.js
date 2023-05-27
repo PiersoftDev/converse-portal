@@ -6,22 +6,22 @@ import {
 const materialv2Tabs = [
   {
     id: 1,
-    tabName: 'Leads',
+    tabName: 'Indents',
     component: <DragAndDropComponent />,
   },
   {
     id: 2,
-    tabName: 'Contact',
+    tabName: 'Purchase Request',
     component: <DummyTabContent content="Contract" />,
   },
   {
     id: 3,
-    tabName: 'Company',
+    tabName: 'RFQ',
     component: <DummyTabContent content="Company" />,
   },
   {
     id: 4,
-    tabName: 'Lead Capture',
+    tabName: 'Purchase Order',
     component: <DummyTabContent content="Lead Capture" />,
   },
 ]

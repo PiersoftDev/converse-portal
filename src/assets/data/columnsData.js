@@ -1,7 +1,7 @@
 const columnsData = {
   'column-1': {
     id: 'column-1',
-    title: 'To be Groomed',
+    title: 'Just Requested',// #47B5FF
     materialIds: [
       'material-1',
       'material-2',
@@ -15,22 +15,22 @@ const columnsData = {
   },
   'column-2': {
     id: 'column-2',
-    title: 'Defined',
+    title: 'Warehouse Order', // #FF6D60
     materialIds: [],
   },
   'column-3': {
     id: 'column-3',
-    title: 'In progress',
+    title: 'Purchase Request', // #804674
     materialIds: [],
   },
   'column-4': {
     id: 'column-4',
-    title: 'Completed',
+    title: 'RFQ', // #EB455F
     materialIds: [],
   },
   'column-5': {
     id: 'column-5',
-    title: 'Accepted',
+    title: 'Pruchase Order', // #BB6464
     materialIds: [],
   },
 }
