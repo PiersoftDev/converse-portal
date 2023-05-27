@@ -321,6 +321,16 @@ const PaymentAdviceContainerComponent = ({
 export default PaymentAdviceContainerComponent
 
 const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  height: 100%;
+  border-bottom: 1px solid var(--grey-100);
+  transition: 0.5s ease-in-out all;
+
+  &.open-details {
+    height: 65%;
+  }
+
   .line {
     border: 1px solid var(--grey-100);
   }

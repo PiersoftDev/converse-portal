@@ -16,7 +16,7 @@ const navLinks = [
   },
   {
     id: 2,
-    path: '/materials',
+    path: '/materialsv2',
     text: 'Material Indent',
     icon: <BiCategoryAlt />,
   },

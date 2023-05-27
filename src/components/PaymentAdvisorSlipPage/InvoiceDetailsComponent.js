@@ -55,6 +55,16 @@ const InvoiceDetailsComponent = ({ openDetails, setOpenDetails }) => {
 export default InvoiceDetailsComponent
 
 const Wrapper = styled.div`
+  height: 35%;
+  padding: 1rem;
+  padding-top: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  &.details-hide {
+    display: none;
+  }
+
   .details-header {
     border-bottom: 1px solid var(--grey-100);
     display: flex;
