@@ -130,7 +130,7 @@ const Wrapper = styled.div`
   .icon-btn {
     padding: 0.2rem 0.4rem;
     border-radius: 5px;
-    font-size: 0.7rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
     display: grid;
@@ -140,7 +140,7 @@ const Wrapper = styled.div`
   .status {
     background-color: var(--primary-200);
     color: var(--primary-600);
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
 
   .right-wrapper {
