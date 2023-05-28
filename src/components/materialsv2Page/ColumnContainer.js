@@ -32,6 +32,11 @@ const ColumnContainer = ({ columnId, isDropDisabled }) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
+              {columnId === 'Item Requested' && materials.length === 0 && (
+                <div className="empty-column">
+                  <p>No new lines here</p>
+                </div>
+              )}
               {materials.map((material, index) => {
                 return (
                   <MaterialCard
@@ -92,11 +97,18 @@ const Wrapper = styled.div`
   .column-title p {
     margin-bottom: 0;
     color: var(--primary-400);
+    font-weight: 600;
   }
 
   .column-content {
     padding: 0 1rem;
     min-height: 30rem;
     flex-grow: 1;
+  }
+
+  .empty-column {
+    height: 10rem;
+    display: grid;
+    place-items: center;
   }
 `
