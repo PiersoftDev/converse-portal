@@ -20,11 +20,13 @@ import {
 } from 'react-icons/md'
 import { useState } from 'react'
 import MaterialsDetailModel from './MaterialsDetailModel'
+import { Tooltip } from '@mui/material'
+import { OverlayTrigger } from 'react-bootstrap'
 
 const MaterialCard = ({ material, index }) => {
   const [showModal, setShowModal] = useState(false)
 
-  const { itemDesc, quantity, plannedDate, username, subStatus } = material
+  const { itemDesc, quantity, plannedDate, username, subStatus, uom } = material
 
   return (
     <Draggable draggableId={material.itemId} index={index}>
@@ -44,13 +46,13 @@ const MaterialCard = ({ material, index }) => {
             <span>
               <MdProductionQuantityLimits />
             </span>
-            <p>{quantity}</p>
+            <p>{`${quantity} ${uom}`}</p>
           </div>
           <div className="content">
             <span>
               <MdCalendarMonth />
             </span>
-            <p>{plannedDate}</p>
+            <p>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]} `}</p>
           </div>
           <div className="content">
             <span>
@@ -62,9 +64,13 @@ const MaterialCard = ({ material, index }) => {
             <div className="status icon-btn">{subStatus}</div>
 
             <div className="right-wrapper">
-              <div className="first-btn icon-btn">
+              <div
+                className="first-btn icon-btn"
+                onClick={() => setShowModal(true)}
+              >
                 <MdRemoveRedEye />
               </div>
+
               <div className="second-btn icon-btn">
                 <MdHelpCenter />
               </div>
@@ -73,9 +79,6 @@ const MaterialCard = ({ material, index }) => {
               </div>
             </div>
           </div>
-          <span className="info-icon" onClick={() => setShowModal(true)}>
-            <HiInformationCircle />
-          </span>
           <MaterialsDetailModel
             showModal={showModal}
             setShowModal={setShowModal}
@@ -94,7 +97,6 @@ const Wrapper = styled.div`
   box-shadow: var(--shadow-1);
   margin: 0.5rem 0;
   padding: 0.5rem 1.25rem;
-  padding-top: 1.25rem;
   position: relative;
 
   .content {
@@ -170,8 +172,8 @@ const Wrapper = styled.div`
   }
 
   .first-btn:hover {
-    color: var(--red-light);
-    background-color: var(--red-dark);
+    color: var(--primary-200);
+    background-color: var(--primary-600);
   }
 
   .second-btn:hover {
