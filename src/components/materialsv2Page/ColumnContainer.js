@@ -4,7 +4,9 @@ import { Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
 const ColumnContainer = ({ columns, columnId }) => {
-  const { id, title, materialIds } = columns[columnId]
+  const { id, title, materialIds, color } = columns[columnId]
+
+  console.log(color)
 
   const materials = materialIds.reduce((acc, curr) => {
     const material = materialsData.find(({ id }) => id === curr)
@@ -18,8 +20,8 @@ const ColumnContainer = ({ columns, columnId }) => {
         <div className="column-header-container">
           <div className="column-header">
             <div className="column-title">
-              <div className="dot"></div>
-              <p>{title}</p>
+              <div className="dot" style={{ backgroundColor: color }}></div>
+              <p style={{ color: color }}>{title}</p>
             </div>
           </div>
         </div>
@@ -48,7 +50,7 @@ export default ColumnContainer
 const Wrapper = styled.div`
   background-color: var(--grey-50);
   border-radius: 10px;
-  overflow: scroll;
+  overflow-y: scroll;
 
   .column-container {
     display: flex;

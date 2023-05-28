@@ -363,3 +363,41 @@ input:focus {
     --progress-value-2: 67;
   }
 }
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.content span {
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  color: var(--grey-400);
+}
+
+.content p {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  color: var(--grey-700);
+}
+
+.sub-status {
+  position: absolute;
+  font-size: 0.6rem;
+  bottom: 5px;
+  right: 5px;
+  background-color: var(--primary-400);
+  color: var(--white);
+  padding: 0.1rem 0.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sub-status:hover {
+  background-color: var(--primary-500);
+  transform: scale(1.05);
+}
