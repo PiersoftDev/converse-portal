@@ -4,18 +4,22 @@ import ColumnContainer from './ColumnContainer'
 import { DragDropContext } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
+import { setColumns } from '../../features/MaterialIndent/MaterialSlice'
+import { useDispatch } from 'react-redux'
 
 const DragAndDropComponent = () => {
-  const [columns, setColumns] = useState(columnsData)
+  const dispatch = useDispatch()
+  const { isLoading, isError, columns } = useSelector((store) => store.material)
 
   const [homeIndex, setHomeIndex] = useState(null)
 
   const columnsOrder = [
-    'column-1',
-    'column-2',
-    'column-3',
-    'column-4',
-    'column-5',
+    'Item Requested',
+    'Warehouse Order',
+    'Purchase Request',
+    'RFQ',
+    'Purchase Order',
   ]
 
   const handleDragStart = (start) => {
@@ -25,16 +29,11 @@ const DragAndDropComponent = () => {
 
   const handleDragEnd = (result) => {
     const { draggableId, destination, source } = result
-
-    console.log(result)
-    console.log(homeIndex)
-
     if (homeIndex === 0 && columnsOrder.indexOf(destination?.droppableId) > 2) {
       toast.error("Requested can't be moved to Rfq and purchase order directly")
       setHomeIndex(null)
       return
     }
-
     setHomeIndex(null)
 
     if (!destination) {
@@ -64,14 +63,14 @@ const DragAndDropComponent = () => {
 
       const newState = {
         ...columns,
-        [newColumn.id]: newColumn,
+        [newColumn.title]: newColumn,
       }
 
-      setColumns(newState)
+      dispatch(setColumns(newState))
       return
     }
 
-    const newStartMaterialIdsArray = start.materialIds
+    const newStartMaterialIdsArray = [...start.materialIds]
 
     newStartMaterialIdsArray.splice(source.index, 1)
 
@@ -80,7 +79,7 @@ const DragAndDropComponent = () => {
       materialIds: newStartMaterialIdsArray,
     }
 
-    const newFinishMaterialIdsArray = finish.materialIds
+    const newFinishMaterialIdsArray = [...finish.materialIds]
     newFinishMaterialIdsArray.splice(destination.index, 0, draggableId)
 
     const newFinishColumn = {
@@ -90,11 +89,27 @@ const DragAndDropComponent = () => {
 
     const newState = {
       ...columns,
-      [newStartColumn.id]: newStartColumn,
-      [newFinishColumn.id]: newFinishColumn,
+      [newStartColumn.title]: newStartColumn,
+      [newFinishColumn.title]: newFinishColumn,
     }
 
-    setColumns(newState)
+    dispatch(setColumns(newState))
+  }
+
+  if (isLoading) {
+    return (
+      <LoadingWrapper>
+        <h4>Still Loading ...</h4>
+      </LoadingWrapper>
+    )
+  }
+
+  if (isError) {
+    return (
+      <ErrorWrapper>
+        <h4>Something went wrong while fetching data ...</h4>
+      </ErrorWrapper>
+    )
   }
 
   return (
@@ -115,7 +130,6 @@ const DragAndDropComponent = () => {
               <ColumnContainer
                 key={id}
                 columnId={id}
-                columns={columns}
                 isDropDisabled={isDropDisabled}
               />
             )
@@ -126,6 +140,20 @@ const DragAndDropComponent = () => {
   )
 }
 export default DragAndDropComponent
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`
+
+const ErrorWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`
 
 const Wrapper = styled.div`
   display: grid;

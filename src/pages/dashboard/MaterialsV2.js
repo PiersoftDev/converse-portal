@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { DragAndDropComponent } from '../../components/materialsv2Page'
 import { materialv2Tabs } from '../../assets/data'
 
 const MaterialsV2 = () => {

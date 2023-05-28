@@ -88,8 +88,8 @@ const Wrapper = styled.div`
     display: inline-block;
     border-radius: 5px;
     padding: 0.2rem 0.5rem;
-
     font-size: 0.7rem;
+    transition: 0.5s 0.4s ease-in-out all;
   }
 
   .plan-1 .plan-type {

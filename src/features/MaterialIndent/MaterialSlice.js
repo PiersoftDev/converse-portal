@@ -1,5 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+// import { columnsData } from '../../assets/data'
+
+const columnsData = {
+  'Item Requested': {
+    id: 'column-1',
+    title: 'Item Requested',
+    color: '#47B5FF',
+    materialIds: [],
+  },
+  'Warehouse Order': {
+    id: 'column-2',
+    title: 'Warehouse Order',
+    color: '#FF6D60',
+    materialIds: [],
+  },
+  'Purchase Request': {
+    id: 'column-3',
+    title: 'Purchase Request',
+    color: '#804674',
+    materialIds: [],
+  },
+  RFQ: {
+    id: 'column-4',
+    title: 'RFQ',
+    color: '#EB455F',
+    materialIds: [],
+  },
+  'Purchase Order': {
+    id: 'column-5',
+    title: 'Purchase Order',
+    color: '#BB6464',
+    materialIds: [],
+  },
+}
 
 const initialState = {
   isLoading: false,
@@ -9,6 +43,7 @@ const initialState = {
   isGetPurchaseLinesLoading: false,
   isGetPurchaseLinesError: false,
   items: [],
+  columns: { ...columnsData },
   rfqList: [],
   rfqNewLines: [],
   rfqAddItems: [],
@@ -88,6 +123,9 @@ const materialSlice = createSlice({
       state.rfqAddItems = newAddItems.sort((a, b) => a.id - b.id)
       state.rfqNewLines = []
     },
+    setColumns: (state, action) => {
+      state.columns = action.payload
+    },
   },
   extraReducers: {
     [getMaterialItems.pending]: (state) => {
@@ -96,6 +134,9 @@ const materialSlice = createSlice({
     [getMaterialItems.fulfilled]: (state, action) => {
       state.isLoading = false
       state.items = action.payload
+      state.items.forEach(({ status, itemId }) => {
+        state?.columns[status]?.materialIds?.push(itemId)
+      })
     },
     [getMaterialItems.rejected]: (state, action) => {
       state.isLoading = false
@@ -137,6 +178,7 @@ export const {
   addToItemsList,
   addAllItems,
   makeAddToRfqErrorStatusBackToNormal,
+  setColumns,
 } = materialSlice.actions
 
 export default materialSlice.reducer
