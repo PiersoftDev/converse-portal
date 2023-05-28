@@ -3,10 +3,10 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
 import styled from 'styled-components'
 import BootstrapTable from 'react-bootstrap-table-next'
 import cellEditFactory from 'react-bootstrap-table2-editor'
-import { data } from '../../assets/data/index'
+import { dummyDeliveryLinesData } from '../../assets/data/'
 import { useState } from 'react'
 const DeliveryContainer = () => {
-  const [lines, setLines] = useState([...data])
+  const [lines, setLines] = useState([...dummyDeliveryLinesData])
 
   const shippingFormatter = (data, row) => {
     return <span>{data}</span>

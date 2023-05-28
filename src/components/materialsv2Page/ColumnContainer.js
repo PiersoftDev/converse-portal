@@ -1,13 +1,15 @@
-import { materialsData } from '../../assets/data'
 import MaterialCard from './MaterialCard'
 import { Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
-const ColumnContainer = ({ columns, columnId, isDropDisabled }) => {
+const ColumnContainer = ({ columnId, isDropDisabled }) => {
+  const { items, columns } = useSelector((store) => store.material)
+
   const { id, title, materialIds, color } = columns[columnId]
 
   const materials = materialIds.reduce((acc, curr) => {
-    const material = materialsData.find(({ id }) => id === curr)
+    const material = items.find(({ itemId }) => itemId === curr)
     acc.push(material)
     return acc
   }, [])
@@ -23,7 +25,7 @@ const ColumnContainer = ({ columns, columnId, isDropDisabled }) => {
             </div>
           </div>
         </div>
-        <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
+        <Droppable droppableId={columnId} isDropDisabled={isDropDisabled}>
           {(provided, snapshot) => (
             <div
               className="column-content"
@@ -32,7 +34,11 @@ const ColumnContainer = ({ columns, columnId, isDropDisabled }) => {
             >
               {materials.map((material, index) => {
                 return (
-                  <MaterialCard key={material.id} {...material} index={index} />
+                  <MaterialCard
+                    key={material.itemId}
+                    material={material}
+                    index={index}
+                  />
                 )
               })}
               {provided.placeholder}

@@ -21,8 +21,6 @@ export const getVendors = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       })
-
-      console.log(resp.data)
       return resp.data
     } catch (error) {
       throw thunkApi.rejectWithValue('Some error occued while fetching date')

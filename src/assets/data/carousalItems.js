@@ -1,4 +1,4 @@
-export const carousalItems = [
+const carousalItems = [
   {
     id: 1,
     header: ' Welcomeback!',
@@ -20,3 +20,5 @@ export const carousalItems = [
     text: `Join the club`,
   },
 ]
+
+export default carousalItems

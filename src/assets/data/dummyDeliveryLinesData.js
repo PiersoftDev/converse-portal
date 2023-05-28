@@ -1,4 +1,4 @@
-const data = [
+const dummyDeliveryLinesData = [
   {
     id: 1,
     item: 'Bricks',
@@ -29,4 +29,4 @@ const data = [
   },
 ]
 
-export default data
+export default dummyDeliveryLinesData
