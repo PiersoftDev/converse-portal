@@ -34,7 +34,7 @@ const ColumnContainer = ({ columnId, isDropDisabled }) => {
             >
               {columnId === 'Item Requested' && materials.length === 0 && (
                 <div className="empty-column">
-                  <p>No new lines here</p>
+                  <p>Nothing new here</p>
                 </div>
               )}
               {materials.map((material, index) => {
@@ -97,7 +97,7 @@ const Wrapper = styled.div`
   .column-title p {
     margin-bottom: 0;
     color: var(--primary-400);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .column-content {
