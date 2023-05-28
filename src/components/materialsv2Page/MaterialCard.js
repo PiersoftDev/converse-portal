@@ -6,12 +6,17 @@ import styled from 'styled-components'
 // import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 // import LinearScaleIcon from '@mui/icons-material/LinearScale'
 // import EngineeringIcon from '@mui/icons-material/Engineering'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import { FaThumbsDown } from 'react-icons/fa'
 import { HiInformationCircle } from 'react-icons/hi'
+import {} from 'react-icons/md'
 import {
   MdFoundation,
   MdProductionQuantityLimits,
   MdCalendarMonth,
   MdEngineering,
+  MdRemoveRedEye,
+  MdHelpCenter,
 } from 'react-icons/md'
 import { useState } from 'react'
 import MaterialsDetailModel from './MaterialsDetailModel'
@@ -54,11 +59,19 @@ const MaterialCard = ({ material, index }) => {
             <p>{username}</p>
           </div>
           <div className="icons-container">
-            <span className="status icon-btn">{subStatus}</span>
+            <div className="status icon-btn">{subStatus}</div>
 
-            <div className="first-btn icon-btn">first</div>
-
-            <div className="second-btn icon-btn">second</div>
+            <div className="right-wrapper">
+              <div className="first-btn icon-btn">
+                <MdRemoveRedEye />
+              </div>
+              <div className="second-btn icon-btn">
+                <MdHelpCenter />
+              </div>
+              <div className="third-btn icon-btn">
+                <FaThumbsDown />
+              </div>
+            </div>
           </div>
           <span className="info-icon" onClick={() => setShowModal(true)}>
             <HiInformationCircle />
@@ -110,30 +123,45 @@ const Wrapper = styled.div`
     display: flex;
     font-size: 0.8rem;
     gap: 0.5rem;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .icon-btn {
-    padding: 0.1rem 0.4rem;
+    padding: 0.2rem 0.4rem;
     border-radius: 5px;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     cursor: pointer;
     transition: var(--transition);
+    display: grid;
+    place-items: center;
   }
 
   .status {
     background-color: var(--primary-200);
     color: var(--primary-600);
+    font-size: 0.5rem;
+  }
+
+  .right-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .first-btn {
-    background-color: var(--red-light);
-    color: var(--red-dark);
+    background-color: var(--primary-200);
+    color: var(--primary-600);
   }
 
   .second-btn {
     background-color: #ffeb80;
     color: #e6c200;
+  }
+
+  .third-btn {
+    background-color: var(--red-light);
+    color: var(--red-dark);
   }
 
   .status:hover {
@@ -149,6 +177,11 @@ const Wrapper = styled.div`
   .second-btn:hover {
     color: #ffeb80;
     background-color: #e6c200;
+  }
+
+  .third-btn:hover {
+    color: var(--red-light);
+    background-color: var(--red-dark);
   }
 
   .content:last-child {
