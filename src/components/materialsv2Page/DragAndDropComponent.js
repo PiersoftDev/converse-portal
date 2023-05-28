@@ -3,9 +3,12 @@ import { columnsData } from '../../assets/data'
 import ColumnContainer from './ColumnContainer'
 import { DragDropContext } from 'react-beautiful-dnd'
 import styled from 'styled-components'
+import { toast } from 'react-toastify'
 
 const DragAndDropComponent = () => {
   const [columns, setColumns] = useState(columnsData)
+
+  const [homeIndex, setHomeIndex] = useState(null)
 
   const columnsOrder = [
     'column-1',
@@ -15,8 +18,24 @@ const DragAndDropComponent = () => {
     'column-5',
   ]
 
+  const handleDragStart = (start) => {
+    const { source } = start
+    setHomeIndex(columnsOrder.indexOf(source.droppableId))
+  }
+
   const handleDragEnd = (result) => {
     const { draggableId, destination, source } = result
+
+    console.log(result)
+    console.log(homeIndex)
+
+    if (homeIndex === 0 && columnsOrder.indexOf(destination?.droppableId) > 2) {
+      toast.error("Requested can't be moved to Rfq and purchase order directly")
+      setHomeIndex(null)
+      return
+    }
+
+    setHomeIndex(null)
 
     if (!destination) {
       return
@@ -83,10 +102,23 @@ const DragAndDropComponent = () => {
       <div className="info-component">
         <h4>Info component</h4>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <div className="dnd-container">
-          {columnsOrder.map((id) => {
-            return <ColumnContainer key={id} columnId={id} columns={columns} />
+          {columnsOrder.map((id, index) => {
+            let isDropDisabled = false
+
+            // if (homeIndex === 0 && index > 2) {
+            //   isDropDisabled = true
+            // }
+
+            return (
+              <ColumnContainer
+                key={id}
+                columnId={id}
+                columns={columns}
+                isDropDisabled={isDropDisabled}
+              />
+            )
           })}
         </div>
       </DragDropContext>
