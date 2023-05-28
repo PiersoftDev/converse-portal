@@ -3,10 +3,8 @@ import MaterialCard from './MaterialCard'
 import { Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
-const ColumnContainer = ({ columns, columnId }) => {
+const ColumnContainer = ({ columns, columnId, isDropDisabled }) => {
   const { id, title, materialIds, color } = columns[columnId]
-
-  console.log(color)
 
   const materials = materialIds.reduce((acc, curr) => {
     const material = materialsData.find(({ id }) => id === curr)
@@ -25,7 +23,7 @@ const ColumnContainer = ({ columns, columnId }) => {
             </div>
           </div>
         </div>
-        <Droppable droppableId={id}>
+        <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
           {(provided, snapshot) => (
             <div
               className="column-content"
