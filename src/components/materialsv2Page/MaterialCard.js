@@ -166,7 +166,7 @@ const Wrapper = styled.div`
   .icon-btn {
     padding: 0.2rem 0.4rem;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: var(--transition);
     display: grid;
