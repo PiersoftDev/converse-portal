@@ -28,6 +28,18 @@ const MaterialCard = ({ material, index }) => {
 
   const { itemDesc, quantity, plannedDate, username, subStatus, uom } = material
 
+  const toolTipStyle = {
+    sx: {
+      '& .MuiTooltip-tooltip': {
+        backgroundColor: 'f0f4f8',
+        padding: `0.5 1`,
+        backgroundColor: '#334e68',
+        top: '0.4rem',
+        fontSize: '0.6rem',
+      },
+    },
+  }
+
   return (
     <Draggable draggableId={material.itemId} index={index}>
       {(provided, snapshot) => (
@@ -64,19 +76,41 @@ const MaterialCard = ({ material, index }) => {
             <div className="status icon-btn">{subStatus}</div>
 
             <div className="right-wrapper">
-              <div
-                className="first-btn icon-btn"
-                onClick={() => setShowModal(true)}
+              <Tooltip
+                title="view details"
+                placement="top"
+                arrow
+                PopperProps={toolTipStyle}
               >
-                <MdRemoveRedEye />
-              </div>
+                <div
+                  className="first-btn icon-btn"
+                  onClick={() => setShowModal(true)}
+                >
+                  <MdRemoveRedEye />
+                </div>
+              </Tooltip>
 
-              <div className="second-btn icon-btn">
-                <MdHelpCenter />
-              </div>
-              <div className="third-btn icon-btn">
-                <FaThumbsDown />
-              </div>
+              <Tooltip
+                title="raise query"
+                placement="top"
+                arrow
+                PopperProps={toolTipStyle}
+              >
+                <div className="second-btn icon-btn">
+                  <MdHelpCenter />
+                </div>
+              </Tooltip>
+
+              <Tooltip
+                title="reject indent"
+                placement="top"
+                arrow
+                PopperProps={toolTipStyle}
+              >
+                <div className="third-btn icon-btn">
+                  <FaThumbsDown />
+                </div>
+              </Tooltip>
             </div>
           </div>
           <MaterialsDetailModel
@@ -142,7 +176,7 @@ const Wrapper = styled.div`
   .status {
     background-color: var(--primary-200);
     color: var(--primary-600);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .right-wrapper {
