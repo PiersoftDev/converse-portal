@@ -21,11 +21,19 @@ import {
 import { useState } from 'react'
 import MaterialsDetailModel from './MaterialsDetailModel'
 import { Tooltip } from '@mui/material'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const MaterialCard = ({ material, index }) => {
   const [showModal, setShowModal] = useState(false)
 
-  const { itemDesc, quantity, plannedDate, username, subStatus, uom } = material
+  const { id, itemDesc, quantity, plannedDate, username, subStatus, uom } =
+    material
+
+  const [subStatusState, setSubStatusState] = useState(subStatus)
+
+  const [subStatusPersistIsLoading, setSubStatusPersistIsLoading] =
+    useState(false)
 
   const toolTipStyle = {
     sx: {
@@ -39,8 +47,43 @@ const MaterialCard = ({ material, index }) => {
     },
   }
 
+  const statusColors = {
+    NEW: {
+      color: '#2563eb',
+      backgroundColor: '#bfdbfe',
+    },
+    REJECTED: {
+      color: '#842029',
+      backgroundColor: '#f8d7da',
+    },
+    QUERY: {
+      color: '#47B5FF',
+      backgroundColor: '#E6F6FF',
+    },
+  }
+
+  const rejectHandle = async () => {
+    if (subStatusState === 'REJECTED') {
+      toast.error('Already rejected')
+      return
+    }
+
+    try {
+      setSubStatusPersistIsLoading(true)
+      await axios.put(
+        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/REJECTED`
+      )
+      setSubStatusState('REJECTED')
+      setSubStatusPersistIsLoading(false)
+    } catch (error) {
+      setSubStatusPersistIsLoading(false)
+      console.log(error)
+      toast.error('Some error occured while changing the Substatus')
+    }
+  }
+
   return (
-    <Draggable draggableId={material.itemId} index={index}>
+    <Draggable draggableId={`${material.id}`} index={index}>
       {(provided, snapshot) => (
         <Wrapper
           {...provided.dragHandleProps}
@@ -72,7 +115,9 @@ const MaterialCard = ({ material, index }) => {
             <p>{username}</p>
           </div>
           <div className="icons-container">
-            <div className="status icon-btn">{subStatus}</div>
+            <Status className="icon-btn" colors={statusColors[subStatusState]}>
+              {subStatusState}
+            </Status>
 
             <div className="right-wrapper">
               <Tooltip
@@ -106,7 +151,7 @@ const MaterialCard = ({ material, index }) => {
                 arrow
                 PopperProps={toolTipStyle}
               >
-                <div className="third-btn icon-btn">
+                <div className="third-btn icon-btn" onClick={rejectHandle}>
                   <FaThumbsDown />
                 </div>
               </Tooltip>
@@ -117,6 +162,18 @@ const MaterialCard = ({ material, index }) => {
             setShowModal={setShowModal}
             material={material}
           />
+
+          <div
+            className={
+              subStatusPersistIsLoading
+                ? 'status-change-mask show'
+                : 'status-change-mask'
+            }
+          >
+            <div className="status-change-loader">
+              {`Rejecting the item ...`}
+            </div>
+          </div>
         </Wrapper>
       )}
     </Draggable>
@@ -172,12 +229,6 @@ const Wrapper = styled.div`
     place-items: center;
   }
 
-  .status {
-    background-color: var(--primary-200);
-    color: var(--primary-600);
-    font-size: 0.6rem;
-  }
-
   .right-wrapper {
     display: flex;
     align-items: center;
@@ -197,11 +248,6 @@ const Wrapper = styled.div`
   .third-btn {
     background-color: var(--red-light);
     color: var(--red-dark);
-  }
-
-  .status:hover {
-    background-color: var(--primary-600);
-    color: var(--primary-200);
   }
 
   .first-btn:hover {
@@ -236,4 +282,10 @@ const Wrapper = styled.div`
   .info-icon:hover {
     color: var(--primary-500);
   }
+`
+
+const Status = styled.div`
+  background-color: ${({ colors }) => colors.backgroundColor};
+  color: ${({ colors }) => colors.color};
+  font-size: 0.6rem !important;
 `

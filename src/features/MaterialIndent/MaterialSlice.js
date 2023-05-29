@@ -152,8 +152,8 @@ const materialSlice = createSlice({
     [getMaterialItems.fulfilled]: (state, action) => {
       state.isLoading = false
       state.items = action.payload
-      state.items.forEach(({ status, itemId }) => {
-        state?.columns[status]?.materialIds?.push(itemId)
+      state.items.forEach(({ status, id }) => {
+        state?.columns[status]?.materialIds?.push(`${id}`)
       })
     },
     [getMaterialItems.rejected]: (state, action) => {

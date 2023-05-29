@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux'
 const ColumnContainer = ({ columnId, isDropDisabled }) => {
   const { items, columns } = useSelector((store) => store.material)
 
-  const { id, title, materialIds, color } = columns[columnId]
+  const { title, materialIds, color } = columns[columnId]
 
   const materials = materialIds.reduce((acc, curr) => {
-    const material = items.find(({ itemId }) => itemId === curr)
+    const material = items.find(({ id }) => `${id}` === curr)
     acc.push(material)
     return acc
   }, [])
@@ -40,7 +40,7 @@ const ColumnContainer = ({ columnId, isDropDisabled }) => {
               {materials.map((material, index) => {
                 return (
                   <MaterialCard
-                    key={material.itemId}
+                    key={material.id}
                     material={material}
                     index={index}
                   />
