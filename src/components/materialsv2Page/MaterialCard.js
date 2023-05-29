@@ -21,7 +21,6 @@ import {
 import { useState } from 'react'
 import MaterialsDetailModel from './MaterialsDetailModel'
 import { Tooltip } from '@mui/material'
-import { OverlayTrigger } from 'react-bootstrap'
 
 const MaterialCard = ({ material, index }) => {
   const [showModal, setShowModal] = useState(false)
