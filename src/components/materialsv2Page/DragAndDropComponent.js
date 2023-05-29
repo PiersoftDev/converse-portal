@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { columnsData } from '../../assets/data'
 import ColumnContainer from './ColumnContainer'
 import { DragDropContext } from 'react-beautiful-dnd'
 import styled from 'styled-components'
@@ -14,6 +13,11 @@ const DragAndDropComponent = () => {
   const { isLoading, isError, columns, items } = useSelector(
     (store) => store.material
   )
+
+  const [statusPersistIsLoading, setStatusPersistIsLoading] = useState(false)
+  // const [statusPersistIsError, setStatusPersistIsError] = useState(false)
+
+  const [droppableId, setDroppableId] = useState(null)
 
   const [homeIndex, setHomeIndex] = useState(null)
 
@@ -50,18 +54,7 @@ const DragAndDropComponent = () => {
       return
     }
 
-    try {
-      const { subStatus, id } = items.find(
-        ({ itemId }) => itemId === draggableId
-      )
-      await axios.put(
-        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
-      )
-    } catch (error) {
-      console.log(error)
-      toast.error('Some error occured while changing the status')
-      return
-    }
+    const temp = { ...columns }
 
     const start = columns[source.droppableId]
     const finish = columns[destination.droppableId]
@@ -83,6 +76,7 @@ const DragAndDropComponent = () => {
       }
 
       dispatch(setColumns(newState))
+
       return
     }
 
@@ -110,6 +104,31 @@ const DragAndDropComponent = () => {
     }
 
     dispatch(setColumns(newState))
+    // dispatch(
+    //   persistStatusChange({
+    //     draggableId,
+    //     droppableId: destination.droppableId,
+    //   })
+    // )
+
+    try {
+      setStatusPersistIsLoading(true)
+      setDroppableId(destination.droppableId)
+      const { subStatus, id } = items.find(
+        ({ itemId }) => itemId === draggableId
+      )
+      await axios.put(
+        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
+      )
+
+      setStatusPersistIsLoading(false)
+    } catch (error) {
+      setStatusPersistIsLoading(false)
+      console.log(error)
+      dispatch(setColumns(temp))
+      toast.error('Some error occured while changing the status')
+      return
+    }
   }
 
   if (isLoading) {
@@ -152,6 +171,18 @@ const DragAndDropComponent = () => {
           })}
         </div>
       </DragDropContext>
+
+      <div
+        className={
+          statusPersistIsLoading
+            ? 'status-change-mask show'
+            : 'status-change-mask'
+        }
+      >
+        <div className="status-change-loader">
+          {`Promoting line to ${droppableId} ...`}
+        </div>
+      </div>
     </Wrapper>
   )
 }

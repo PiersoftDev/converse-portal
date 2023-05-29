@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 // import { columnsData } from '../../assets/data'
 
 const columnsData = {
@@ -126,6 +127,23 @@ const materialSlice = createSlice({
     setColumns: (state, action) => {
       state.columns = action.payload
     },
+    persistStatusChange: async (state, action) => {
+      const { items, columns } = state
+      const { draggableId, droppableId } = action.payload
+
+      try {
+        const { subStatus, id } = items.find(
+          ({ itemId }) => itemId === draggableId
+        )
+        await axios.put(
+          `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
+        )
+      } catch (error) {
+        console.log(error)
+        toast.error('Some error occured while changing the status')
+        return
+      }
+    },
   },
   extraReducers: {
     [getMaterialItems.pending]: (state) => {
@@ -179,6 +197,7 @@ export const {
   addAllItems,
   makeAddToRfqErrorStatusBackToNormal,
   setColumns,
+  persistStatusChange,
 } = materialSlice.actions
 
 export default materialSlice.reducer
