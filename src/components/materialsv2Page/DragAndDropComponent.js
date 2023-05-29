@@ -63,7 +63,7 @@ const DragAndDropComponent = () => {
       const newMaterialIdsArray = [...start.materialIds]
 
       newMaterialIdsArray.splice(source.index, 1)
-      newMaterialIdsArray.splice(destination.index, 0, draggableId)
+      newMaterialIdsArray.splice(destination.index, 0, `${draggableId}`)
 
       const newColumn = {
         ...start,
@@ -90,7 +90,7 @@ const DragAndDropComponent = () => {
     }
 
     const newFinishMaterialIdsArray = [...finish.materialIds]
-    newFinishMaterialIdsArray.splice(destination.index, 0, draggableId)
+    newFinishMaterialIdsArray.splice(destination.index, 0, `${draggableId}`)
 
     const newFinishColumn = {
       ...finish,
@@ -104,24 +104,17 @@ const DragAndDropComponent = () => {
     }
 
     dispatch(setColumns(newState))
-    // dispatch(
-    //   persistStatusChange({
-    //     draggableId,
-    //     droppableId: destination.droppableId,
-    //   })
-    // )
 
     try {
       setStatusPersistIsLoading(true)
       setDroppableId(destination.droppableId)
-      const { subStatus, id } = items.find(
-        ({ itemId }) => itemId === draggableId
-      )
+      const { subStatus, id } = items.find(({ id }) => `${id}` === draggableId)
       await axios.put(
-        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
+        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
       )
 
       setStatusPersistIsLoading(false)
+      return
     } catch (error) {
       setStatusPersistIsLoading(false)
       console.log(error)
@@ -218,5 +211,27 @@ const Wrapper = styled.div`
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     overflow: hidden;
+  }
+
+  .status-change-mask {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 30;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  .status-change-mask.show {
+    opacity: 1;
+    pointer-events: visible;
+  }
+
+  .status-change-loader {
+    color: var(--white);
+    font-size: 2rem;
   }
 `
