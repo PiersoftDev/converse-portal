@@ -7,10 +7,13 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { setColumns } from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 const DragAndDropComponent = () => {
   const dispatch = useDispatch()
-  const { isLoading, isError, columns } = useSelector((store) => store.material)
+  const { isLoading, isError, columns, items } = useSelector(
+    (store) => store.material
+  )
 
   const [homeIndex, setHomeIndex] = useState(null)
 
@@ -27,7 +30,7 @@ const DragAndDropComponent = () => {
     setHomeIndex(columnsOrder.indexOf(source.droppableId))
   }
 
-  const handleDragEnd = (result) => {
+  const handleDragEnd = async (result) => {
     const { draggableId, destination, source } = result
     if (homeIndex === 0 && columnsOrder.indexOf(destination?.droppableId) > 2) {
       toast.error("Requested can't be moved to Rfq and purchase order directly")
@@ -44,6 +47,19 @@ const DragAndDropComponent = () => {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
+      return
+    }
+
+    try {
+      const { subStatus, id } = items.find(
+        ({ itemId }) => itemId === draggableId
+      )
+      await axios.put(
+        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
+      )
+    } catch (error) {
+      console.log(error)
+      toast.error('Some error occured while changing the status')
       return
     }
 
