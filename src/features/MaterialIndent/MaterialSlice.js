@@ -50,7 +50,7 @@ const initialState = {
   rfqAddItems: [],
 }
 
-const url = 'https://13.232.221.196:8081/v1/purchase'
+const url = 'http://13.232.221.196:9091/v1/purchase'
 
 // const url =
 //   'https://6aad-49-43-201-220.ngrok-free.app/v1/purchase/material-indent/'
