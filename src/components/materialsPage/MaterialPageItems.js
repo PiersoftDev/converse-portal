@@ -7,6 +7,8 @@ import {
 } from '../../features/MaterialIndent/MaterialSlice'
 import { useEffect } from 'react'
 
+import ReactLoading from 'react-loading'
+
 const MaterialPageItems = () => {
   const { isLoading, isError, items } = useSelector((store) => store.material)
 
@@ -15,7 +17,12 @@ const MaterialPageItems = () => {
   if (isLoading) {
     return (
       <LoadingWrapper>
-        <h4>Still Loading ...</h4>
+        <ReactLoading
+          type="balls"
+          color="var(--grey-500)"
+          height={50}
+          width={50}
+        />
       </LoadingWrapper>
     )
   }

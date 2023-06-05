@@ -5,6 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { QuoteCardComponent } from '../../components/QuotationsPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRfqList } from '../../features/Quotations/QuotationsSlice'
+import ReactLoading from 'react-loading'
 
 const Quotations = () => {
   const { rfqList, isError, isLoading } = useSelector(
@@ -21,7 +22,12 @@ const Quotations = () => {
   if (isLoading) {
     return (
       <LoadingWrapper>
-        <h4>Still Loading ...</h4>
+        <ReactLoading
+          type="balls"
+          color="var(--grey-500)"
+          height={50}
+          width={50}
+        />
       </LoadingWrapper>
     )
   }

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import ReactLoading from 'react-loading'
 
 import {
   VendorModal,
@@ -25,7 +26,12 @@ const Vendors = () => {
   if (isLoading) {
     return (
       <LoadingWrapper>
-        <h4>Still Loading ...</h4>
+        <ReactLoading
+          type="balls"
+          color="var(--grey-500)"
+          height={50}
+          width={50}
+        />
       </LoadingWrapper>
     )
   }

@@ -12,17 +12,17 @@ const materialv2Tabs = [
   {
     id: 2,
     tabName: 'Purchase Request',
-    component: <DummyTabContent content="Contract" />,
+    component: <DummyTabContent content="Purchase Request" />,
   },
   {
     id: 3,
     tabName: 'RFQ',
-    component: <DummyTabContent content="Company" />,
+    component: <DummyTabContent content="RFQ" />,
   },
   {
     id: 4,
     tabName: 'Purchase Order',
-    component: <DummyTabContent content="Lead Capture" />,
+    component: <DummyTabContent content="Purchase Order" />,
   },
 ]
 
