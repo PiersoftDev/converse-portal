@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import MaterialModalInputContainer from './MaterialModalInputContainer'
 import { useState } from 'react'
+import ReactLoading from 'react-loading'
 
 const MaterialModal = ({ showModal, setShowModal }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +20,12 @@ const MaterialModal = ({ showModal, setShowModal }) => {
         <div className="material-modal-content">
           {isLoading && (
             <div className="create-rfq-loading">
-              <h4>Loading ...</h4>
+              <ReactLoading
+                type="balls"
+                color="var(--grey-500)"
+                height={50}
+                width={50}
+              />
             </div>
           )}
 

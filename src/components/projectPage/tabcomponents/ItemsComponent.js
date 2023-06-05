@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPurchaseLines } from '../../../features/MaterialIndent/MaterialSlice'
+import ReactLoading from 'react-loading'
 
 import {
   addToItemsList,
@@ -93,7 +94,12 @@ const ItemsComponent = () => {
   if (isGetPurchaseLinesLoading) {
     return (
       <LoadingWrapper>
-        <h4>Still Loading ...</h4>
+        <ReactLoading
+          type="balls"
+          color="var(--grey-500)"
+          height={50}
+          width={50}
+        />
       </LoadingWrapper>
     )
   }

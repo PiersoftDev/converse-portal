@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { setColumns } from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
+import ReactLoading from 'react-loading'
 import axios from 'axios'
 
 const DragAndDropComponent = () => {
@@ -39,14 +40,14 @@ const DragAndDropComponent = () => {
 
     const { subStatus } = items.find(({ id }) => `${id}` === draggableId)
 
-    if (subStatus === 'REJECTED') {
-      toast.error(`Material Item cant be moved as it is rejected`)
+    if (source.droppableId === 'Warehouse Order') {
+      toast.error(`Material in Warehouse Order can't be moved`)
       setHomeIndex(null)
       return
     }
 
-    if (source.droppableId === 'Warehouse Order') {
-      toast.error(`Material in Warehouse Order can't be moved`)
+    if (subStatus === 'REJECTED') {
+      toast.error(`Material Item cant be moved as it is rejected`)
       setHomeIndex(null)
       return
     }
@@ -148,7 +149,12 @@ const DragAndDropComponent = () => {
   if (isLoading) {
     return (
       <LoadingWrapper>
-        <h4>Still Loading ...</h4>
+        <ReactLoading
+          type="balls"
+          color="var(--grey-500)"
+          height={50}
+          width={50}
+        />
       </LoadingWrapper>
     )
   }
@@ -170,9 +176,14 @@ const DragAndDropComponent = () => {
         <div className="dnd-container">
           {columnsOrder.map((id, index) => {
             let isDropDisabled = false
+            // let isDragDisabled = false
 
             // if (homeIndex === 0 && index > 2) {
             //   isDropDisabled = true
+            // }
+
+            // if (id === 'Warehouse Order') {
+            //   isDragDisabled = true
             // }
 
             return (
