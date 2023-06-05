@@ -1,15 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
-// import FoundationIcon from '@mui/icons-material/Foundation'
-// import ConstructionIcon from '@mui/icons-material/Construction'
-// import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
-// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-// import LinearScaleIcon from '@mui/icons-material/LinearScale'
-// import EngineeringIcon from '@mui/icons-material/Engineering'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import { FaThumbsDown } from 'react-icons/fa'
-import { HiInformationCircle } from 'react-icons/hi'
-import {} from 'react-icons/md'
+
 import {
   MdFoundation,
   MdProductionQuantityLimits,
@@ -23,17 +15,18 @@ import MaterialsDetailModel from './MaterialsDetailModel'
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import QueryModal from './QueryModal'
+import RejectModal from './RejectModal'
 
 const MaterialCard = ({ material, index }) => {
-  const [showModal, setShowModal] = useState(false)
+  const [showMaterialModal, setShowMaterialModal] = useState(false)
+  const [showRejectModal, setShowRejectModal] = useState(false)
+  const [showQueryModal, setShowQueryModal] = useState(false)
 
   const { id, itemDesc, quantity, plannedDate, username, subStatus, uom } =
     material
 
   const [subStatusState, setSubStatusState] = useState(subStatus)
-
-  const [subStatusPersistIsLoading, setSubStatusPersistIsLoading] =
-    useState(false)
 
   const toolTipStyle = {
     sx: {
@@ -62,24 +55,22 @@ const MaterialCard = ({ material, index }) => {
     },
   }
 
-  const rejectHandle = async () => {
+  const handleRaiseQuery = () => {
+    if (subStatusState === 'REJECTED') {
+      toast.error('Cant raise query on rejected material')
+      return
+    }
+
+    setShowQueryModal(true)
+  }
+
+  const handleReject = () => {
     if (subStatusState === 'REJECTED') {
       toast.error('Already rejected')
       return
     }
 
-    try {
-      setSubStatusPersistIsLoading(true)
-      await axios.put(
-        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/REJECTED`
-      )
-      setSubStatusState('REJECTED')
-      setSubStatusPersistIsLoading(false)
-    } catch (error) {
-      setSubStatusPersistIsLoading(false)
-      console.log(error)
-      toast.error('Some error occured while changing the Substatus')
-    }
+    setShowRejectModal(true)
   }
 
   return (
@@ -128,7 +119,7 @@ const MaterialCard = ({ material, index }) => {
               >
                 <div
                   className="first-btn icon-btn"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => setShowMaterialModal(true)}
                 >
                   <MdRemoveRedEye />
                 </div>
@@ -140,7 +131,7 @@ const MaterialCard = ({ material, index }) => {
                 arrow
                 PopperProps={toolTipStyle}
               >
-                <div className="second-btn icon-btn">
+                <div className="second-btn icon-btn" onClick={handleRaiseQuery}>
                   <MdHelpCenter />
                 </div>
               </Tooltip>
@@ -151,29 +142,29 @@ const MaterialCard = ({ material, index }) => {
                 arrow
                 PopperProps={toolTipStyle}
               >
-                <div className="third-btn icon-btn" onClick={rejectHandle}>
+                <div className="third-btn icon-btn" onClick={handleReject}>
                   <FaThumbsDown />
                 </div>
               </Tooltip>
             </div>
           </div>
           <MaterialsDetailModel
-            showModal={showModal}
-            setShowModal={setShowModal}
+            showModal={showMaterialModal}
+            setShowModal={setShowMaterialModal}
             material={material}
           />
+          <QueryModal
+            showModal={showQueryModal}
+            setShowModal={setShowQueryModal}
+          />
 
-          <div
-            className={
-              subStatusPersistIsLoading
-                ? 'status-change-mask show'
-                : 'status-change-mask'
-            }
-          >
-            <div className="status-change-loader">
-              {`Rejecting the item ...`}
-            </div>
-          </div>
+          <RejectModal
+            showModal={showRejectModal}
+            setShowModal={setShowRejectModal}
+            subStatusState={subStatusState}
+            setSubStatusState={setSubStatusState}
+            materialId={id}
+          />
         </Wrapper>
       )}
     </Draggable>

@@ -36,6 +36,27 @@ const DragAndDropComponent = () => {
 
   const handleDragEnd = async (result) => {
     const { draggableId, destination, source } = result
+
+    const { subStatus } = items.find(({ id }) => `${id}` === draggableId)
+
+    if (subStatus === 'REJECTED') {
+      toast.error(`Material Item cant be moved as it is rejected`)
+      setHomeIndex(null)
+      return
+    }
+
+    if (source.droppableId === 'Warehouse Order') {
+      toast.error(`Material in Warehouse Order can't be moved`)
+      setHomeIndex(null)
+      return
+    }
+
+    if (homeIndex > columnsOrder.indexOf(destination?.droppableId)) {
+      toast.error(`can't be moved back to ${destination?.droppableId}`)
+      setHomeIndex(null)
+      return
+    }
+
     if (homeIndex === 0 && columnsOrder.indexOf(destination?.droppableId) > 2) {
       toast.error("Requested can't be moved to Rfq and purchase order directly")
       setHomeIndex(null)
