@@ -1,6 +1,6 @@
-import { Draggable } from 'react-beautiful-dnd'
-import styled from 'styled-components'
-import { FaThumbsDown } from 'react-icons/fa'
+import { Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
+import { FaThumbsDown } from "react-icons/fa";
 
 import {
   MdFoundation,
@@ -9,69 +9,69 @@ import {
   MdEngineering,
   MdRemoveRedEye,
   MdHelpCenter,
-} from 'react-icons/md'
-import { useState } from 'react'
-import MaterialsDetailModel from './MaterialsDetailModel'
-import { Tooltip } from '@mui/material'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import QueryModal from './QueryModal'
-import RejectModal from './RejectModal'
+} from "react-icons/md";
+import { useState } from "react";
+import MaterialsDetailModel from "./MaterialsDetailModel";
+import { Tooltip } from "@mui/material";
+import axios from "axios";
+import { toast } from "react-toastify";
+import QueryModal from "./QueryModal";
+import RejectModal from "./RejectModal";
 
 const MaterialCard = ({ material, index }) => {
-  const [showMaterialModal, setShowMaterialModal] = useState(false)
-  const [showRejectModal, setShowRejectModal] = useState(false)
-  const [showQueryModal, setShowQueryModal] = useState(false)
+  const [showMaterialModal, setShowMaterialModal] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showQueryModal, setShowQueryModal] = useState(false);
 
   const { id, itemDesc, quantity, plannedDate, username, subStatus, uom } =
-    material
+    material;
 
-  const [subStatusState, setSubStatusState] = useState(subStatus)
+  const [subStatusState, setSubStatusState] = useState(subStatus);
 
   const toolTipStyle = {
     sx: {
-      '& .MuiTooltip-tooltip': {
-        backgroundColor: 'f0f4f8',
+      "& .MuiTooltip-tooltip": {
+        backgroundColor: "f0f4f8",
         padding: `0.5 1`,
-        backgroundColor: '#334e68',
-        top: '0.4rem',
-        fontSize: '0.6rem',
+        backgroundColor: "#334e68",
+        top: "0.4rem",
+        fontSize: "0.6rem",
       },
     },
-  }
+  };
 
   const statusColors = {
     NEW: {
-      color: '#2563eb',
-      backgroundColor: '#bfdbfe',
+      color: "#2563eb",
+      backgroundColor: "#bfdbfe",
     },
     REJECTED: {
-      color: '#842029',
-      backgroundColor: '#f8d7da',
+      color: "#842029",
+      backgroundColor: "#f8d7da",
     },
     QUERY: {
-      color: '#47B5FF',
-      backgroundColor: '#E6F6FF',
+      color: "#47B5FF",
+      backgroundColor: "#E6F6FF",
     },
-  }
+  };
 
   const handleRaiseQuery = () => {
-    if (subStatusState === 'REJECTED') {
-      toast.error('Cant raise query on rejected material')
-      return
+    if (subStatusState === "REJECTED") {
+      toast.error("Cant raise query on rejected material");
+      return;
     }
 
-    setShowQueryModal(true)
-  }
+    setShowQueryModal(true);
+  };
 
   const handleReject = () => {
-    if (subStatusState === 'REJECTED') {
-      toast.error('Already rejected')
-      return
+    if (subStatusState === "REJECTED") {
+      toast.error("Already rejected");
+      return;
     }
 
-    setShowRejectModal(true)
-  }
+    setShowRejectModal(true);
+  };
 
   return (
     <Draggable draggableId={`${material.id}`} index={index}>
@@ -112,7 +112,7 @@ const MaterialCard = ({ material, index }) => {
 
             <div className="right-wrapper">
               <Tooltip
-                title="view details"
+                title="View Details"
                 placement="top"
                 arrow
                 PopperProps={toolTipStyle}
@@ -126,7 +126,7 @@ const MaterialCard = ({ material, index }) => {
               </Tooltip>
 
               <Tooltip
-                title="raise query"
+                title="Raise Query"
                 placement="top"
                 arrow
                 PopperProps={toolTipStyle}
@@ -137,7 +137,7 @@ const MaterialCard = ({ material, index }) => {
               </Tooltip>
 
               <Tooltip
-                title="reject indent"
+                title="Reject Indent"
                 placement="top"
                 arrow
                 PopperProps={toolTipStyle}
@@ -168,9 +168,9 @@ const MaterialCard = ({ material, index }) => {
         </Wrapper>
       )}
     </Draggable>
-  )
-}
-export default MaterialCard
+  );
+};
+export default MaterialCard;
 
 const Wrapper = styled.div`
   background-color: var(--white);
@@ -273,10 +273,10 @@ const Wrapper = styled.div`
   .info-icon:hover {
     color: var(--primary-500);
   }
-`
+`;
 
 const Status = styled.div`
   background-color: ${({ colors }) => colors.backgroundColor};
   color: ${({ colors }) => colors.color};
   font-size: 0.6rem !important;
-`
+`;
