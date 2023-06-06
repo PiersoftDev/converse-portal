@@ -132,7 +132,7 @@ const DragAndDropComponent = () => {
       setDroppableId(destination.droppableId)
       const { subStatus, id } = items.find(({ id }) => `${id}` === draggableId)
       await axios.put(
-        `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
       )
 
       setStatusPersistIsLoading(false)

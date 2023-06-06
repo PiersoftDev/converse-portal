@@ -7,7 +7,7 @@ import moment from 'moment'
 import { addRFQToList } from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
 
-const url = 'http://13.232.221.196:8081/v1/purchase/rfq/create-rfq'
+const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const MaterialModalInputContainer = ({
   setShowModal,

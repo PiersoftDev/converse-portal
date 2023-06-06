@@ -136,7 +136,7 @@ const materialSlice = createSlice({
           ({ itemId }) => itemId === draggableId
         )
         await axios.put(
-          `https://13.232.221.196:8081/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
+          `http://13.232.221.196:9090/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
         )
       } catch (error) {
         console.log(error)
