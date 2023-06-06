@@ -29,7 +29,7 @@ const initial = {
   pocEmail: 'gsmreddy3@gmail.com',
 }
 
-const url = 'https://13.232.221.196/v1/vm/onboard'
+const url = 'http://13.232.221.196:9060/v1/vm/onboard'
 
 const VendorModal = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()

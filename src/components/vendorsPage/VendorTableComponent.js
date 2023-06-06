@@ -17,15 +17,16 @@ const VendorTableComponent = ({ vendorsList }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>gst</th>
-            <th>aadhaar</th>
-            <th>pan</th>
-            <th>pocName</th>
-            <th>pocWhatsappNo</th>
-            <th>pocEmail</th>
-            <th>businessName</th>
-            <th>address</th>
-            <th>state</th>
+            <th>Business Name</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>GST</th>
+            <th>Aadhar</th>
+            <th>PAN</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+
           </tr>
         </thead>
         <tbody>
@@ -45,15 +46,16 @@ const VendorTableComponent = ({ vendorsList }) => {
               return (
                 <tr key={id}>
                   <td>{id}</td>
+                  <td>{businessName}</td>
+                  <td>{address}</td>
+                  <td>{state}</td>
                   <td>{gst}</td>
                   <td>{aadhaar}</td>
                   <td>{pan}</td>
                   <td>{pocName}</td>
                   <td>{pocWhatsappNo}</td>
                   <td>{pocEmail}</td>
-                  <td>{businessName}</td>
-                  <td>{address}</td>
-                  <td>{state}</td>
+                  
                 </tr>
               )
             }

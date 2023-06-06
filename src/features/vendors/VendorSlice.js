@@ -9,7 +9,7 @@ const initialState = {
   onBoardAll: false,
 }
 
-const url = 'https://13.232.221.196/v1/vm/list'
+const url = 'http://13.232.221.196:9060/v1/vm/list'
 
 export const getVendors = createAsyncThunk(
   'vendors/getVendors',
