@@ -4,6 +4,8 @@ import { FaThumbsDown } from 'react-icons/fa'
 import { BsChatLeft } from 'react-icons/bs'
 import { BsFillChatLeftFill } from 'react-icons/bs'
 
+import { FiAlertTriangle } from 'react-icons/fi'
+
 import {
   MdFoundation,
   MdProductionQuantityLimits,
@@ -11,6 +13,9 @@ import {
   MdEngineering,
   MdRemoveRedEye,
   MdHelpCenter,
+  MdReportGmailerrorred,
+  MdBatteryAlert,
+  MdCheckCircleOutline,
 } from 'react-icons/md'
 import { useState } from 'react'
 import MaterialsDetailModel from './MaterialsDetailModel'
@@ -20,6 +25,7 @@ import { toast } from 'react-toastify'
 import QueryModal from './QueryModal'
 import RejectModal from './RejectModal'
 import CommentsModal from './CommentsModal'
+import { useEffect } from 'react'
 
 const MaterialCard = ({ material, index }) => {
   const [showMaterialModal, setShowMaterialModal] = useState(false)
@@ -36,11 +42,18 @@ const MaterialCard = ({ material, index }) => {
     subStatus,
     uom,
     comments,
+    budgetedQty,
+    inventory,
   } = material
 
   const [commentsState, setCommentsState] = useState(comments)
 
   const [subStatusState, setSubStatusState] = useState(subStatus)
+
+  const [quantityStatus, setQuantityStatus] = useState({
+    icon: null,
+    color: null,
+  })
 
   const toolTipStyle = {
     sx: {
@@ -53,6 +66,17 @@ const MaterialCard = ({ material, index }) => {
       },
     },
   }
+
+  useEffect(() => {
+    console.log(quantity, budgetedQty, inventory)
+    if (quantity > budgetedQty) {
+      setQuantityStatus({ icon: <MdReportGmailerrorred />, color: '#ff4d4d' })
+    } else if (quantity > inventory) {
+      setQuantityStatus({ icon: <FiAlertTriangle />, color: 'gold' })
+    } else {
+      setQuantityStatus({ icon: <MdCheckCircleOutline />, color: 'green' })
+    }
+  }, [])
 
   const statusColors = {
     NEW: {
@@ -117,6 +141,9 @@ const MaterialCard = ({ material, index }) => {
               <MdProductionQuantityLimits />
             </span>
             <p>{`${quantity} ${uom}`}</p>
+            <span style={{ color: quantityStatus.color }}>
+              {quantityStatus.icon}
+            </span>
           </div>
           <div className="content">
             <span>
