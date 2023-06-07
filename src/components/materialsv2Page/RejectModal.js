@@ -9,22 +9,36 @@ const RejectModal = ({
   setShowModal,
   subStatusState,
   setSubStatusState,
+  setComments,
   materialId,
 }) => {
   const [subStatusPersistIsLoading, setSubStatusPersistIsLoading] =
     useState(false)
 
+  const [rejectText, setRejectText] = useState('')
+
+  const closeModal = () => {
+    setShowModal(false)
+    setRejectText('')
+  }
+
   const rejectHandle = async () => {
     try {
       setSubStatusPersistIsLoading(true)
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/REJECTED`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/REJECTED/${rejectText}`
       )
+
+      console.log(rejectText)
+
+      setComments(rejectText)
+      setRejectText('')
       setSubStatusState('REJECTED')
       setSubStatusPersistIsLoading(false)
       setShowModal(false)
     } catch (error) {
       setSubStatusPersistIsLoading(false)
+      setRejectText('')
       console.log(error)
       toast.error('Some error occured while changing the Substatus')
     }
@@ -33,17 +47,14 @@ const RejectModal = ({
     <Wrapper>
       <div
         className={`reject-modal ${showModal ? 'show' : ''} `}
-        onClick={() => setShowModal(false)}
+        onClick={closeModal}
       >
         <div
           className="reject-modal-content"
           onClick={(e) => e.stopPropagation()}
         >
           <h4 className="reject-modal-header">Reject</h4>
-          <button
-            onClick={() => setShowModal(false)}
-            className="close-modal-btn"
-          >
+          <button onClick={closeModal} className="close-modal-btn">
             <ImCross />
           </button>
 
@@ -51,8 +62,10 @@ const RejectModal = ({
             <textarea
               name="reject"
               id="reject"
-              placeholder="Please Enter the Query"
+              placeholder="Please Enter the Reject reason"
               className="reject-textarea"
+              value={rejectText}
+              onChange={(e) => setRejectText(e.target.value)}
             ></textarea>
 
             <div className="btns-container">

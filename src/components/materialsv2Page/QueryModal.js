@@ -34,6 +34,7 @@ const QueryModal = ({
       setShowModal(false)
     } catch (error) {
       setQueryPersistIsLoading(false)
+      setQueryText('')
       console.log(error)
       toast.error('Some error occured while raising a query')
     }
