@@ -48,12 +48,30 @@ const initialState = {
   rfqList: [],
   rfqNewLines: [],
   rfqAddItems: [],
+
+  rfqItems: [],
+  rfqItemsLoading: false,
+  rfqItemsError: false,
 }
 
 const url = 'http://13.232.221.196:9090/v1/purchase'
 
 // const url =
 //   'https://6aad-49-43-201-220.ngrok-free.app/v1/purchase/material-indent/'
+
+const rfqListUrl = 'http://13.232.221.196:9090/v1/purchase/rfq/'
+
+export const getRfqList = createAsyncThunk(
+  'Quotations/getRfqList',
+  async (_, thunkApi) => {
+    try {
+      const resp = await axios.get(rfqListUrl)
+      return resp.data
+    } catch (error) {
+      throw thunkApi.rejectWithValue('Some error happened while fetching data')
+    }
+  }
+)
 
 export const getMaterialItems = createAsyncThunk(
   'MaterialIndent/getMaterialItems',
@@ -187,6 +205,17 @@ const materialSlice = createSlice({
     [getPurchaseLines.rejected]: (state, action) => {
       state.isGetPurchaseLinesLoading = false
       state.isGetPurchaseLinesError = true
+    },
+    [getRfqList.pending]: (state, action) => {
+      state.rfqItemsLoading = true
+    },
+    [getRfqList.fulfilled]: (state, action) => {
+      state.rfqItemsLoading = false
+      state.rfqItems = action.payload
+    },
+    [getRfqList.rejected]: (state, action) => {
+      state.rfqItemsLoading = false
+      state.rfqItemsError = true
     },
   },
 })
