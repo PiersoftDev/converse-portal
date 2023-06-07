@@ -78,6 +78,11 @@ const MaterialCard = ({ material, index }) => {
       return
     }
 
+    if (subStatusState === 'ONHOLD') {
+      toast.error('Cant raise a new query as substatus  is on hold')
+      return
+    }
+
     setShowQueryModal(true)
   }
 
@@ -89,6 +94,8 @@ const MaterialCard = ({ material, index }) => {
 
     setShowRejectModal(true)
   }
+
+  console.log(commentsState)
 
   return (
     <Draggable draggableId={`${material.id}`} index={index}>
@@ -131,7 +138,8 @@ const MaterialCard = ({ material, index }) => {
                 {subStatusState === 'ONHOLD' ? 'ON HOLD' : subStatusState}
               </Status>
 
-              {subStatusState === 'ONHOLD' && (
+              {(subStatusState === 'ONHOLD' ||
+                subStatusState === 'REJECTED') && (
                 <Tooltip
                   title="View Comments"
                   placement="top"
@@ -206,6 +214,8 @@ const MaterialCard = ({ material, index }) => {
             setShowModal={setShowRejectModal}
             subStatusState={subStatusState}
             setSubStatusState={setSubStatusState}
+            comments={commentsState}
+            setComments={setCommentsState}
             materialId={id}
           />
 
