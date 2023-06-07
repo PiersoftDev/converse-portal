@@ -1,7 +1,7 @@
 import { ImCross } from 'react-icons/im'
 import styled from 'styled-components'
 
-const CommentsModal = ({ showModal, setShowModal }) => {
+const CommentsModal = ({ showModal, setShowModal, comments }) => {
   return (
     <Wrapper>
       <div
@@ -19,6 +19,10 @@ const CommentsModal = ({ showModal, setShowModal }) => {
           >
             <ImCross />
           </button>
+
+          <div className="comments-container">
+            <p className="comment">{comments}</p>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -75,5 +79,13 @@ const Wrapper = styled.div`
 
   .close-modal-btn:hover {
     color: #b52c37;
+  }
+
+  .comments-container {
+    margin-top: 1rem;
+  }
+
+  .comment {
+    color: var(--grey-700);
   }
 `
