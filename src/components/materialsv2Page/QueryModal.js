@@ -1,22 +1,54 @@
+import axios from 'axios'
+import { useState } from 'react'
 import { ImCross } from 'react-icons/im'
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
-const QueryModal = ({ showModal, setShowModal }) => {
+const QueryModal = ({
+  showModal,
+  setShowModal,
+  subStatusState,
+  setSubStatusState,
+  materialId,
+}) => {
+  const [queryText, setQueryText] = useState('')
+
+  const [queryPersistIsLoading, setQueryPersistIsLoading] = useState(false)
+
+  const closeModal = () => {
+    setShowModal(false)
+    setQueryText('')
+  }
+
+  const handleSubmit = async () => {
+    try {
+      setQueryPersistIsLoading(true)
+      await axios.put(
+        `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/ONHOLD/${queryText}`
+      )
+      setQueryText('')
+      setSubStatusState('ONHOLD')
+      setQueryPersistIsLoading(false)
+      setShowModal(false)
+    } catch (error) {
+      setQueryPersistIsLoading(false)
+      console.log(error)
+      toast.error('Some error occured while raising a query')
+    }
+  }
+
   return (
     <Wrapper>
       <div
         className={`query-modal ${showModal ? 'show' : ''} `}
-        onClick={() => setShowModal(false)}
+        onClick={closeModal}
       >
         <div
           className="query-modal-content"
           onClick={(e) => e.stopPropagation()}
         >
           <h4 className="query-modal-header">Query</h4>
-          <button
-            onClick={() => setShowModal(false)}
-            className="close-modal-btn"
-          >
+          <button onClick={closeModal} className="close-modal-btn">
             <ImCross />
           </button>
 
@@ -26,18 +58,27 @@ const QueryModal = ({ showModal, setShowModal }) => {
               id="query"
               placeholder="Please Enter the Query"
               className="query-textarea"
+              value={queryText}
+              onChange={(e) => setQueryText(e.target.value)}
             ></textarea>
 
             <div className="btns-container">
-              <button
-                className="submit-btn"
-                onClick={() => setShowModal(false)}
-              >
+              <button className="submit-btn" onClick={handleSubmit}>
                 Submit
               </button>
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        className={
+          queryPersistIsLoading
+            ? 'status-change-mask show'
+            : 'status-change-mask'
+        }
+      >
+        <div className="status-change-loader">{`Submitting the query ...`}</div>
       </div>
     </Wrapper>
   )
