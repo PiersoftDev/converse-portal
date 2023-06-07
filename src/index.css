@@ -416,3 +416,20 @@ input:focus {
 .submit-btn:hover {
   background-color: var(--primary-600);
 }
+
+.comments-btn {
+  color: #e6c200;
+  background-color: #ffeb80;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.comments-btn:hover {
+  color: #ffeb80;
+  background-color: #e6c200;
+}
