@@ -7,12 +7,16 @@ import { BsFillDatabaseFill } from 'react-icons/bs'
 
 import { GrInProgress } from 'react-icons/gr'
 import { BsGlobeAmericas } from 'react-icons/bs'
+import { RiShareBoxLine } from 'react-icons/ri'
 
 import styled from 'styled-components'
 
 const OrderComponent = () => {
   return (
     <Wrapper>
+      <span className="open-order-details-icon">
+        <RiShareBoxLine />
+      </span>
       <div className="order-header">
         <p className="order-header-text">
           <span>#80149 - </span> Summer Lenin Jacket SS22
@@ -66,15 +70,16 @@ export default OrderComponent
 const Wrapper = styled.div`
   border: 1px solid var(--grey-100);
   border-radius: 10px;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 1.5rem;
   margin-bottom: 1rem;
+  position: relative;
 
   .order-header {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .order-header-text {
@@ -157,5 +162,18 @@ const Wrapper = styled.div`
   .order-footer p {
     margin-bottom: 0;
     color: var(--grey-700);
+  }
+
+  .open-order-details-icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+    transform: var(--transition);
+  }
+
+  .open-order-details-icon:hover {
+    transform: scale(1.1);
+    color: var(--grey-800);
   }
 `
