@@ -2,6 +2,7 @@ import { FiFilter } from 'react-icons/fi'
 
 import styled from 'styled-components'
 import OrderComponent from './OrderComponent'
+import { GrFormAdd } from 'react-icons/gr'
 
 const InProgressComponent = () => {
   return (
@@ -14,6 +15,13 @@ const InProgressComponent = () => {
 
           <div className="filter-text">Add Filters</div>
         </div>
+
+        <button className="create-order">
+          <span className="create-order-icon">
+            <GrFormAdd />
+          </span>
+          <span className="create-order-text">Create Order</span>
+        </button>
       </div>
 
       <div className="orders-container">
@@ -34,6 +42,7 @@ const Wrapper = styled.div`
   .filter-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 1rem;
     gap: 1rem;
   }
