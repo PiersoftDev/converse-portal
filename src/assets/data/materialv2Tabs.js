@@ -3,6 +3,10 @@ import {
   DummyTabContent,
 } from '../../components/materialsv2Page'
 
+import PurchaseTabComponent from '../../components/materialsv2Page/purchaseTab/PurchaseTabComponent'
+
+import InProgressComponent from '../../components/materialsv2Page/purchaseTab/InProgressComponent'
+
 const materialv2Tabs = [
   {
     id: 1,
@@ -22,7 +26,7 @@ const materialv2Tabs = [
   {
     id: 4,
     tabName: 'Purchase Order',
-    component: <DummyTabContent content="Purchase Order" />,
+    component: <InProgressComponent />,
   },
 ]
 
