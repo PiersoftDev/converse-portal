@@ -6,6 +6,7 @@ import {
 import PurchaseTabComponent from '../../components/materialsv2Page/purchaseTab/PurchaseTabComponent'
 
 import InProgressComponent from '../../components/materialsv2Page/purchaseTab/InProgressComponent'
+import RfqComponent from '../../components/materialsv2Page/RfqTab/RfqComponent'
 
 const materialv2Tabs = [
   {
@@ -21,7 +22,7 @@ const materialv2Tabs = [
   {
     id: 3,
     tabName: 'RFQ',
-    component: <DummyTabContent content="RFQ" />,
+    component: <RfqComponent />,
   },
   {
     id: 4,
