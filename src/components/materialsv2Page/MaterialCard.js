@@ -26,8 +26,18 @@ const MaterialCard = ({ material, index }) => {
   const [showQueryModal, setShowQueryModal] = useState(false)
   const [showCommentsModal, setShowCommentsModal] = useState(false)
 
-  const { id, itemDesc, quantity, plannedDate, username, subStatus, uom } =
-    material
+  const {
+    id,
+    itemDesc,
+    quantity,
+    plannedDate,
+    username,
+    subStatus,
+    uom,
+    comments,
+  } = material
+
+  const [commentsState, setCommentsState] = useState(comments)
 
   const [subStatusState, setSubStatusState] = useState(subStatus)
 
@@ -57,8 +67,8 @@ const MaterialCard = ({ material, index }) => {
       backgroundColor: '#E6F6FF',
     },
     ONHOLD: {
-      color: '#2563eb',
-      backgroundColor: '#bfdbfe',
+      color: '#a28b09',
+      backgroundColor: '#ffeb80',
     },
   }
 
@@ -79,8 +89,6 @@ const MaterialCard = ({ material, index }) => {
 
     setShowRejectModal(true)
   }
-
-  console.log(subStatusState)
 
   return (
     <Draggable draggableId={`${material.id}`} index={index}>
@@ -120,7 +128,7 @@ const MaterialCard = ({ material, index }) => {
                 className="icon-btn status-btn"
                 colors={statusColors[subStatusState]}
               >
-                {subStatusState}
+                {subStatusState === 'ONHOLD' ? 'ON HOLD' : subStatusState}
               </Status>
 
               {subStatusState === 'ONHOLD' && (
@@ -188,6 +196,8 @@ const MaterialCard = ({ material, index }) => {
             setShowModal={setShowQueryModal}
             subStatusState={subStatusState}
             setSubStatusState={setSubStatusState}
+            comments={commentsState}
+            setComments={setCommentsState}
             materialId={id}
           />
 
@@ -202,6 +212,7 @@ const MaterialCard = ({ material, index }) => {
           <CommentsModal
             showModal={showCommentsModal}
             setShowModal={setShowCommentsModal}
+            comments={commentsState}
           />
         </Wrapper>
       )}
@@ -320,6 +331,23 @@ const Wrapper = styled.div`
 
   .info-icon:hover {
     color: var(--primary-500);
+  }
+
+  .comments-btn {
+    color: var(--grey-500);
+    padding: 0.2rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .comments-btn:hover {
+    color: var(--grey-700);
+    transform: scale(1.2);
   }
 `
 

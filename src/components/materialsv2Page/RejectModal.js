@@ -159,4 +159,26 @@ const Wrapper = styled.div`
   .reject-btn:hover {
     background-color: #c22f3b;
   }
+
+  .status-change-mask {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    display: grid;
+    place-items: center;
+    z-index: 30;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  .status-change-mask.show {
+    opacity: 1;
+    pointer-events: visible;
+  }
+
+  .status-change-loader {
+    color: var(--white);
+    font-size: 2rem;
+  }
 `

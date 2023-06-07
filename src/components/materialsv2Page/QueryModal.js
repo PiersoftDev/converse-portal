@@ -9,11 +9,11 @@ const QueryModal = ({
   setShowModal,
   subStatusState,
   setSubStatusState,
+  setComments,
   materialId,
 }) => {
-  const [queryText, setQueryText] = useState('')
-
   const [queryPersistIsLoading, setQueryPersistIsLoading] = useState(false)
+  const [queryText, setQueryText] = useState('')
 
   const closeModal = () => {
     setShowModal(false)
@@ -26,6 +26,8 @@ const QueryModal = ({
       await axios.put(
         `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/ONHOLD/${queryText}`
       )
+
+      setComments(queryText)
       setQueryText('')
       setSubStatusState('ONHOLD')
       setQueryPersistIsLoading(false)
@@ -165,5 +167,27 @@ const Wrapper = styled.div`
 
   .submit-btn:hover {
     background-color: var(--primary-600);
+  }
+
+  .status-change-mask {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    display: grid;
+    place-items: center;
+    z-index: 30;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  .status-change-mask.show {
+    opacity: 1;
+    pointer-events: visible;
+  }
+
+  .status-change-loader {
+    color: var(--white);
+    font-size: 2rem;
   }
 `
