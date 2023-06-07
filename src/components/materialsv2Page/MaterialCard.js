@@ -117,7 +117,7 @@ const MaterialCard = ({ material, index }) => {
           <div className="icons-container">
             <div className="left-wrapper">
               <Status
-                className="icon-btn"
+                className="icon-btn status-btn"
                 colors={statusColors[subStatusState]}
               >
                 {subStatusState}
@@ -256,6 +256,10 @@ const Wrapper = styled.div`
     transition: var(--transition);
     display: grid;
     place-items: center;
+  }
+
+  .status-btn {
+    cursor: grab;
   }
 
   .left-wrapper {
