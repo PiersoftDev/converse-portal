@@ -2,6 +2,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { FaThumbsDown } from 'react-icons/fa'
 import { BsChatLeft } from 'react-icons/bs'
+import { BsFillChatLeftFill } from 'react-icons/bs'
 
 import {
   MdFoundation,
@@ -150,7 +151,7 @@ const MaterialCard = ({ material, index }) => {
                     className="comments-btn"
                     onClick={() => setShowCommentsModal(true)}
                   >
-                    <BsChatLeft />
+                    <BsFillChatLeftFill />
                   </span>
                 </Tooltip>
               )}
@@ -287,6 +288,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+    position: relative;
   }
 
   .right-wrapper {
@@ -344,7 +346,7 @@ const Wrapper = styled.div`
   }
 
   .comments-btn {
-    color: var(--grey-500);
+    color: var(--grey-300);
     padding: 0.2rem 0.4rem;
     border-radius: 5px;
     font-size: 0.9rem;
@@ -353,6 +355,9 @@ const Wrapper = styled.div`
     place-items: center;
     cursor: pointer;
     transition: var(--transition);
+    position: absolute;
+    top: -0.5rem;
+    right: -1rem;
   }
 
   .comments-btn:hover {
