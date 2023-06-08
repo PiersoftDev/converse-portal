@@ -21,22 +21,16 @@ const OrderTabsComponent = () => {
             Items
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Criteria
+            Business Partner Info
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Bidders
+            Terms & Conditions
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Price Comparisons
+            Tax and Holding
           </Tab>
           <Tab selectedClassName="selected-tab" className="tab">
-            Negotiations
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Approvals
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Conversion Details
+            Notes
           </Tab>
         </TabList>
         {/* <TabPanel className="tab-panel">
@@ -46,22 +40,16 @@ const OrderTabsComponent = () => {
           <ItemsComponent />
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Criteria</h4>
+          <h4>Business Partner Info</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Bidders</h4>
+          <h4>Terms & Conditions</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Price Comparisons</h4>
+          <h4>Tax and Holding</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Negotiations</h4>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Approvals</h4>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Conversion Details</h4>
+          <h4>Notes</h4>
         </TabPanel>
       </Tabs>
     </Wrapper>

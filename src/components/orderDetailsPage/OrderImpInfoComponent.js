@@ -171,13 +171,13 @@ const OrderImpInfoComponent = ({
             <span>
               <ThumbUpIcon />
             </span>
-            Approve
+            Accept
           </button>
           <button className="btn-decline">
             <span>
               <ThumbDownAltIcon />
             </span>
-            Decline
+            Reject
           </button>
         </div>
       </div>
