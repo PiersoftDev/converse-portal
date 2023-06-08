@@ -24,7 +24,7 @@ const QueryModal = ({
     try {
       setQueryPersistIsLoading(true)
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/ONHOLD/${queryText}`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/comments/${materialId}/ONHOLD/${queryText}`
       )
 
       setComments(queryText)

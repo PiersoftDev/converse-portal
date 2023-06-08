@@ -52,6 +52,12 @@ const DragAndDropComponent = () => {
       return
     }
 
+    if (subStatus === 'ONHOLD') {
+      toast.error(`Material Item cant be moved as it is on hold`)
+      setHomeIndex(null)
+      return
+    }
+
     if (homeIndex > columnsOrder.indexOf(destination?.droppableId)) {
       toast.error(`can't be moved back to ${destination?.droppableId}`)
       setHomeIndex(null)
@@ -132,7 +138,7 @@ const DragAndDropComponent = () => {
       setDroppableId(destination.droppableId)
       const { subStatus, id } = items.find(({ id }) => `${id}` === draggableId)
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/${id}/${destination.droppableId}/${subStatus}`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus${id}/${destination.droppableId}/${subStatus}`
       )
 
       setStatusPersistIsLoading(false)

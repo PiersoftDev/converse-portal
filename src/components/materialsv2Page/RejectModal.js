@@ -26,7 +26,7 @@ const RejectModal = ({
     try {
       setSubStatusPersistIsLoading(true)
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/${materialId}/REJECTED/${rejectText}`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/comments${materialId}/REJECTED/${rejectText}`
       )
 
       console.log(rejectText)
