@@ -8,10 +8,10 @@ import styled from 'styled-components'
 const QuoteCardComponent = ({ quote }) => {
   const navigate = useNavigate()
 
-  const { id, projectId, category, plannedDate } = quote
+  const { id, projectId, category } = quote
 
   const handleCardClick = () => {
-    navigate('/rfqdetails', { state: { ...quote } })
+    navigate(`/rfqdetails/${id}`, { state: { ...quote } })
   }
   return (
     <Wrapper onClick={handleCardClick}>
@@ -24,13 +24,6 @@ const QuoteCardComponent = ({ quote }) => {
           <FiTarget />
         </span>
         <p>{projectId}</p>
-      </div>
-
-      <div className="sub-content">
-        <span>
-          <MdAccessAlarms />
-        </span>
-        <p>{`${plannedDate[2]}-${plannedDate[1]}-${plannedDate[0]}`}</p>
       </div>
 
       <div className="sub-content">

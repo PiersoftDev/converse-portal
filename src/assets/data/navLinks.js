@@ -22,37 +22,31 @@ const navLinks = [
   },
   {
     id: 3,
-    path: '/quotations',
-    text: 'Quotations',
-    icon: <MdOutlineRequestQuote />,
-  },
-  {
-    id: 4,
     path: '/vendors',
     text: 'Vendors',
     icon: <BsShop />,
   },
 
   {
-    id: 5,
+    id: 4,
     path: '/orders',
     text: 'Orders',
     icon: <AiOutlineShoppingCart />,
   },
   {
-    id: 6,
+    id: 5,
     path: '/asn',
     text: 'ASN',
     icon: <MdOutlineLocalShipping />,
   },
   {
-    id: 7,
+    id: 6,
     path: '/grn',
     text: 'GRN',
     icon: <BsReceiptCutoff />,
   },
   {
-    id: 8,
+    id: 7,
     path: '/user',
     text: 'UserName',
     icon: <MdOutlineAssignmentInd />,

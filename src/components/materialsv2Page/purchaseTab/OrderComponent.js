@@ -10,11 +10,18 @@ import { BsGlobeAmericas } from 'react-icons/bs'
 import { RiShareBoxLine } from 'react-icons/ri'
 
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
-const OrderComponent = () => {
+const OrderComponent = ({ item }) => {
+  const navigate = useNavigate()
+
+  const openOrderDetails = () => {
+    navigate(`/rfqdetails/123`, { state: { ...item } })
+  }
+
   return (
     <Wrapper>
-      <span className="open-order-details-icon">
+      <span className="open-order-details-icon" onClick={openOrderDetails}>
         <RiShareBoxLine />
       </span>
       <div className="order-header">
