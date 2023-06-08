@@ -365,3 +365,64 @@ input:focus {
 }
 
 /* Purchase order tabs */
+
+.decision-content {
+  margin-top: 1rem;
+}
+
+.btns-container {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.yes-btn,
+.no-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  background-color: var(--transition);
+  border: 1px solid var(--grey-300);
+  color: var(--grey-600);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.yes-btn:hover {
+  background-color: var(--green-light);
+  border: 1px solid var(--grey-100);
+  color: var(--green-dark);
+  transform: scale(1.05);
+}
+
+.no-btn:hover {
+  background-color: var(--red-light);
+  border: 1px solid var(--grey-100);
+  color: var(--red-dark);
+  transform: scale(1.05);
+}
+
+.rfq-details-link {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  background-color: var(--primary-500);
+  color: var(--white);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  letter-spacing: 0.05rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.rfq-details-link:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+}
