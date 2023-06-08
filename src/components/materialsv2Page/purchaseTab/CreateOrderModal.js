@@ -1,71 +1,73 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { ImCross } from 'react-icons/im'
-import { toast } from 'react-toastify'
-import styled from 'styled-components'
-import ReactLoading from 'react-loading'
+import axios from "axios";
+import { useState } from "react";
+import { ImCross } from "react-icons/im";
+import { toast } from "react-toastify";
+import styled from "styled-components";
+import ReactLoading from "react-loading";
 
 const initialState = {
-  projectCode: '',
-  category: '',
-  warehouseCode: '',
-}
+  project: "",
+  category: "",
+  warehouse: "",
+  businessPartner: "",
+};
 
-const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
+const url = "http://13.232.221.196:9090/v1/purchase/rfq/create-rfq";
 
 const CreateOrderModal = ({ showModal, setShowModal }) => {
-  const [newOrderState, setNewOrderState] = useState(initialState)
+  const [newOrderState, setNewOrderState] = useState(initialState);
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e) => {
     setNewOrderState({
       ...newOrderState,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const discardOrder = () => {
-    setNewOrderState(initialState)
-    setShowModal(false)
-  }
+    setNewOrderState(initialState);
+    setShowModal(false);
+  };
 
   const createOrder = async () => {
-    const { projectCode, category, warehouseCode } = newOrderState
+    const { project, category, warehouse, businessPartner } = newOrderState;
 
-    if (!projectCode || !category || !warehouseCode) {
-      toast.error('Pls enter all the values')
-      return
+    if (!project || !category || !warehouse || !businessPartner) {
+      toast.error("Pls enter all the values");
+      return;
     }
 
     const reqBody = {
       category: category,
-      projectCode: projectCode,
-      warehouseCode: warehouseCode,
-    }
+      project: project,
+      warehouse: warehouse,
+      businessPartner: businessPartner,
+    };
 
     try {
-      console.log(reqBody)
-      setIsLoading(true)
-      setIsError(false)
-      await axios.post(url, reqBody)
-      setIsLoading(false)
-      setNewOrderState(initialState)
-      setShowModal(false)
-      toast.success('A New Order is created')
+      console.log(reqBody);
+      setIsLoading(true);
+      setIsError(false);
+      await axios.post(url, reqBody);
+      setIsLoading(false);
+      setNewOrderState(initialState);
+      setShowModal(false);
+      toast.success("A New Order is created");
     } catch (error) {
-      setIsLoading(false)
-      setIsError(true)
-      setNewOrderState(initialState)
-      setShowModal(false)
-      toast.error('An error while creating a new order')
+      setIsLoading(false);
+      setIsError(true);
+      setNewOrderState(initialState);
+      setShowModal(false);
+      toast.error("An error while creating a new order");
     }
-  }
+  };
 
   return (
     <Wrapper>
-      <div className={`material-modal ${showModal ? 'show' : ''} `}>
+      <div className={`material-modal ${showModal ? "show" : ""} `}>
         <div className="material-modal-content">
           {isLoading && (
             <div className="create-rfq-loading">
@@ -82,13 +84,13 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
 
           <div className="input-container">
             <div className="input-item ">
-              <label htmlFor="projectCode">Project Code </label>
+              <label htmlFor="project">Project</label>
               <input
                 type="text"
-                value={newOrderState.projectCode}
-                name="projectCode"
+                value={newOrderState.project}
+                name="project"
                 onChange={handleChange}
-                id="projectCode"
+                id="project"
               />
             </div>
             <div className="input-item ">
@@ -103,13 +105,24 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
             </div>
 
             <div className="input-item">
-              <label htmlFor="warehouseCode">Warehouse Code</label>
+              <label htmlFor="warehouse">Warehouse</label>
               <input
                 type="text"
-                value={newOrderState.warehouseCode}
-                name="warehouseCode"
+                value={newOrderState.warehouse}
+                name="warehouse"
                 onChange={handleChange}
-                id="warehouseCode"
+                id="warehouse"
+              />
+            </div>
+
+            <div className="input-item">
+              <label htmlFor="businessPartner">Business Partner</label>
+              <input
+                type="text"
+                value={newOrderState.businessPartner}
+                name="businessPartner"
+                onChange={handleChange}
+                id="businessPartner"
               />
             </div>
 
@@ -125,9 +138,9 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
         </div>
       </div>
     </Wrapper>
-  )
-}
-export default CreateOrderModal
+  );
+};
+export default CreateOrderModal;
 
 const Wrapper = styled.div`
   position: absolute;
@@ -283,4 +296,4 @@ const Wrapper = styled.div`
     transform: scale(1.05);
     border: 1px solid var(--grey-100);
   }
-`
+`;

@@ -6,9 +6,9 @@ import styled from 'styled-components'
 import ReactLoading from 'react-loading'
 
 const initialState = {
-  projectCode: '',
+  project: '',
   category: '',
-  warehouseCode: '',
+  warehouse: '',
 }
 
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
@@ -32,17 +32,17 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
   }
 
   const createRFQ = async () => {
-    const { projectCode, category, warehouseCode } = newRfqState
+    const { project, category, warehouse } = newRfqState
 
-    if (!projectCode || !category || !warehouseCode) {
+    if (!project || !category || !warehouse) {
       toast.error('Pls enter all the values')
       return
     }
 
     const reqBody = {
       category: category,
-      projectCode: projectCode,
-      warehouseCode: warehouseCode,
+      project: project,
+      warehouse: warehouse,
     }
 
     try {
@@ -82,13 +82,13 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
 
           <div className="input-container">
             <div className="input-item ">
-              <label htmlFor="projectCode">Project Code </label>
+              <label htmlFor="project">Project </label>
               <input
                 type="text"
-                value={newRfqState.projectCode}
-                name="projectCode"
+                value={newRfqState.project}
+                name="project"
                 onChange={handleChange}
-                id="projectCode"
+                id="project"
               />
             </div>
             <div className="input-item ">
@@ -103,13 +103,13 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
             </div>
 
             <div className="input-item">
-              <label htmlFor="warehouseCode">Warehouse Code</label>
+              <label htmlFor="warehouse">Warehouse </label>
               <input
                 type="text"
-                value={newRfqState.warehouseCode}
-                name="warehouseCode"
+                value={newRfqState.warehouse}
+                name="warehouse"
                 onChange={handleChange}
-                id="warehouseCode"
+                id="warehouse"
               />
             </div>
 
