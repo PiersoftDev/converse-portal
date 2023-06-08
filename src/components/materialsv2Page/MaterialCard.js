@@ -69,7 +69,6 @@ const MaterialCard = ({ material, index }) => {
   }
 
   useEffect(() => {
-    console.log(quantity, budgetedQty, inventory)
     if (quantity > budgetedQty) {
       setQuantityStatus({
         icon: <MdReportGmailerrorred />,
@@ -132,8 +131,6 @@ const MaterialCard = ({ material, index }) => {
 
     setShowRejectModal(true)
   }
-
-  console.log(commentsState)
 
   return (
     <Draggable draggableId={`${material.id}`} index={index}>

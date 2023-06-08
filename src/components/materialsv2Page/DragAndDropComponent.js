@@ -9,6 +9,10 @@ import { useDispatch } from 'react-redux'
 import ReactLoading from 'react-loading'
 import axios from 'axios'
 
+import CreateRfqModal from './RfqTab/CreateRfqModal'
+import RfqDecisionModal from './RfqDecisionModal'
+import { TbRuler, TbRuler2, TbRuler2Off, TbRuler3 } from 'react-icons/tb'
+
 const DragAndDropComponent = () => {
   const dispatch = useDispatch()
   const { isLoading, isError, columns, items } = useSelector(
@@ -21,6 +25,10 @@ const DragAndDropComponent = () => {
   const [droppableId, setDroppableId] = useState(null)
 
   const [homeIndex, setHomeIndex] = useState(null)
+
+  const [createRfq, setCreateRfq] = useState(true)
+
+  const [rfqDecision, setRfqDecision] = useState(false)
 
   const columnsOrder = [
     'Item Requested',
@@ -138,8 +146,22 @@ const DragAndDropComponent = () => {
       setDroppableId(destination.droppableId)
       const { subStatus, id } = items.find(({ id }) => `${id}` === draggableId)
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus${id}/${destination.droppableId}/${subStatus}`
+        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
       )
+
+      if (destination.droppableId === 'RFQ') {
+        // Some api call to check whether line falls in to existing RFQ or not
+
+        let val = false
+
+        if (val) {
+          console.log('yes condition')
+          setRfqDecision(true)
+        } else {
+          console.log('no condition')
+          setCreateRfq(true)
+        }
+      }
 
       setStatusPersistIsLoading(false)
       return
@@ -214,6 +236,9 @@ const DragAndDropComponent = () => {
           {`Promoting line to ${droppableId} ...`}
         </div>
       </div>
+
+      <CreateRfqModal showModal={createRfq} setShowModal={setCreateRfq} />
+      <RfqDecisionModal showModal={rfqDecision} setShowModal={setRfqDecision} />
     </Wrapper>
   )
 }
