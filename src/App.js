@@ -11,11 +11,12 @@ import {
   ASN,
   GRN,
   User,
-  Projects,
+  RfqDetails,
   Vendors,
   Bidders,
   PaymentAdviseSlip,
   MaterialsV2,
+  OrderDetails,
 } from './pages/dashboard'
 
 import { ToastContainer } from 'react-toastify'
@@ -35,7 +36,8 @@ function App() {
             <Route path="asn" element={<ASN />} />
             <Route path="grn" element={<GRN />} />
             <Route path="user" element={<User />} />
-            <Route path="rfqdetails/:id" element={<Projects />} />
+            <Route path="rfqdetails/:id" element={<RfqDetails />} />
+            <Route path="orderDetails/:id" element={<OrderDetails />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="bidders" element={<Bidders />} />
             <Route path="paymentAdviceSlip" element={<PaymentAdviseSlip />} />

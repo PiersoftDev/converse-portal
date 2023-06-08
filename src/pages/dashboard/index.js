@@ -6,11 +6,12 @@ import Orders from './Orders'
 import ASN from './ASN'
 import GRN from './GRN'
 import User from './User'
-import Projects from './Project'
+import RfqDetails from './RfqDetails'
 import Vendors from './Vendors'
 import Bidders from './Bidders'
 import PaymentAdviseSlip from './PaymentAdviseSlip'
 import MaterialsV2 from './MaterialsV2'
+import OrderDetails from './OrderDetails'
 
 export {
   SharedLayout,
@@ -21,9 +22,10 @@ export {
   ASN,
   GRN,
   User,
-  Projects,
+  RfqDetails,
   Vendors,
   Bidders,
   PaymentAdviseSlip,
   MaterialsV2,
+  OrderDetails,
 }
