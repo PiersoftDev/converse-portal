@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { getPurchaseLines } from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
 
-const Projects = () => {
+const RfqDetails = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
@@ -37,7 +37,7 @@ const Projects = () => {
     </Wrapper>
   )
 }
-export default Projects
+export default RfqDetails
 
 const Wrapper = styled.div`
   background-color: var(--grey-50);

@@ -16,7 +16,7 @@ const OrderComponent = ({ item }) => {
   const navigate = useNavigate()
 
   const openOrderDetails = () => {
-    navigate(`/rfqdetails/123`, { state: { ...item } })
+    navigate(`/orderDetails/123`, { state: { ...item } })
   }
 
   return (
