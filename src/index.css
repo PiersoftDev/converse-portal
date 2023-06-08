@@ -365,25 +365,3 @@ input:focus {
 }
 
 /* Purchase order tabs */
-
-.create-order {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.9rem;
-  background-color: var(--white);
-  border: 1px solid var(--grey-400);
-  border-radius: 5px;
-  transition: var(--transition);
-}
-
-.create-order-icon {
-  display: grid;
-  place-items: center;
-  font-size: 1.5rem;
-}
-
-.create-order:hover {
-  transform: scale(1.05);
-}

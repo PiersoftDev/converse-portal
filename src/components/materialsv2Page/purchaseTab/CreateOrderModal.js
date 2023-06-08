@@ -13,26 +13,26 @@ const initialState = {
 
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
-const CreateRfqModal = ({ showModal, setShowModal }) => {
-  const [newRfqState, setNewRfqState] = useState(initialState)
+const CreateOrderModal = ({ showModal, setShowModal }) => {
+  const [newOrderState, setNewOrderState] = useState(initialState)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
   const handleChange = (e) => {
-    setNewRfqState({
-      ...newRfqState,
+    setNewOrderState({
+      ...newOrderState,
       [e.target.name]: e.target.value,
     })
   }
 
-  const discardRfq = () => {
-    setNewRfqState(initialState)
+  const discardOrder = () => {
+    setNewOrderState(initialState)
     setShowModal(false)
   }
 
-  const createRFQ = async () => {
-    const { projectCode, category, warehouseCode } = newRfqState
+  const createOrder = async () => {
+    const { projectCode, category, warehouseCode } = newOrderState
 
     if (!projectCode || !category || !warehouseCode) {
       toast.error('Pls enter all the values')
@@ -51,15 +51,15 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       setIsError(false)
       await axios.post(url, reqBody)
       setIsLoading(false)
-      setNewRfqState(initialState)
+      setNewOrderState(initialState)
       setShowModal(false)
-      toast.success('A New RFQ is created')
+      toast.success('A New Order is created')
     } catch (error) {
       setIsLoading(false)
       setIsError(true)
-      setNewRfqState(initialState)
+      setNewOrderState(initialState)
       setShowModal(false)
-      toast.error('An error while creating a new RFQ')
+      toast.error('An error while creating a new order')
     }
   }
 
@@ -78,14 +78,14 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
             </div>
           )}
 
-          <h4 className="material-modal-header">New RFQ</h4>
+          <h4 className="material-modal-header">New Purchase Order</h4>
 
           <div className="input-container">
             <div className="input-item ">
               <label htmlFor="projectCode">Project Code </label>
               <input
                 type="text"
-                value={newRfqState.projectCode}
+                value={newOrderState.projectCode}
                 name="projectCode"
                 onChange={handleChange}
                 id="projectCode"
@@ -95,7 +95,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
               <label htmlFor="category">Category </label>
               <input
                 type="text"
-                value={newRfqState.category}
+                value={newOrderState.category}
                 name="category"
                 onChange={handleChange}
                 id="category"
@@ -106,7 +106,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
               <label htmlFor="warehouseCode">Warehouse Code</label>
               <input
                 type="text"
-                value={newRfqState.warehouseCode}
+                value={newOrderState.warehouseCode}
                 name="warehouseCode"
                 onChange={handleChange}
                 id="warehouseCode"
@@ -114,10 +114,10 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
             </div>
 
             <div className="btns-container">
-              <button className="discard-btn" onClick={discardRfq}>
+              <button className="discard-btn" onClick={discardOrder}>
                 Discard
               </button>
-              <button className="create-btn" onClick={createRFQ}>
+              <button className="create-btn" onClick={createOrder}>
                 Create
               </button>
             </div>
@@ -127,7 +127,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
     </Wrapper>
   )
 }
-export default CreateRfqModal
+export default CreateOrderModal
 
 const Wrapper = styled.div`
   position: absolute;

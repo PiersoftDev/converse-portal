@@ -10,8 +10,10 @@ import { BsGlobeAmericas } from 'react-icons/bs'
 import { RiShareBoxLine } from 'react-icons/ri'
 
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const SingleRfq = ({ item }) => {
+  const navigate = useNavigate()
   const {
     id,
     projectId,
@@ -23,42 +25,46 @@ const SingleRfq = ({ item }) => {
     projectCode,
   } = item
 
+  const openRfqDetails = () => {
+    navigate(`/rfqdetails/${id}`, { state: { ...item } })
+  }
+
   return (
     <Wrapper>
-      <span className="open-order-details-icon">
+      <span className="open-rfq-details-icon" onClick={openRfqDetails}>
         <RiShareBoxLine />
       </span>
-      <div className="order-header">
-        <p className="order-header-text">
+      <div className="rfq-header">
+        <p className="rfq-header-text">
           <span>#80149 - </span> Summer Lenin Jacket SS22
         </p>
-        <div className="order-status">
+        <div className="rfq-status">
           <span>
             <BsGlobeAmericas />
           </span>
           <p>In Progress</p>
         </div>
       </div>
-      <div className="order-subheader">
-        <div className="order-subheader-element">
+      <div className="rfq-subheader">
+        <div className="rfq-subheader-element">
           <span>
             <BsFillBuildingFill />
           </span>
           <p>Bozekurt KonfesiyonSan A.S</p>
         </div>
-        <div className="order-subheader-element">
+        <div className="rfq-subheader-element">
           <span>
             <MdLocationOn />
           </span>
           <p>Turkey</p>
         </div>
-        <div className="order-subheader-element">
+        <div className="rfq-subheader-element">
           <span>
             <BsFillPersonFill />
           </span>
           <p>Stephanie carvole</p>
         </div>
-        <div className="order-subheader-element">
+        <div className="rfq-subheader-element">
           <span>
             <BsFillDatabaseFill />
           </span>
@@ -77,7 +83,7 @@ const Wrapper = styled.div`
   margin-bottom: 1rem;
   position: relative;
 
-  .order-header {
+  .rfq-header {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -85,21 +91,21 @@ const Wrapper = styled.div`
     font-size: 1.3rem;
   }
 
-  .order-header-text {
+  .rfq-header-text {
     color: var(--grey-800);
     font-weight: 500;
   }
 
-  .order-header-text span {
+  .rfq-header-text span {
     font-weight: 400;
     color: var(--grey-500);
   }
 
-  .order-header p {
+  .rfq-header p {
     margin-bottom: 0;
   }
 
-  .order-status {
+  .rfq-status {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -110,64 +116,39 @@ const Wrapper = styled.div`
     background-color: var(--primary-50);
   }
 
-  .order-status span {
+  .rfq-status span {
     display: grid;
     align-items: center;
     color: var(--primary-500);
   }
 
-  .order-status p {
+  .rfq-status p {
     color: var(--grey-800);
   }
 
-  .order-subheader {
+  .rfq-subheader {
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
-  .order-subheader-element {
+  .rfq-subheader-element {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--grey-500);
   }
 
-  .order-subheader-element span {
+  .rfq-subheader-element span {
     display: grid;
     place-items: center;
   }
 
-  .order-subheader-element p {
+  .rfq-subheader-element p {
     margin-bottom: 0;
   }
 
-  .order-sep-line {
-    border-bottom: 1px solid var(--grey-100);
-    margin: 1rem 0;
-  }
-
-  .order-footer {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .order-footer-icon {
-    display: grid;
-    place-items: center;
-    background-color: var(--primary-500);
-    color: var(--white);
-    padding: 0.3rem;
-    border-radius: 5px;
-  }
-
-  .order-footer p {
-    margin-bottom: 0;
-    color: var(--grey-700);
-  }
-
-  .open-order-details-icon {
+  .open-rfq-details-icon {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
@@ -175,7 +156,7 @@ const Wrapper = styled.div`
     transform: var(--transition);
   }
 
-  .open-order-details-icon:hover {
+  .open-rfq-details-icon:hover {
     transform: scale(1.1);
     color: var(--grey-800);
   }

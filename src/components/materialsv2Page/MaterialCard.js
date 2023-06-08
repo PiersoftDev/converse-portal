@@ -53,6 +53,7 @@ const MaterialCard = ({ material, index }) => {
   const [quantityStatus, setQuantityStatus] = useState({
     icon: null,
     color: null,
+    msg: null,
   })
 
   const toolTipStyle = {
@@ -70,11 +71,23 @@ const MaterialCard = ({ material, index }) => {
   useEffect(() => {
     console.log(quantity, budgetedQty, inventory)
     if (quantity > budgetedQty) {
-      setQuantityStatus({ icon: <MdReportGmailerrorred />, color: '#ff4d4d' })
+      setQuantityStatus({
+        icon: <MdReportGmailerrorred />,
+        color: '#ff4d4d',
+        msg: 'Quantity > budgeted quantity',
+      })
     } else if (quantity > inventory) {
-      setQuantityStatus({ icon: <FiAlertTriangle />, color: 'gold' })
+      setQuantityStatus({
+        icon: <FiAlertTriangle />,
+        color: 'gold',
+        msg: 'Quantity > inventory',
+      })
     } else {
-      setQuantityStatus({ icon: <MdCheckCircleOutline />, color: 'green' })
+      setQuantityStatus({
+        icon: <MdCheckCircleOutline />,
+        color: 'green',
+        msg: 'Quantity < inventory',
+      })
     }
   }, [])
 
@@ -141,9 +154,17 @@ const MaterialCard = ({ material, index }) => {
               <MdProductionQuantityLimits />
             </span>
             <p>{`${quantity} ${uom}`}</p>
-            <span style={{ color: quantityStatus.color }}>
-              {quantityStatus.icon}
-            </span>
+
+            <Tooltip
+              title={quantityStatus.msg}
+              placement="top"
+              arrow
+              PopperProps={toolTipStyle}
+            >
+              <span style={{ color: quantityStatus.color }}>
+                {quantityStatus.icon}
+              </span>
+            </Tooltip>
           </div>
           <div className="content">
             <span>

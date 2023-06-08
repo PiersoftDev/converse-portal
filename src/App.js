@@ -35,7 +35,7 @@ function App() {
             <Route path="asn" element={<ASN />} />
             <Route path="grn" element={<GRN />} />
             <Route path="user" element={<User />} />
-            <Route path="rfqdetails" element={<Projects />} />
+            <Route path="rfqdetails/:id" element={<Projects />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="bidders" element={<Bidders />} />
             <Route path="paymentAdviceSlip" element={<PaymentAdviseSlip />} />
