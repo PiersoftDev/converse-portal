@@ -4,6 +4,7 @@ import { ImCross } from 'react-icons/im'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
+import { useEffect } from 'react'
 
 const initialState = {
   project: '',
@@ -11,18 +12,98 @@ const initialState = {
   warehouse: '',
 }
 
+const initialSuggestionsState = {
+  project: [],
+  category: [],
+  warehouse: [],
+}
+
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const CreateRfqModal = ({ showModal, setShowModal }) => {
   const [newRfqState, setNewRfqState] = useState(initialState)
+  const [suggestions, setSuggestions] = useState(initialSuggestionsState)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+    const { name, value } = e.target
+
+    if (value.length > 3) {
+      setNewRfqState({
+        ...newRfqState,
+        [e.target.name]: value,
+      })
+      const suggestions = await fetchData(name, value)
+
+      setSuggestions({
+        ...suggestions,
+        [e.target.name]: suggestions,
+      })
+    } else {
+      setNewRfqState({
+        ...newRfqState,
+        [e.target.name]: value,
+      })
+
+      setSuggestions({
+        ...suggestions,
+        [e.target.name]: [],
+      })
+    }
+  }
+
+  const fetchData = async (name, value) => {
+    try {
+      let response = []
+
+      switch (name) {
+        case 'project':
+          response = await axios(
+            `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
+          )
+          break
+        case 'category':
+          response = await axios(
+            `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
+          )
+          break
+        case 'warehouse':
+          response = await axios.post(
+            `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+          )
+          break
+
+        default:
+          break
+      }
+      return response.data
+    } catch (error) {
+      console.log(error)
+      console.log('some error occured while fetching sample json data')
+    }
+  }
+
+  const handleProductValueChange = async (e) => {
     setNewRfqState({
       ...newRfqState,
       [e.target.name]: e.target.value,
+    })
+
+    await fetchData(e.target.value)
+  }
+
+  const handleSearchItemsClick = (name, value) => {
+    console.log(name, value)
+    setNewRfqState({
+      ...newRfqState,
+      [name]: value,
+    })
+
+    setSuggestions({
+      ...suggestions,
+      [name]: [],
     })
   }
 
@@ -90,6 +171,21 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="project"
               />
+              {suggestions?.project?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.project?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() => console.log('Project clicked')}
+                      >
+                        {result.projectName}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
             <div className="input-item ">
               <label htmlFor="category">Category </label>
@@ -100,6 +196,26 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="category"
               />
+              {suggestions?.category?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.category?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() =>
+                          handleSearchItemsClick(
+                            result.itemGroupDesc,
+                            'category'
+                          )
+                        }
+                      >
+                        {result.itemGroupDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="input-item">
@@ -111,6 +227,24 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="warehouse"
               />
+
+              {suggestions?.warehouse?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.warehouse?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() =>
+                          handleSearchItemsClick(result.whDesc, 'warehouse')
+                        }
+                      >
+                        {result.whDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="btns-container">
@@ -206,6 +340,7 @@ const Wrapper = styled.div`
 
   .input-item {
     /* max-width: 400px; */
+    position: relative;
   }
 
   .input-item label {
@@ -282,5 +417,38 @@ const Wrapper = styled.div`
     color: var(--red-dark);
     transform: scale(1.05);
     border: 1px solid var(--grey-100);
+  }
+
+  .drop-down-container {
+    margin: 0 auto;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 15rem;
+    overflow-y: scroll;
+    position: absolute;
+    top: 100%;
+    z-index: 2;
+    border: 1px solid var(--grey-200);
+  }
+
+  .search-item {
+    padding: 0.1rem 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--grey-500);
+  }
+
+  .search-item:hover {
+    background-color: var(--primary-50);
+  }
+
+  .input-item input:focus + .drop-down-container {
+    display: flex;
   }
 `

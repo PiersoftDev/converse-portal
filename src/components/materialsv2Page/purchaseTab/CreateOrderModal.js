@@ -1,43 +1,115 @@
-import axios from "axios";
-import { useState } from "react";
-import { ImCross } from "react-icons/im";
-import { toast } from "react-toastify";
-import styled from "styled-components";
-import ReactLoading from "react-loading";
+import axios from 'axios'
+import { useState } from 'react'
+import { ImCross } from 'react-icons/im'
+import { toast } from 'react-toastify'
+import styled from 'styled-components'
+import ReactLoading from 'react-loading'
 
 const initialState = {
-  project: "",
-  category: "",
-  warehouse: "",
-  businessPartner: "",
-};
+  project: '',
+  category: '',
+  warehouse: '',
+  businessPartner: '',
+}
 
-const url = "http://13.232.221.196:9090/v1/purchase/rfq/create-rfq";
+const initialSuggestionsState = {
+  project: [],
+  category: [],
+  warehouse: [],
+  businessPartner: [],
+}
+
+const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const CreateOrderModal = ({ showModal, setShowModal }) => {
-  const [newOrderState, setNewOrderState] = useState(initialState);
+  const [newOrderState, setNewOrderState] = useState(initialState)
+  const [suggestions, setSuggestions] = useState(initialSuggestionsState)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
-  const handleChange = (e) => {
-    setNewOrderState({
-      ...newOrderState,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = async (e) => {
+    const { name, value } = e.target
+
+    if (value.length > 3) {
+      setNewOrderState({
+        ...newOrderState,
+        [e.target.name]: value,
+      })
+      const suggestions = await fetchData(name, value)
+
+      setSuggestions({
+        ...suggestions,
+        [e.target.name]: suggestions,
+      })
+    } else {
+      setNewOrderState({
+        ...newOrderState,
+        [e.target.name]: value,
+      })
+
+      setSuggestions({
+        ...suggestions,
+        [e.target.name]: [],
+      })
+    }
+  }
+
+  const fetchData = async (name, value) => {
+    try {
+      let response = []
+
+      switch (name) {
+        case 'project':
+          response = await axios(
+            `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
+          )
+          break
+        case 'category':
+          response = await axios(
+            `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
+          )
+          break
+        case 'warehouse':
+          response = await axios.post(
+            `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+          )
+          break
+
+        case 'businessPartner':
+          response = await axios(
+            `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
+          )
+          break
+
+        default:
+          break
+      }
+      return response.data
+    } catch (error) {
+      console.log(error)
+      console.log('some error occured while fetching sample json data')
+    }
+  }
 
   const discardOrder = () => {
-    setNewOrderState(initialState);
-    setShowModal(false);
-  };
+    setNewOrderState(initialState)
+    setShowModal(false)
+  }
+
+  const handleSearchItemsClick = (name) => {
+    setNewOrderState({
+      ...newOrderState,
+      project: name,
+    })
+  }
 
   const createOrder = async () => {
-    const { project, category, warehouse, businessPartner } = newOrderState;
+    const { project, category, warehouse, businessPartner } = newOrderState
 
     if (!project || !category || !warehouse || !businessPartner) {
-      toast.error("Pls enter all the values");
-      return;
+      toast.error('Pls enter all the values')
+      return
     }
 
     const reqBody = {
@@ -45,29 +117,29 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
       project: project,
       warehouse: warehouse,
       businessPartner: businessPartner,
-    };
+    }
 
     try {
-      console.log(reqBody);
-      setIsLoading(true);
-      setIsError(false);
-      await axios.post(url, reqBody);
-      setIsLoading(false);
-      setNewOrderState(initialState);
-      setShowModal(false);
-      toast.success("A New Order is created");
+      console.log(reqBody)
+      setIsLoading(true)
+      setIsError(false)
+      await axios.post(url, reqBody)
+      setIsLoading(false)
+      setNewOrderState(initialState)
+      setShowModal(false)
+      toast.success('A New Order is created')
     } catch (error) {
-      setIsLoading(false);
-      setIsError(true);
-      setNewOrderState(initialState);
-      setShowModal(false);
-      toast.error("An error while creating a new order");
+      setIsLoading(false)
+      setIsError(true)
+      setNewOrderState(initialState)
+      setShowModal(false)
+      toast.error('An error while creating a new order')
     }
-  };
+  }
 
   return (
     <Wrapper>
-      <div className={`material-modal ${showModal ? "show" : ""} `}>
+      <div className={`material-modal ${showModal ? 'show' : ''} `}>
         <div className="material-modal-content">
           {isLoading && (
             <div className="create-rfq-loading">
@@ -84,7 +156,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
 
           <div className="input-container">
             <div className="input-item ">
-              <label htmlFor="project">Project</label>
+              <label htmlFor="project">Project </label>
               <input
                 type="text"
                 value={newOrderState.project}
@@ -92,6 +164,23 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="project"
               />
+              {suggestions?.project?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.project?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() =>
+                          handleSearchItemsClick(result.projectName)
+                        }
+                      >
+                        {result.projectName}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
             <div className="input-item ">
               <label htmlFor="category">Category </label>
@@ -102,10 +191,27 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="category"
               />
+              {suggestions?.category?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.category?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() =>
+                          handleSearchItemsClick(result.itemGroupDesc)
+                        }
+                      >
+                        {result.itemGroupDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="input-item">
-              <label htmlFor="warehouse">Warehouse</label>
+              <label htmlFor="warehouse">Warehouse </label>
               <input
                 type="text"
                 value={newOrderState.warehouse}
@@ -113,10 +219,26 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="warehouse"
               />
+
+              {suggestions?.warehouse?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.warehouse?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() => handleSearchItemsClick(result.whDesc)}
+                      >
+                        {result.whDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="input-item">
-              <label htmlFor="businessPartner">Business Partner</label>
+              <label htmlFor="warehouse">Business Partner </label>
               <input
                 type="text"
                 value={newOrderState.businessPartner}
@@ -124,6 +246,22 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                 onChange={handleChange}
                 id="businessPartner"
               />
+
+              {suggestions?.businessPartner?.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions?.businessPartner?.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() => handleSearchItemsClick(result.bpDesc)}
+                      >
+                        {result.bpDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="btns-container">
@@ -138,9 +276,9 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
         </div>
       </div>
     </Wrapper>
-  );
-};
-export default CreateOrderModal;
+  )
+}
+export default CreateOrderModal
 
 const Wrapper = styled.div`
   position: absolute;
@@ -219,6 +357,7 @@ const Wrapper = styled.div`
 
   .input-item {
     /* max-width: 400px; */
+    position: relative;
   }
 
   .input-item label {
@@ -296,4 +435,37 @@ const Wrapper = styled.div`
     transform: scale(1.05);
     border: 1px solid var(--grey-100);
   }
-`;
+
+  .drop-down-container {
+    margin: 0 auto;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 15rem;
+    overflow-y: scroll;
+    position: absolute;
+    top: 100%;
+    z-index: 2;
+    border: 1px solid var(--grey-200);
+  }
+
+  .search-item {
+    padding: 0.1rem 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--grey-500);
+  }
+
+  .search-item:hover {
+    background-color: var(--primary-50);
+  }
+
+  .input-item input:focus + .drop-down-container {
+    display: flex;
+  }
+`
