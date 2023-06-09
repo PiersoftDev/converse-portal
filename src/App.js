@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { LoginPage, ErrorPage } from './pages'
+import { LoginPage, ErrorPage, TypeAheadPage } from './pages'
 
 import {
   SharedLayout,
@@ -42,6 +42,7 @@ function App() {
             <Route path="bidders" element={<Bidders />} />
             <Route path="paymentAdviceSlip" element={<PaymentAdviseSlip />} />
             <Route path="materialsv2" element={<MaterialsV2 />} />
+            <Route path="search" element={<TypeAheadPage />} />
           </Route>
           <Route index path="/login" element={<LoginPage />} />
           <Route path="*" element={<ErrorPage />} />

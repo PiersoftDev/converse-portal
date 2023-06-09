@@ -26,9 +26,9 @@ const DragAndDropComponent = () => {
 
   const [homeIndex, setHomeIndex] = useState(null)
 
-  const [createRfq, setCreateRfq] = useState(true)
+  const [createRfq, setCreateRfq] = useState(false)
 
-  const [rfqDecision, setRfqDecision] = useState(false)
+  const [rfqDecision, setRfqDecision] = useState(true)
 
   const columnsOrder = [
     'Item Requested',
@@ -152,7 +152,7 @@ const DragAndDropComponent = () => {
       if (destination.droppableId === 'RFQ') {
         // Some api call to check whether line falls in to existing RFQ or not
 
-        let val = false
+        let val = true
 
         if (val) {
           console.log('yes condition')
@@ -238,7 +238,12 @@ const DragAndDropComponent = () => {
       </div>
 
       <CreateRfqModal showModal={createRfq} setShowModal={setCreateRfq} />
-      <RfqDecisionModal showModal={rfqDecision} setShowModal={setRfqDecision} />
+      <RfqDecisionModal
+        showModal={rfqDecision}
+        setShowModal={setRfqDecision}
+        createRfq={createRfq}
+        setCreateRfq={setCreateRfq}
+      />
     </Wrapper>
   )
 }
