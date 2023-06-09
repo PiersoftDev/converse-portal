@@ -1,161 +1,138 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { ImCross } from 'react-icons/im'
-import { toast } from 'react-toastify'
-import styled from 'styled-components'
-import ReactLoading from 'react-loading'
-import { useEffect } from 'react'
+import axios from "axios";
+import { useState } from "react";
+import { ImCross } from "react-icons/im";
+import { toast } from "react-toastify";
+import styled from "styled-components";
+import ReactLoading from "react-loading";
+import { useEffect } from "react";
+import { debounce } from "@mui/material";
 
 const initialState = {
-  project: '',
-  category: '',
-  warehouse: '',
-}
+  project: "",
+  category: "",
+  warehouse: "",
+};
 
 const initialSuggestionsState = {
   project: [],
   category: [],
   warehouse: [],
-}
+};
 
-const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
+const url = "http://13.232.221.196:9090/v1/purchase/rfq/create-rfq";
 
 const CreateRfqModal = ({ showModal, setShowModal }) => {
-  const [newRfqState, setNewRfqState] = useState(initialState)
-  const [suggestions, setSuggestions] = useState(initialSuggestionsState)
+  const [newRfqState, setNewRfqState] = useState(initialState);
+  const [suggestions, setSuggestions] = useState(initialSuggestionsState);
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  const handleChange = async (e) => {
-    const { name, value } = e.target
+  const handleChange = debounce(async (e) => {
+    const { name, value } = e.target;
+    setNewRfqState({
+      ...newRfqState,
+      [name]: value,
+    });
+    const suggestions = await fetchData(name, value);
 
-    if (value.length > 2) {
-      setNewRfqState({
-        ...newRfqState,
-        [e.target.name]: value,
-      })
-      const suggestions = await fetchData(name, value)
-
-      setSuggestions({
-        ...suggestions,
-        [e.target.name]: suggestions,
-      })
-    } else {
-      setNewRfqState({
-        ...newRfqState,
-        [e.target.name]: value,
-      })
-
-      setSuggestions({
-        ...suggestions,
-        [e.target.name]: [],
-      })
-    }
-  }
+    setSuggestions({
+      ...suggestions,
+      [name]: suggestions,
+    });
+  }, 500);
 
   const fetchData = async (name, value) => {
     try {
-      let response = []
+      let response = [];
 
       switch (name) {
-        case 'project':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
-          )
-          break
-        case 'category':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
-          )
-          break
-        case 'warehouse':
-          response = await axios.post(
-            `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
-          )
-          break
+        case "project":
+          response = await axios(`http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`);
+          break;
+        case "category":
+          response = await axios(`http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`);
+          break;
+        case "warehouse":
+          response = await axios.post(`http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`);
+          break;
 
         default:
-          break
+          break;
       }
-      return response.data
+      return response.data;
     } catch (error) {
-      console.log(error)
-      console.log('some error occured while fetching sample json data')
+      console.log(error);
+      console.log("some error occured while fetching sample json data");
     }
-  }
+  };
 
   const handleProductValueChange = async (e) => {
     setNewRfqState({
       ...newRfqState,
       [e.target.name]: e.target.value,
-    })
+    });
 
-    await fetchData(e.target.value)
-  }
+    await fetchData(e.target.value);
+  };
 
   const handleSearchItemsClick = (name, value) => {
-    console.log(name, value)
+    console.log(name, value);
     setNewRfqState({
       ...newRfqState,
       [name]: value,
-    })
+    });
 
     setSuggestions({
       ...suggestions,
       [name]: [],
-    })
-  }
+    });
+  };
 
   const discardRfq = () => {
-    setNewRfqState(initialState)
-    setShowModal(false)
-  }
+    setNewRfqState(initialState);
+    setShowModal(false);
+  };
 
   const createRFQ = async () => {
-    const { project, category, warehouse } = newRfqState
+    const { project, category, warehouse } = newRfqState;
 
     if (!project || !category || !warehouse) {
-      toast.error('Pls enter all the values')
-      return
+      toast.error("Pls enter all the values");
+      return;
     }
 
     const reqBody = {
       category: category,
       project: project,
       warehouse: warehouse,
-    }
+    };
 
     try {
-      console.log(reqBody)
-      setIsLoading(true)
-      setIsError(false)
-      await axios.post(url, reqBody)
-      setIsLoading(false)
-      setNewRfqState(initialState)
-      setShowModal(false)
-      toast.success('A New RFQ is created')
+      console.log(reqBody);
+      setIsLoading(true);
+      setIsError(false);
+      await axios.post(url, reqBody);
+      setIsLoading(false);
+      setNewRfqState(initialState);
+      setShowModal(false);
+      toast.success("A New RFQ is created");
     } catch (error) {
-      setIsLoading(false)
-      setIsError(true)
-      setNewRfqState(initialState)
-      setShowModal(false)
-      toast.error('An error while creating a new RFQ')
+      setIsLoading(false);
+      setIsError(true);
+      setNewRfqState(initialState);
+      setShowModal(false);
+      toast.error("An error while creating a new RFQ");
     }
-  }
+  };
 
   return (
     <Wrapper>
-      <div className={`material-modal ${showModal ? 'show' : ''} `}>
+      <div className={`material-modal ${showModal ? "show" : ""} `}>
         <div className="material-modal-content">
           {isLoading && (
             <div className="create-rfq-loading">
-              <ReactLoading
-                type="balls"
-                color="var(--grey-500)"
-                height={50}
-                width={50}
-              />
+              <ReactLoading type="balls" color="var(--grey-500)" height={50} width={50} />
             </div>
           )}
 
@@ -164,55 +141,30 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
           <div className="input-container">
             <div className="input-item ">
               <label htmlFor="project">Project </label>
-              <input
-                type="text"
-                value={newRfqState.project}
-                name="project"
-                onChange={handleChange}
-                id="project"
-              />
+              <input type="text" value={newRfqState.project} name="project" onChange={handleChange} id="project" />
               {suggestions?.project?.length > 0 && (
                 <ul className="drop-down-container">
                   {suggestions?.project?.map((result, index) => {
                     return (
-                      <li
-                        key={index}
-                        className="search-item"
-                        onClick={() => console.log('Project clicked')}
-                      >
+                      <li key={index} className="search-item" onClick={() => handleSearchItemsClick("project", result.projectName)}>
                         {result.projectName}
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               )}
             </div>
             <div className="input-item ">
               <label htmlFor="category">Category </label>
-              <input
-                type="text"
-                value={newRfqState.category}
-                name="category"
-                onChange={handleChange}
-                id="category"
-              />
+              <input type="text" value={newRfqState.category} name="category" onChange={handleChange} id="category" />
               {suggestions?.category?.length > 0 && (
                 <ul className="drop-down-container">
                   {suggestions?.category?.map((result, index) => {
                     return (
-                      <li
-                        key={index}
-                        className="search-item"
-                        onClick={() =>
-                          handleSearchItemsClick(
-                            result.itemGroupDesc,
-                            'category'
-                          )
-                        }
-                      >
+                      <li key={index} className="search-item" onClick={() => handleSearchItemsClick(result.itemGroupDesc, "category")}>
                         {result.itemGroupDesc}
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               )}
@@ -220,28 +172,16 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
 
             <div className="input-item">
               <label htmlFor="warehouse">Warehouse </label>
-              <input
-                type="text"
-                value={newRfqState.warehouse}
-                name="warehouse"
-                onChange={handleChange}
-                id="warehouse"
-              />
+              <input type="text" value={newRfqState.warehouse} name="warehouse" onChange={handleChange} id="warehouse" />
 
               {suggestions?.warehouse?.length > 0 && (
                 <ul className="drop-down-container">
                   {suggestions?.warehouse?.map((result, index) => {
                     return (
-                      <li
-                        key={index}
-                        className="search-item"
-                        onClick={() =>
-                          handleSearchItemsClick(result.whDesc, 'warehouse')
-                        }
-                      >
+                      <li key={index} className="search-item" onClick={() => handleSearchItemsClick(result.whDesc, "warehouse")}>
                         {result.whDesc}
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               )}
@@ -259,9 +199,9 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
         </div>
       </div>
     </Wrapper>
-  )
-}
-export default CreateRfqModal
+  );
+};
+export default CreateRfqModal;
 
 const Wrapper = styled.div`
   position: absolute;
@@ -422,7 +362,7 @@ const Wrapper = styled.div`
   .drop-down-container {
     margin: 0 auto;
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: column;
     text-align: left;
     padding-left: 0;
@@ -447,8 +387,4 @@ const Wrapper = styled.div`
   .search-item:hover {
     background-color: var(--primary-50);
   }
-
-  .input-item input:focus + .drop-down-container {
-    display: flex;
-  }
-`
+`;
