@@ -76,7 +76,43 @@ const Wrapper = styled.div`
     text-align: center;
   }
 
-  .error-container h3 {
-    margin-top: 3rem;
+  .search-input {
+    border: 1px solid var(--grey-200);
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 20rem;
+    display: block;
+  }
+
+  .search-input:focus {
+    border: 1px solid var(--grey-400);
+  }
+
+  .drop-down-container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 0;
+    background-color: var(--white);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 15rem;
+    overflow-y: scroll;
+  }
+
+  .search-item {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .search-item:hover {
+    background-color: var(--primary-50);
   }
 `
