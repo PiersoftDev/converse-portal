@@ -17,6 +17,7 @@ import {
   PaymentAdviseSlip,
   MaterialsV2,
   OrderDetails,
+  VendorsV2,
 } from './pages/dashboard'
 
 import { ToastContainer } from 'react-toastify'
@@ -43,6 +44,7 @@ function App() {
             <Route path="paymentAdviceSlip" element={<PaymentAdviseSlip />} />
             <Route path="materialsv2" element={<MaterialsV2 />} />
             <Route path="search" element={<TypeAheadPage />} />
+            <Route path="vendorsv2" element={<VendorsV2 />} />
           </Route>
           <Route index path="/login" element={<LoginPage />} />
           <Route path="*" element={<ErrorPage />} />

@@ -22,7 +22,7 @@ const navLinks = [
   },
   {
     id: 3,
-    path: '/vendors',
+    path: '/vendorsv2',
     text: 'Vendors',
     icon: <BsShop />,
   },

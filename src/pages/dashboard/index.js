@@ -12,6 +12,7 @@ import Bidders from './Bidders'
 import PaymentAdviseSlip from './PaymentAdviseSlip'
 import MaterialsV2 from './MaterialsV2'
 import OrderDetails from './OrderDetails'
+import VendorsV2 from './VendorsV2'
 
 export {
   SharedLayout,
@@ -28,4 +29,5 @@ export {
   PaymentAdviseSlip,
   MaterialsV2,
   OrderDetails,
+  VendorsV2,
 }

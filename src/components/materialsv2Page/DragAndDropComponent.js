@@ -11,7 +11,6 @@ import axios from 'axios'
 
 import CreateRfqModal from './RfqTab/CreateRfqModal'
 import RfqDecisionModal from './RfqDecisionModal'
-import { TbRuler, TbRuler2, TbRuler2Off, TbRuler3 } from 'react-icons/tb'
 
 const DragAndDropComponent = () => {
   const dispatch = useDispatch()
