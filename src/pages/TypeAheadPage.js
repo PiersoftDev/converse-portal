@@ -23,7 +23,7 @@ const TypeAheadPage = () => {
 
   const handleInputChange = async (e) => {
     setInputValue(e.target.value)
-    fetchData(e.target.value)
+    await fetchData(e.target.value)
   }
 
   const handleSearchItemsClick = ({ name }) => {

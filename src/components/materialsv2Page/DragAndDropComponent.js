@@ -28,7 +28,7 @@ const DragAndDropComponent = () => {
 
   const [createRfq, setCreateRfq] = useState(false)
 
-  const [rfqDecision, setRfqDecision] = useState(true)
+  const [rfqDecision, setRfqDecision] = useState(false)
 
   const columnsOrder = [
     'Item Requested',
