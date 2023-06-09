@@ -31,7 +31,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
   const handleChange = async (e) => {
     const { name, value } = e.target
 
-    if (value.length > 3) {
+    if (value.length > 2) {
       setNewOrderState({
         ...newOrderState,
         [e.target.name]: value,
