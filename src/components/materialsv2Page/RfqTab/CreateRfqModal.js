@@ -30,7 +30,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
   const handleChange = async (e) => {
     const { name, value } = e.target
 
-    if (value.length > 3) {
+    if (value.length > 2) {
       setNewRfqState({
         ...newRfqState,
         [e.target.name]: value,
