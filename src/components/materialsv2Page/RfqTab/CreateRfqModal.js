@@ -1,16 +1,18 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ImCross } from 'react-icons/im'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
 import { useEffect } from 'react'
-import { debounce } from '@mui/material'
+import { DatePicker } from '@mui/x-date-pickers'
+import debounce from 'lodash.debounce'
 
 const initialState = {
   project: '',
   category: '',
   warehouse: '',
+  plannedDate: '',
 }
 
 const initialSuggestionsState = {
@@ -19,11 +21,18 @@ const initialSuggestionsState = {
   warehouse: [],
 }
 
+const initialIdState = {
+  project: '',
+  category: '',
+  warehouse: '',
+}
+
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const CreateRfqModal = ({ showModal, setShowModal }) => {
   const [newRfqState, setNewRfqState] = useState(initialState)
   const [suggestions, setSuggestions] = useState(initialSuggestionsState)
+  const [idState, setIdState] = useState(initialIdState)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -34,55 +43,97 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       ...newRfqState,
       [name]: value,
     })
-    const suggestions = await fetchData(name, value)
-
-    setSuggestions({
-      ...suggestions,
-      [name]: suggestions,
-    })
+    fetchData(name, value)
   }
 
-  const fetchData = async (name, value) => {
-    try {
-      let response = []
+  const fetchData = useCallback(
+    debounce(
+      async (name, value) => {
+        console.log(name, value)
+        try {
+          let response = []
 
-      switch (name) {
-        case 'project':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
-          )
-          break
-        case 'category':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
-          )
-          break
-        case 'warehouse':
-          response = await axios.post(
-            `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
-          )
-          break
+          switch (name) {
+            case 'project':
+              response = await axios(
+                `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
+              )
+              break
+            case 'category':
+              response = await axios(
+                `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
+              )
+              break
+            case 'warehouse':
+              response = await axios.post(
+                `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+              )
+              break
 
-        default:
-          break
-      }
-      return response.data
-    } catch (error) {
-      console.log(error)
-      console.log('some error occured while fetching sample json data')
-    }
-  }
+            default:
+              break
+          }
 
-  const handleSearchItemsClick = (name, value) => {
-    setNewRfqState({
-      ...newRfqState,
-      [name]: value,
-    })
+          setSuggestions({
+            ...suggestions,
+            [name]: response.data,
+          })
+        } catch (error) {
+          console.log(error)
+          console.log('some error occured while fetching sample json data')
+        }
+      },
 
+      500
+    ),
+    []
+  )
+
+  const handleSearchItemsClick = (name, result) => {
+    console.log(name, result)
     setSuggestions({
       ...suggestions,
       [name]: [],
     })
+
+    switch (name) {
+      case 'project':
+        setNewRfqState({
+          ...newRfqState,
+          [name]: result.projectName,
+        })
+
+        setIdState({
+          ...idState,
+          [name]: result.projectCode,
+        })
+        break
+
+      case 'category':
+        setNewRfqState({
+          ...newRfqState,
+          [name]: result.itemGroupDesc,
+        })
+        setIdState({
+          ...idState,
+          [name]: result.itemGroupCode,
+        })
+        break
+      case 'warehouse':
+        setNewRfqState({
+          ...newRfqState,
+          [name]: result.whDesc,
+        })
+
+        setIdState({
+          ...idState,
+          [name]: result.whCode,
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const discardRfq = () => {
@@ -91,17 +142,27 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
   }
 
   const createRFQ = async () => {
-    const { project, category, warehouse } = newRfqState
+    const { project, category, warehouse, plannedDate } = newRfqState
 
-    if (!project || !category || !warehouse) {
+    const {
+      project: projectId,
+      category: categoryId,
+      warehouse: warehouseId,
+    } = idState
+
+    if (!project || !category || !warehouse || !plannedDate) {
       toast.error('Pls enter all the values')
       return
     }
 
     const reqBody = {
-      category: category,
-      project: project,
-      warehouse: warehouse,
+      categoryId: categoryId,
+      categoryDesc: category,
+      projectId: projectId,
+      projectDesc: project,
+      warehouseId: warehouseId,
+      warehouseDesc: warehouse,
+      plannedDate: plannedDate,
     }
 
     try {
@@ -122,7 +183,46 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
     }
   }
 
-  useEffect(() => {}, [newRfqState])
+  const dateFilterStyling = {
+    margin: '0',
+    padding: '0',
+    borderRadius: '10px',
+    fontSize: '12px',
+
+    '.MuiFormControl-root': {
+      borderRadius: '10px',
+      padding: '0.25rem 0.5rem',
+    },
+    '.MuiFormLabel-root': {
+      color: 'black',
+    },
+    '.MuiOutlinedInput-notchedOutline ': {
+      top: '0px',
+    },
+    '.MuiOutlinedInput-root': {
+      border: '1px solid var(--grey-200)',
+      transition: '0.3s ease-in-out all',
+      borderRadius: '5px',
+    },
+    '.MuiOutlinedInput-root:hover': {
+      border: '1px solid var(--grey-400)',
+    },
+
+    '.MuiOutlinedInput-input': {
+      border: '1px solid transparent',
+    },
+
+    '.MuiOutlinedInput-input:hover': {
+      border: '1px solid transparent',
+    },
+
+    '.MuiOutlinedInput-notchedOutline': {
+      border: 'transparent',
+    },
+    '.MuiOutlinedInput-notchedOutline span': {
+      border: 'transparent',
+    },
+  }
 
   return (
     <Wrapper>
@@ -159,7 +259,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick('project', result.projectName)
+                          handleSearchItemsClick('project', result)
                         }
                       >
                         {result.projectName}
@@ -186,10 +286,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick(
-                            'category',
-                            result.itemGroupDesc
-                          )
+                          handleSearchItemsClick('category', result)
                         }
                       >
                         {result.itemGroupDesc}
@@ -218,7 +315,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick('warehouse', result.whDesc)
+                          handleSearchItemsClick('warehouse', result)
                         }
                       >
                         {result.whDesc}
@@ -227,6 +324,20 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                   })}
                 </ul>
               )}
+            </div>
+
+            <div className="input-item plannedDate-container">
+              <label htmlFor="plannedDate">Planned Date</label>
+              <DatePicker
+                slotProps={{ textField: { size: 'small' } }}
+                showDaysOutsideCurrentMonth
+                sx={dateFilterStyling}
+                value={newRfqState.plannedDate}
+                id="shipment-date"
+                onChange={(newValue) =>
+                  setNewRfqState({ ...newRfqState, plannedDate: newValue })
+                }
+              />
             </div>
 
             <div className="btns-container">
@@ -428,5 +539,14 @@ const Wrapper = styled.div`
 
   .search-item:hover {
     background-color: var(--primary-50);
+  }
+
+  .plannedDate-container input {
+    border: 1px solid transparent;
+  }
+
+  .plannedDate-container input:focus {
+    outline: none;
+    border: 1px solid transparent;
   }
 `

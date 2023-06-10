@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ImCross } from 'react-icons/im'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
+import debounce from 'lodash.debounce'
 
 const initialState = {
   project: '',
@@ -19,11 +20,19 @@ const initialSuggestionsState = {
   businessPartner: [],
 }
 
+const initialIdState = {
+  project: '',
+  category: '',
+  warehouse: '',
+  businessPartner: '',
+}
+
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const CreateOrderModal = ({ showModal, setShowModal }) => {
   const [newOrderState, setNewOrderState] = useState(initialState)
   const [suggestions, setSuggestions] = useState(initialSuggestionsState)
+  const [idState, setIdState] = useState(initialIdState)
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -35,81 +44,140 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
       ...newOrderState,
       [e.target.name]: value,
     })
-    const suggestions = await fetchData(name, value)
-
-    setSuggestions({
-      ...suggestions,
-      [e.target.name]: suggestions,
-    })
+    await fetchData(name, value)
   }
 
-  const fetchData = async (name, value) => {
-    try {
-      let response = []
+  const fetchData = useCallback(
+    debounce(async (name, value) => {
+      try {
+        let response = []
 
-      switch (name) {
-        case 'project':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
-          )
-          break
-        case 'category':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
-          )
-          break
-        case 'warehouse':
-          response = await axios.post(
-            `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
-          )
-          break
+        switch (name) {
+          case 'project':
+            response = await axios(
+              `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
+            )
+            break
+          case 'category':
+            response = await axios(
+              `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
+            )
+            break
+          case 'warehouse':
+            response = await axios.post(
+              `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+            )
+            break
 
-        case 'businessPartner':
-          response = await axios(
-            `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
-          )
-          break
+          case 'businessPartner':
+            response = await axios(
+              `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
+            )
+            break
 
-        default:
-          break
+          default:
+            break
+        }
+
+        setSuggestions({
+          ...suggestions,
+          [name]: response.data,
+        })
+      } catch (error) {
+        console.log(error)
+        console.log('some error occured while fetching sample json data')
       }
-      return response.data
-    } catch (error) {
-      console.log(error)
-      console.log('some error occured while fetching sample json data')
-    }
-  }
+    }, 500),
+    []
+  )
 
   const discardOrder = () => {
     setNewOrderState(initialState)
     setShowModal(false)
   }
 
-  const handleSearchItemsClick = (name, value) => {
-    setNewOrderState({
-      ...newOrderState,
-      [name]: value,
-    })
-
+  const handleSearchItemsClick = (name, result) => {
+    console.log(name, result)
     setSuggestions({
       ...suggestions,
       [name]: [],
     })
+
+    switch (name) {
+      case 'project':
+        setNewOrderState({
+          ...newOrderState,
+          [name]: result.projectName,
+        })
+
+        setIdState({
+          ...idState,
+          [name]: result.projectCode,
+        })
+        break
+
+      case 'category':
+        setNewOrderState({
+          ...newOrderState,
+          [name]: result.itemGroupDesc,
+        })
+        setIdState({
+          ...idState,
+          [name]: result.itemGroupCode,
+        })
+        break
+      case 'warehouse':
+        setNewOrderState({
+          ...newOrderState,
+          [name]: result.whDesc,
+        })
+
+        setIdState({
+          ...idState,
+          [name]: result.whCode,
+        })
+        break
+
+      case 'businessPartner':
+        setNewOrderState({
+          ...newOrderState,
+          [name]: result.bpDesc,
+        })
+
+        setIdState({
+          ...idState,
+          [name]: result.bpCode,
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   const createOrder = async () => {
     const { project, category, warehouse, businessPartner } = newOrderState
 
+    const {
+      project: projectId,
+      category: categoryId,
+      warehouse: warehouseId,
+      businessPartner: businessPartnerId,
+    } = idState
+
     if (!project || !category || !warehouse || !businessPartner) {
       toast.error('Pls enter all the values')
       return
     }
-
     const reqBody = {
-      category: category,
-      project: project,
-      warehouse: warehouse,
-      businessPartner: businessPartner,
+      categoryId: categoryId,
+      categoryDesc: category,
+      projectId: projectId,
+      projectDesc: project,
+      warehouseId: warehouseId,
+      warehouseDesc: warehouse,
+      businessPartnerId: businessPartnerId,
+      businessPartnerDesc: businessPartner,
     }
 
     try {
@@ -165,7 +233,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick('project', result.projectName)
+                          handleSearchItemsClick('project', result)
                         }
                       >
                         {result.projectName}
@@ -192,10 +260,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick(
-                            'category',
-                            result.itemGroupDesc
-                          )
+                          handleSearchItemsClick('category', result)
                         }
                       >
                         {result.itemGroupDesc}
@@ -224,7 +289,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick('warehouse', result.whDesc)
+                          handleSearchItemsClick('warehouse', result)
                         }
                       >
                         {result.whDesc}
@@ -253,10 +318,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick(
-                            'businessPartner',
-                            result.bpDesc
-                          )
+                          handleSearchItemsClick('businessPartner', result)
                         }
                       >
                         {result.bpDesc}
