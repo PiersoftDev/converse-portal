@@ -3,6 +3,7 @@ import dummyDeliveryLinesData from './dummyDeliveryLinesData'
 import materialv2Tabs from './materialv2Tabs'
 import columnsData from './columnsData'
 import materialsData from './materialsData'
+import dummyBidsData from './dummyBidsData'
 
 export {
   carousalItems,
@@ -10,4 +11,5 @@ export {
   materialv2Tabs,
   columnsData,
   materialsData,
+  dummyBidsData,
 }
