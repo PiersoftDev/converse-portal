@@ -4,6 +4,7 @@ import DirectoryComponent from '../../components/Vendorsv2Page/DirectoryComponen
 
 import InProgressComponent from '../../components/Vendorsv2Page/purchaseOrderTab/InProgressComponent'
 import AsnTabComponent from '../../components/Vendorsv2Page/asnTab/AsnTabComponent'
+import BidsTabComponent from '../../components/Vendorsv2Page/bidsTab/BidsTabComponent'
 
 const vendorsv2Tabs = [
   {
@@ -14,7 +15,7 @@ const vendorsv2Tabs = [
   {
     id: 2,
     tabName: 'Bids',
-    component: <DummyTabComponent content={'Bids'} />,
+    component: <BidsTabComponent />,
   },
   {
     id: 3,
