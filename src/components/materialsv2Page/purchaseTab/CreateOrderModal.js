@@ -31,28 +31,16 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
   const handleChange = async (e) => {
     const { name, value } = e.target
 
-    if (value.length > 2) {
-      setNewOrderState({
-        ...newOrderState,
-        [e.target.name]: value,
-      })
-      const suggestions = await fetchData(name, value)
+    setNewOrderState({
+      ...newOrderState,
+      [e.target.name]: value,
+    })
+    const suggestions = await fetchData(name, value)
 
-      setSuggestions({
-        ...suggestions,
-        [e.target.name]: suggestions,
-      })
-    } else {
-      setNewOrderState({
-        ...newOrderState,
-        [e.target.name]: value,
-      })
-
-      setSuggestions({
-        ...suggestions,
-        [e.target.name]: [],
-      })
-    }
+    setSuggestions({
+      ...suggestions,
+      [e.target.name]: suggestions,
+    })
   }
 
   const fetchData = async (name, value) => {
@@ -97,10 +85,15 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
     setShowModal(false)
   }
 
-  const handleSearchItemsClick = (name) => {
+  const handleSearchItemsClick = (name, value) => {
     setNewOrderState({
       ...newOrderState,
-      project: name,
+      [name]: value,
+    })
+
+    setSuggestions({
+      ...suggestions,
+      [name]: [],
     })
   }
 
@@ -172,7 +165,7 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick(result.projectName)
+                          handleSearchItemsClick('project', result.projectName)
                         }
                       >
                         {result.projectName}
@@ -199,7 +192,10 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                         key={index}
                         className="search-item"
                         onClick={() =>
-                          handleSearchItemsClick(result.itemGroupDesc)
+                          handleSearchItemsClick(
+                            'category',
+                            result.itemGroupDesc
+                          )
                         }
                       >
                         {result.itemGroupDesc}
@@ -227,7 +223,9 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                       <li
                         key={index}
                         className="search-item"
-                        onClick={() => handleSearchItemsClick(result.whDesc)}
+                        onClick={() =>
+                          handleSearchItemsClick('warehouse', result.whDesc)
+                        }
                       >
                         {result.whDesc}
                       </li>
@@ -254,7 +252,12 @@ const CreateOrderModal = ({ showModal, setShowModal }) => {
                       <li
                         key={index}
                         className="search-item"
-                        onClick={() => handleSearchItemsClick(result.bpDesc)}
+                        onClick={() =>
+                          handleSearchItemsClick(
+                            'businessPartner',
+                            result.bpDesc
+                          )
+                        }
                       >
                         {result.bpDesc}
                       </li>
@@ -439,7 +442,7 @@ const Wrapper = styled.div`
   .drop-down-container {
     margin: 0 auto;
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: column;
     text-align: left;
     padding-left: 0;
@@ -463,9 +466,5 @@ const Wrapper = styled.div`
 
   .search-item:hover {
     background-color: var(--primary-50);
-  }
-
-  .input-item input:focus + .drop-down-container {
-    display: flex;
   }
 `
