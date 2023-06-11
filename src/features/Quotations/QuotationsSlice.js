@@ -7,7 +7,7 @@ const initialState = {
   isError: false,
 }
 
-const url = 'http://13.232.221.196:9090/v1/purchase/rfq/'
+const url = 'http://13.232.221.196:9090/v1/purchase/rfq/list-all-rfqs'
 
 export const getRfqList = createAsyncThunk(
   'Quotations/getRfqList',
