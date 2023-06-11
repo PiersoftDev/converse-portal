@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import ReactLoading from 'react-loading'
 
 import BidsTableComponent from './BidsTableComponent'
+import BidsTable2Component from './BidsTable2Component'
 
 const BidsTabComponent = () => {
   const { rfqItems, rfqItemsLoading, rfqItemsError } = useSelector(
@@ -46,7 +47,8 @@ const BidsTabComponent = () => {
           <div className="filter-text">Add Filters</div>
         </div>
       </div>
-      <BidsTableComponent />
+      {/* <BidsTableComponent /> */}
+      <BidsTable2Component />
     </Wrapper>
   )
 }
