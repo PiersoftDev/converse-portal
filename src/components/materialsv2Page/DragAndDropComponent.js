@@ -11,6 +11,7 @@ import axios from 'axios'
 
 import CreateRfqModal from './CreateRfqModal'
 import RfqDecisionModal from './RfqDecisionModal'
+import NoRfqDecisionModal from './NoRfqDecisionModal'
 
 const DragAndDropComponent = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,8 @@ const DragAndDropComponent = () => {
   const [createRfq, setCreateRfq] = useState(false)
 
   const [rfqDecision, setRfqDecision] = useState(false)
+
+  const [noRfqDecision, setNoRfqDecision] = useState(false)
 
   const [dragItem, setDragItem] = useState(null)
 
@@ -88,7 +91,7 @@ const DragAndDropComponent = () => {
       setStatusPersistIsLoading(true)
       setDroppableId(destination.droppableId)
       const tempitem = items.find(({ id }) => `${id}` === draggableId)
-      const { subStatus, id, projectId, categoryId } = tempitem
+      const { subStatus, id, projectId, categoryId, projectDesc } = tempitem
 
       if (destination.droppableId === 'RFQ') {
         // Some api call to check whether line falls in to existing RFQ or not
@@ -107,7 +110,11 @@ const DragAndDropComponent = () => {
           setStatusPersistIsLoading(false)
           return
         } else {
-          setCreateRfq(true)
+          setNoRfqDecision(true)
+
+          let state = { ...draftedRfq[0], projectId, projectDesc }
+
+          setDraftedRfq([state])
           setStatusPersistIsLoading(false)
           return
         }
@@ -316,6 +323,16 @@ const DragAndDropComponent = () => {
         rfqFlowState={rfqFlowState}
         setColumns={setColumns}
         saveStatusChangeForRfq={saveStatusChangeForRfq}
+      />
+      <NoRfqDecisionModal
+        showModal={noRfqDecision}
+        setShowModal={setNoRfqDecision}
+        createRfq={createRfq}
+        setCreateRfq={setCreateRfq}
+        rfqFlowState={rfqFlowState}
+        setColumns={setColumns}
+        saveStatusChangeForRfq={saveStatusChangeForRfq}
+        draftedRfq={draftedRfq}
       />
     </Wrapper>
   )
