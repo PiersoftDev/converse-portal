@@ -164,42 +164,6 @@ const BidsTable2Component = () => {
       title: 'VendorDate',
       dataIndex: 'vendorDate',
     },
-    // {
-    //   title: 'Name',
-    //   dataIndex: 'name',
-    //   render: (text, record) => {
-    //     if (editingRow === record.key) {
-    //       return (
-    //         <input
-    //           type="text"
-    //           name="name"
-    //           value={editData.name}
-    //           onChange={handleChange}
-    //         />
-    //       )
-    //     }
-    //     return text
-    //   },
-    // },
-    // {
-    //   title: 'Age',
-    //   dataIndex: 'age',
-    //   render: (text, record) => {
-    //     if (editingRow === record.key) {
-    //       return (
-    //         <input
-    //           type="text"
-    //           value={editData.age}
-    //           name="age"
-    //           onChange={(e) => {
-    //             setEditData({ ...editData, age: e.target.value })
-    //           }}
-    //         />
-    //       )
-    //     }
-    //     return text
-    //   },
-    // },
     {
       title: 'Actions',
       render: (text, record) => (
@@ -226,68 +190,18 @@ export default BidsTable2Component
 const Wrapper = styled.div`
   border: 1px solid var(--grey-100);
   border-radius: 10px;
-  padding: 0 1rem;
-  margin-top: 4rem;
 
-  h4 {
-    border-bottom: 1px solid var(--grey-100);
-    padding: 1rem 0;
-  }
-
-  .table {
-    border: transparent;
-    margin-bottom: 0;
-  }
-
-  td,
-  th {
-    text-align: center;
-    border: none;
-  }
-
-  tr {
-    border-bottom: 1px solid var(--grey-100);
-  }
-
-  tr:hover {
-    background-color: transparent;
-  }
-
-  .edit-cell-class {
-    padding: 0.5rem 1rem;
-  }
-
-  .editor-class {
-    text-align: center;
-    width: 5rem;
-    margin: 0 auto;
-    border: 0;
-    border-radius: 0;
-    border-bottom: 1px solid var(--primary-300);
-    font-size: 0.8rem;
-    padding: 0.25rem 0.5rem;
-    box-shadow: none;
-  }
-
-  .vendor-editor-class {
-    width: 10rem;
+  .ant-table-cell {
+    padding: 0.5rem !important;
   }
 
   .input-item {
-    /* max-width: 400px; */
     position: relative;
-  }
-
-  .input-item label {
-    display: block;
-    color: var(--grey-800);
-    font-weight: 500;
-    font-size: 0.8rem;
   }
 
   .input-item input {
     display: block;
-    width: 100%;
+    width: %;
     border: 1px solid var(--grey-100);
     border-radius: 5px;
     margin-top: 0.2rem;
