@@ -3,11 +3,13 @@ import { TbTruckLoading } from 'react-icons/tb'
 import { BsFillBuildingFill } from 'react-icons/bs'
 import { MdLocationOn } from 'react-icons/md'
 import { BsFillPersonFill } from 'react-icons/bs'
-import { BsFillDatabaseFill } from 'react-icons/bs'
+import { BsFillCalendarCheckFill } from 'react-icons/bs'
 
 import { GrInProgress } from 'react-icons/gr'
 import { BsGlobeAmericas } from 'react-icons/bs'
 import { RiShareBoxLine } from 'react-icons/ri'
+import { MdHardware } from 'react-icons/md'
+
 
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
@@ -24,6 +26,7 @@ const SingleRfq = ({ item }) => {
     categoryId,
     categoryDesc,
     createdDate,
+    plannedDate,
   } = item
 
   const openRfqDetails = () => {
@@ -37,7 +40,7 @@ const SingleRfq = ({ item }) => {
       </span>
       <div className="rfq-header">
         <p className="rfq-header-text">
-          <span>#80149 - </span> Summer Lenin Jacket SS22
+          <span>RFQ #{id}</span>
         </p>
         <div className="rfq-status">
           <span>
@@ -61,15 +64,15 @@ const SingleRfq = ({ item }) => {
         </div>
         <div className="rfq-subheader-element">
           <span>
-            <BsFillPersonFill />
+            <MdHardware />
           </span>
-          <p>Stephanie carvole</p>
+          <p>{categoryDesc}</p>
         </div>
         <div className="rfq-subheader-element">
           <span>
-            <BsFillDatabaseFill />
+            <BsFillCalendarCheckFill />
           </span>
-          <p>Jackets & Coats</p>
+          <p>{plannedDate}</p>
         </div>
       </div>
     </Wrapper>

@@ -163,6 +163,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       warehouseId: warehouseId,
       warehouseDesc: warehouse,
       plannedDate: plannedDate,
+      status: 'DRAFT',
     }
 
     try {
