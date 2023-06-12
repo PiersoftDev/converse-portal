@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import ReactLoading from 'react-loading'
 import axios from 'axios'
 
-import CreateRfqModal from './RfqTab/CreateRfqModal'
+import CreateRfqModal from './CreateRfqModal'
 import RfqDecisionModal from './RfqDecisionModal'
 
 const DragAndDropComponent = () => {
@@ -29,6 +29,23 @@ const DragAndDropComponent = () => {
 
   const [rfqDecision, setRfqDecision] = useState(false)
 
+  const [rfqFlowState, setRfqFlowState] = useState({
+    destination: null,
+    draggableId: null,
+    temp: null,
+  })
+
+  const [draftedRfq, setDraftedRfq] = useState([
+    {
+      projectId: '',
+      projectDesc: '',
+      categoryId: '',
+      categoryDesc: '',
+      warehouseId: '',
+      warehouseDesc: '',
+    },
+  ])
+
   const columnsOrder = [
     'Item Requested',
     'Warehouse Order',
@@ -40,6 +57,74 @@ const DragAndDropComponent = () => {
   const handleDragStart = (start) => {
     const { source } = start
     setHomeIndex(columnsOrder.indexOf(source.droppableId))
+  }
+
+  const saveStatusChangeForRfq = async ({ destination, draggableId, temp }) => {
+    try {
+      setStatusPersistIsLoading(true)
+      setDroppableId(destination.droppableId)
+      const tempitem = items.find(({ id }) => `${id}` === draggableId)
+      const { subStatus, id, projectId, categoryId } = tempitem
+
+      await axios.put(
+        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
+      )
+
+      setStatusPersistIsLoading(false)
+      return
+    } catch (error) {
+      setStatusPersistIsLoading(false)
+      console.log(error)
+      dispatch(setColumns(temp))
+      toast.error('Some error occured while changing the status')
+      return
+    }
+  }
+
+  const saveStatusChange = async (destination, draggableId, temp) => {
+    try {
+      setStatusPersistIsLoading(true)
+      setDroppableId(destination.droppableId)
+      const tempitem = items.find(({ id }) => `${id}` === draggableId)
+      const { subStatus, id, projectId, categoryId } = tempitem
+
+      if (destination.droppableId === 'RFQ') {
+        // Some api call to check whether line falls in to existing RFQ or not
+
+        // const response = await axios(
+        //   `http://13.232.221.196:9090/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
+        // )
+
+        const response = await axios(
+          `http://13.232.221.196:9090/v1/purchase/rfq/drafted/EXE000022/A05`
+        )
+
+        setDraftedRfq(response.data)
+
+        if (response.data.length > 0) {
+          setRfqDecision(true)
+          setStatusPersistIsLoading(false)
+          return
+        } else {
+          setCreateRfq(true)
+          setStatusPersistIsLoading(false)
+          return
+        }
+      }
+
+      await axios.put(
+        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
+      )
+
+      setStatusPersistIsLoading(false)
+      return
+    } catch (error) {
+      setStatusPersistIsLoading(false)
+      console.log(error)
+      dispatch(setColumns(temp))
+      toast.error('Some error occured while changing the status')
+      return
+    }
   }
 
   const handleDragEnd = async (result) => {
@@ -91,6 +176,8 @@ const DragAndDropComponent = () => {
 
     const temp = { ...columns }
 
+    setRfqFlowState({ destination, draggableId, temp })
+
     const start = columns[source.droppableId]
     const finish = columns[destination.droppableId]
 
@@ -140,37 +227,7 @@ const DragAndDropComponent = () => {
 
     dispatch(setColumns(newState))
 
-    try {
-      setStatusPersistIsLoading(true)
-      setDroppableId(destination.droppableId)
-      const { subStatus, id } = items.find(({ id }) => `${id}` === draggableId)
-      await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
-      )
-
-      if (destination.droppableId === 'RFQ') {
-        // Some api call to check whether line falls in to existing RFQ or not
-
-        let val = true
-
-        if (val) {
-          console.log('yes condition')
-          setRfqDecision(true)
-        } else {
-          console.log('no condition')
-          setCreateRfq(true)
-        }
-      }
-
-      setStatusPersistIsLoading(false)
-      return
-    } catch (error) {
-      setStatusPersistIsLoading(false)
-      console.log(error)
-      dispatch(setColumns(temp))
-      toast.error('Some error occured while changing the status')
-      return
-    }
+    saveStatusChange(destination, draggableId, temp)
   }
 
   if (isLoading) {
@@ -236,12 +293,22 @@ const DragAndDropComponent = () => {
         </div>
       </div>
 
-      <CreateRfqModal showModal={createRfq} setShowModal={setCreateRfq} />
+      <CreateRfqModal
+        showModal={createRfq}
+        setShowModal={setCreateRfq}
+        draftedRfq={draftedRfq}
+        rfqFlowState={rfqFlowState}
+        setColumns={setColumns}
+        saveStatusChangeForRfq={saveStatusChangeForRfq}
+      />
       <RfqDecisionModal
         showModal={rfqDecision}
         setShowModal={setRfqDecision}
         createRfq={createRfq}
         setCreateRfq={setCreateRfq}
+        rfqFlowState={rfqFlowState}
+        setColumns={setColumns}
+        saveStatusChangeForRfq={saveStatusChangeForRfq}
       />
     </Wrapper>
   )

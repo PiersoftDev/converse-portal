@@ -5,13 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import { RiShareBoxLine } from 'react-icons/ri'
 import { useState } from 'react'
 import CreateRfqModal from './RfqTab/CreateRfqModal'
+import { useDispatch } from 'react-redux'
 
 const RfqDecisionModal = ({
   showModal,
   setShowModal,
   createRfq,
   setCreateRfq,
+  rfqFlowState,
+  setColumns,
+  saveStatusChangeForRfq,
 }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const item = {
     id: 123,
@@ -24,7 +29,10 @@ const RfqDecisionModal = ({
     projectCode: 'random code',
   }
 
+  const { destination, draggableId, temp } = rfqFlowState
+
   const openRfqDetails = () => {
+    saveStatusChangeForRfq({ destination, draggableId, temp })
     navigate(`/rfqdetails/${item.id}`, { state: { ...item } })
   }
 
@@ -32,20 +40,22 @@ const RfqDecisionModal = ({
     setCreateRfq(true)
     setShowModal(false)
   }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    dispatch(setColumns(temp))
+  }
   return (
     <Wrapper>
       <div
         className={`material-modal ${showModal ? 'show' : ''} `}
-        onClick={() => setShowModal(false)}
+        onClick={handleCloseModal}
       >
         <div
           className="material-modal-content"
           onClick={(e) => e.stopPropagation()}
         >
-          <button
-            onClick={() => setShowModal(false)}
-            className="close-modal-btn"
-          >
+          <button onClick={handleCloseModal} className="close-modal-btn">
             <ImCross />
           </button>
 
