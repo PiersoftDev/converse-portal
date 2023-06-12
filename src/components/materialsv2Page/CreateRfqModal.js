@@ -49,7 +49,11 @@ const CreateRfqModal = ({
       return
     }
 
-    const { $D, $M, $y } = plannedDate
+    let { $D, $M, $y } = plannedDate
+
+    if ($D < 10) $D = `0${$D}`
+
+    if ($M < 10) $M = `0${$M}`
 
     const reqBody = {
       categoryId: categoryId,
