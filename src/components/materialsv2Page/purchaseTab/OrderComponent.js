@@ -15,6 +15,18 @@ import { useNavigate } from 'react-router-dom'
 const OrderComponent = ({ item }) => {
   const navigate = useNavigate()
 
+  const {
+    id,
+    projectId,
+    projectDesc,
+    warehouseId,
+    warehouseDesc,
+    status,
+    categoryId,
+    categoryDesc,
+    createdDate,
+  } = item
+
   const openOrderDetails = () => {
     navigate(`/orderDetails/123`, { state: { ...item } })
   }
@@ -32,7 +44,7 @@ const OrderComponent = ({ item }) => {
           <span>
             <BsGlobeAmericas />
           </span>
-          <p>In Progress</p>
+          <p>{status || 'Dummy'}</p>
         </div>
       </div>
       <div className="order-subheader">
@@ -40,7 +52,7 @@ const OrderComponent = ({ item }) => {
           <span>
             <BsFillBuildingFill />
           </span>
-          <p>Bozekurt KonfesiyonSan A.S</p>
+          <p>{projectDesc}</p>
         </div>
         <div className="order-subheader-element">
           <span>
