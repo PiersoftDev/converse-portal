@@ -145,6 +145,9 @@ const materialSlice = createSlice({
     setColumns: (state, action) => {
       state.columns = action.payload
     },
+    addRfqToRfqItemsList: (state, action) => {
+      state.rfqItems = [...state.rfqItems, action.payload]
+    },
     persistStatusChange: async (state, action) => {
       const { items, columns } = state
       const { draggableId, droppableId } = action.payload
@@ -227,6 +230,7 @@ export const {
   makeAddToRfqErrorStatusBackToNormal,
   setColumns,
   persistStatusChange,
+  addRfqToRfqItemsList,
 } = materialSlice.actions
 
 export default materialSlice.reducer
