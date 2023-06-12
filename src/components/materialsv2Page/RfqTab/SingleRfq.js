@@ -10,12 +10,12 @@ import { BsGlobeAmericas } from 'react-icons/bs'
 import { RiShareBoxLine } from 'react-icons/ri'
 import { MdHardware } from 'react-icons/md'
 
-
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
 const SingleRfq = ({ item }) => {
   const navigate = useNavigate()
+
   const {
     id,
     projectId,
@@ -28,6 +28,12 @@ const SingleRfq = ({ item }) => {
     createdDate,
     plannedDate,
   } = item
+
+  let date = 'Null plannned Date'
+
+  if (plannedDate) {
+    date = `${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`
+  }
 
   const openRfqDetails = () => {
     navigate(`/rfqdetails/${id}`, { state: { ...item } })
@@ -72,7 +78,7 @@ const SingleRfq = ({ item }) => {
           <span>
             <BsFillCalendarCheckFill />
           </span>
-          <p>{plannedDate}</p>
+          <p>{date}</p>
         </div>
       </div>
     </Wrapper>

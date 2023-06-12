@@ -49,6 +49,8 @@ const CreateRfqModal = ({
       return
     }
 
+    const { $D, $M, $y } = plannedDate
+
     const reqBody = {
       categoryId: categoryId,
       categoryDesc: categoryDesc,
@@ -56,7 +58,7 @@ const CreateRfqModal = ({
       projectDesc: projectDesc,
       warehouseId: warehouseId,
       warehouseDesc: warehouseDesc,
-      plannedDate: plannedDate,
+      plannedDate: `${$y}${$M}-${$D}`,
     }
 
     const dummyItem = {
