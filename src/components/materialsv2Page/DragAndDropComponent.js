@@ -101,9 +101,8 @@ const DragAndDropComponent = () => {
         //   `http://13.232.221.196:9090/v1/purchase/rfq/drafted/EXE000022/A05`
         // )
 
-        setDraftedRfq(response.data)
-
         if (response.data.length > 0) {
+          setDraftedRfq(response.data)
           setRfqDecision(true)
           setStatusPersistIsLoading(false)
           return
