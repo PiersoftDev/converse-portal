@@ -7,6 +7,8 @@ import ReactLoading from 'react-loading'
 import { useEffect } from 'react'
 import { DatePicker } from '@mui/x-date-pickers'
 import debounce from 'lodash.debounce'
+import { useDispatch } from 'react-redux'
+import { addRfqToRfqItemsList } from '../../../features/MaterialIndent/MaterialSlice'
 
 const initialState = {
   project: '',
@@ -30,6 +32,7 @@ const initialIdState = {
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
 const CreateRfqModal = ({ showModal, setShowModal }) => {
+  const dispatch = useDispatch()
   const [newRfqState, setNewRfqState] = useState(initialState)
   const [suggestions, setSuggestions] = useState(initialSuggestionsState)
   const [idState, setIdState] = useState(initialIdState)
@@ -49,7 +52,6 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
   const fetchData = useCallback(
     debounce(
       async (name, value) => {
-        console.log(name, value)
         try {
           let response = []
 
@@ -90,7 +92,6 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
   )
 
   const handleSearchItemsClick = (name, result) => {
-    console.log(name, result)
     setSuggestions({
       ...suggestions,
       [name]: [],
@@ -155,6 +156,12 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       return
     }
 
+    let { $D, $M, $y } = plannedDate
+
+    if ($D < 10) $D = `0${$D}`
+
+    if ($M < 10) $M = `0${$M}`
+
     const reqBody = {
       categoryId: categoryId,
       categoryDesc: category,
@@ -162,7 +169,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       projectDesc: project,
       warehouseId: warehouseId,
       warehouseDesc: warehouse,
-      plannedDate: plannedDate,
+      plannedDate: `${$y}-${$M}-${$D}`,
       status: 'DRAFT',
     }
 
@@ -170,7 +177,8 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       console.log(reqBody)
       setIsLoading(true)
       setIsError(false)
-      await axios.post(url, reqBody)
+      const resp = await axios.post(url, reqBody)
+      dispatch(addRfqToRfqItemsList(resp.data))
       setIsLoading(false)
       setNewRfqState(initialState)
       setShowModal(false)
