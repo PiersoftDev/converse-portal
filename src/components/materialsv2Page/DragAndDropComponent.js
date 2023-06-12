@@ -29,6 +29,8 @@ const DragAndDropComponent = () => {
 
   const [rfqDecision, setRfqDecision] = useState(false)
 
+  const [dragItem, setDragItem] = useState(null)
+
   const [rfqFlowState, setRfqFlowState] = useState({
     destination: null,
     draggableId: null,
@@ -91,13 +93,13 @@ const DragAndDropComponent = () => {
       if (destination.droppableId === 'RFQ') {
         // Some api call to check whether line falls in to existing RFQ or not
 
-        // const response = await axios(
-        //   `http://13.232.221.196:9090/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
-        // )
-
         const response = await axios(
-          `http://13.232.221.196:9090/v1/purchase/rfq/drafted/EXE000022/A05`
+          `http://13.232.221.196:9090/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
         )
+
+        // const response = await axios(
+        //   `http://13.232.221.196:9090/v1/purchase/rfq/drafted/EXE000022/A05`
+        // )
 
         setDraftedRfq(response.data)
 
@@ -130,7 +132,9 @@ const DragAndDropComponent = () => {
   const handleDragEnd = async (result) => {
     const { draggableId, destination, source } = result
 
-    const { subStatus } = items.find(({ id }) => `${id}` === draggableId)
+    const draggingItem = items.find(({ id }) => `${id}` === draggableId)
+
+    const { subStatus } = draggingItem
 
     if (source.droppableId === 'Warehouse Order') {
       toast.error(`Material in Warehouse Order can't be moved`)
@@ -227,6 +231,8 @@ const DragAndDropComponent = () => {
 
     dispatch(setColumns(newState))
 
+    setDragItem(draggingItem)
+
     saveStatusChange(destination, draggableId, temp)
   }
 
@@ -289,7 +295,9 @@ const DragAndDropComponent = () => {
         }
       >
         <div className="status-change-loader">
-          {`Promoting line to ${droppableId} ...`}
+          {droppableId === 'RFQ'
+            ? `checking if there are any open RFQ for the this ${dragItem?.projectDesc} and ${dragItem?.category} ...`
+            : `Promoting line to ${droppableId} ...`}
         </div>
       </div>
 
