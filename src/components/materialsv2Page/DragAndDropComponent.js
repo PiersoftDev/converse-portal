@@ -91,7 +91,8 @@ const DragAndDropComponent = () => {
       setStatusPersistIsLoading(true)
       setDroppableId(destination.droppableId)
       const tempitem = items.find(({ id }) => `${id}` === draggableId)
-      const { subStatus, id, projectId, categoryId, projectDesc } = tempitem
+      const { subStatus, id, projectId, categoryId, projectDesc, category } =
+        tempitem
 
       if (destination.droppableId === 'RFQ') {
         // Some api call to check whether line falls in to existing RFQ or not
@@ -112,7 +113,13 @@ const DragAndDropComponent = () => {
         } else {
           setNoRfqDecision(true)
 
-          let state = { ...draftedRfq[0], projectId, projectDesc }
+          let state = {
+            ...draftedRfq[0],
+            projectId,
+            projectDesc,
+            categoryId,
+            categoryDesc: category,
+          }
 
           setDraftedRfq([state])
           setStatusPersistIsLoading(false)
