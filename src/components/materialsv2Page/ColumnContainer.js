@@ -6,9 +6,6 @@ import { useSelector } from 'react-redux'
 const ColumnContainer = ({ columnId, isDropDisabled }) => {
   const { items, columns } = useSelector((store) => store.material)
 
-  console.log('items', items)
-  console.log('columns', columns)
-
   const { title, materialIds, color } = columns[columnId]
 
   const materials = materialIds.reduce((acc, curr) => {

@@ -17,12 +17,13 @@ const SingleRfq = ({ item }) => {
   const {
     id,
     projectId,
-    categoryId,
-    category,
-    plannedDate,
+    projectDesc,
     warehouseId,
-    warehouseCode,
-    projectCode,
+    warehouseDesc,
+    status,
+    categoryId,
+    categoryDesc,
+    createdDate,
   } = item
 
   const openRfqDetails = () => {
@@ -42,7 +43,7 @@ const SingleRfq = ({ item }) => {
           <span>
             <BsGlobeAmericas />
           </span>
-          <p>In Progress</p>
+          <p>{status || 'Dummy'}</p>
         </div>
       </div>
       <div className="rfq-subheader">
@@ -50,13 +51,13 @@ const SingleRfq = ({ item }) => {
           <span>
             <BsFillBuildingFill />
           </span>
-          <p>Bozekurt KonfesiyonSan A.S</p>
+          <p>{projectDesc}</p>
         </div>
         <div className="rfq-subheader-element">
           <span>
             <MdLocationOn />
           </span>
-          <p>Turkey</p>
+          <p>{warehouseDesc}</p>
         </div>
         <div className="rfq-subheader-element">
           <span>
