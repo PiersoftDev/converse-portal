@@ -58,7 +58,7 @@ const CreateRfqModal = ({
       projectDesc: projectDesc,
       warehouseId: warehouseId,
       warehouseDesc: warehouseDesc,
-      plannedDate: `${$y}${$M}-${$D}`,
+      plannedDate: `${$y}-${$M}-${$D}`,
     }
 
     const dummyItem = {
@@ -112,6 +112,7 @@ const CreateRfqModal = ({
       setIsLoading(false)
       setIsError(true)
       setShowModal(false)
+      dispatch(setColumns(temp))
       toast.error('An error while creating a new RFQ')
     }
   }
