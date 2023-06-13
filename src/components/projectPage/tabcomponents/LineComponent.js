@@ -45,7 +45,6 @@ const LineComponent = ({ newline, rfqId }) => {
           className="add-items-btn"
           onClick={() => addItemsToAddItemsList(newline)}
           disabled={loading}
-          loading={loading}
         >
           <div className="add-item-btn-content">
             {loading && (

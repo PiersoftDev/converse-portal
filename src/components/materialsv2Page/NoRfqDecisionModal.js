@@ -42,8 +42,8 @@ const NoRfqDecisionModal = ({
 
   const { destination, draggableId, temp } = rfqFlowState
 
-  const openRfqDetails = () => {
-    saveStatusChangeForRfq({ destination, draggableId, temp })
+  const openRfqDetails = async () => {
+    await saveStatusChangeForRfq({ destination, draggableId, temp })
     navigate(`/rfqdetails/${item.id}`, { state: { ...item } })
   }
 
