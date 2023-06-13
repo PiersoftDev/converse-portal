@@ -9,6 +9,7 @@ import { DatePicker } from '@mui/x-date-pickers'
 import debounce from 'lodash.debounce'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { Warehouse } from '@mui/icons-material'
 
 const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
 
@@ -32,11 +33,39 @@ const CreateRfqModal = ({
   } = draftedRfq[0]
 
   const [plannedDate, setPlannedDate] = useState('')
+  const [warehouse, setWarehouse] = useState({ id: '', desc: '' })
+  const [suggestions, setSuggestions] = useState([])
 
   const { destination, draggableId, temp } = rfqFlowState
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
+
+  const handleChange = async (e) => {
+    const { name, value } = e.target
+    setWarehouse({ id: '', desc: value })
+    fetchData(name, value)
+  }
+
+  const fetchData = useCallback(
+    debounce(async (name, value) => {
+      try {
+        let response = await axios.post(
+          `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+        )
+        setSuggestions(response.data)
+      } catch (error) {
+        console.log(error)
+        console.log('some error occured while fetching sample json data')
+      }
+    }, 500),
+    []
+  )
+
+  const handleSearchItemsClick = (result) => {
+    setSuggestions([])
+    setWarehouse({ id: result.whCode, desc: result.whDesc })
+  }
 
   const discardRfq = () => {
     setShowModal(false)
@@ -44,8 +73,8 @@ const CreateRfqModal = ({
   }
 
   const createRFQ = async () => {
-    if (!plannedDate) {
-      toast.error('Pls enter the planned date')
+    if (!plannedDate || !warehouse.desc || !warehouse.id) {
+      toast.error('Pls enter the  warehouse and planned date')
       return
     }
 
@@ -60,8 +89,8 @@ const CreateRfqModal = ({
       categoryDesc: categoryDesc,
       projectId: projectId,
       projectDesc: projectDesc,
-      warehouseId: warehouseId,
-      warehouseDesc: warehouseDesc,
+      warehouseId: warehouse.id,
+      warehouseDesc: warehouse.desc,
       plannedDate: `${$y}-${$M}-${$D}`,
     }
 
@@ -101,13 +130,14 @@ const CreateRfqModal = ({
       console.log(reqBody)
       setIsLoading(true)
       setIsError(false)
-      await axios.post(url, reqBody)
+      const resp = await axios.post(url, reqBody)
+      console.log(resp.data)
       setIsLoading(false)
       setShowModal(false)
       saveStatusChangeForRfq({ destination, draggableId, temp })
       navigate(`/rfqdetails/123`, {
         state: {
-          ...dummyItem,
+          ...resp.data,
         },
       })
 
@@ -205,11 +235,28 @@ const CreateRfqModal = ({
               <label htmlFor="warehouse">Warehouse </label>
               <input
                 type="text"
-                value={warehouseDesc}
+                value={warehouse.desc}
                 name="warehouse"
                 id="warehouse"
-                disabled="disabled"
+                onChange={handleChange}
+                autoComplete="off"
               />
+
+              {suggestions.length > 0 && (
+                <ul className="drop-down-container">
+                  {suggestions.map((result, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="search-item"
+                        onClick={() => handleSearchItemsClick(result)}
+                      >
+                        {result.whDesc}
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
             <div className="input-item plannedDate-container">
