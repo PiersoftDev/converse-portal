@@ -30,7 +30,7 @@ const ProjectImpInfoComponent = ({
         <div className="left-header">{projectCode}</div>
         <div className="left-content">
           <Tooltip
-            title="project id"
+            title="RFQ Id"
             placement="bottom-start"
             PopperProps={{
               sx: {
@@ -50,12 +50,12 @@ const ProjectImpInfoComponent = ({
               <span>
                 <NumbersIcon />
               </span>
-              <p>{`RFQ-${id}`}</p>
+              <p>{`${id}`}</p>
             </div>
           </Tooltip>
 
           <Tooltip
-            title="location"
+            title="Project"
             placement="bottom-start"
             PopperProps={{
               sx: {
@@ -80,7 +80,7 @@ const ProjectImpInfoComponent = ({
           </Tooltip>
 
           <Tooltip
-            title="Category"
+            title="Warehouse"
             placement="bottom-start"
             PopperProps={{
               sx: {
@@ -98,7 +98,8 @@ const ProjectImpInfoComponent = ({
           >
             <div className="project-value">
               <span>
-                <ConstructionIcon />
+              <WarehouseIcon />
+                
               </span>
               <p>{warehouseDesc}</p>
             </div>
@@ -123,14 +124,14 @@ const ProjectImpInfoComponent = ({
           >
             <div className="project-value">
               <span>
-                <WarehouseIcon />
+              <ConstructionIcon />
               </span>
               <p>{categoryDesc}</p>
             </div>
           </Tooltip>
 
           <Tooltip
-            title="Calendar"
+            title="Bidding Last Date"
             placement="bottom-start"
             PopperProps={{
               sx: {
