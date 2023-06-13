@@ -177,11 +177,13 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       console.log(reqBody)
       setIsLoading(true)
       setIsError(false)
+
       const resp = await axios.post(url, reqBody)
-      dispatch(addRfqToRfqItemsList(resp.data))
       setIsLoading(false)
-      setNewRfqState(initialState)
       setShowModal(false)
+
+      setNewRfqState(initialState)
+      dispatch(addRfqToRfqItemsList(resp.data))
       toast.success('A New RFQ is created')
     } catch (error) {
       setIsLoading(false)
@@ -259,6 +261,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 name="project"
                 onChange={handleChange}
                 id="project"
+                autoComplete="off"
               />
               {suggestions?.project?.length > 0 && (
                 <ul className="drop-down-container">
@@ -286,6 +289,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 name="category"
                 onChange={handleChange}
                 id="category"
+                autoComplete="off"
               />
               {suggestions?.category?.length > 0 && (
                 <ul className="drop-down-container">
@@ -314,6 +318,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 name="warehouse"
                 onChange={handleChange}
                 id="warehouse"
+                autoComplete="off"
               />
 
               {suggestions?.warehouse?.length > 0 && (
