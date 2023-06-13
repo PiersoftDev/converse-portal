@@ -107,7 +107,7 @@ export const getPurchaseLines = createAsyncThunk(
   'MaterialIndent/getPurchaseLines',
   async ({ categoryId, projectId }, thunkApi) => {
     try {
-      const getPurchaseLinesUrl = `${url}/material-indent/purchase/${projectId}/${categoryId}`
+      const getPurchaseLinesUrl = `${url}/material-indent/pr/${projectId}/${categoryId}`
       console.log(getPurchaseLinesUrl)
       const resp = await axios.get(getPurchaseLinesUrl)
 
