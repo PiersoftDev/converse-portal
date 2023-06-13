@@ -80,6 +80,8 @@ const CreateRfqModal = ({
 
     let { $D, $M, $y } = plannedDate
 
+    $M = $M + 1
+
     if ($D < 10) $D = `0${$D}`
 
     if ($M < 10) $M = `0${$M}`
@@ -92,38 +94,7 @@ const CreateRfqModal = ({
       warehouseId: warehouse.id,
       warehouseDesc: warehouse.desc,
       plannedDate: `${$y}-${$M}-${$D}`,
-    }
-
-    const dummyItem = {
-      id: 138,
-      orderId: 'GVXhhy-TlPk9p-IWFMqh',
-      itemId: 'A00001129',
-      itemDesc: 'L/c for reinforment Steel-Belo',
-      categoryId: 'A02',
-      category: 'A02',
-      quantity: 100.0,
-      uom: 'MT',
-      plannedDate: [2023, 6, 30, 0, 0],
-      projectId: '3100_1079',
-      projectDesc: 'APTIDCO-AMARAVATHI',
-      activityId: '3100_1079_A.1',
-      activityDesc: 'E/W excavation for foundations',
-      createdDate: null,
-      lastUpdatedTime: null,
-      budgetedQty: 0.0,
-      inventory: 0.0,
-      procuredTillDate: 0.0,
-      userId: 'userId',
-      username: 'Sample User',
-      cmp: 0.0,
-      variance: 0.0,
-      status: 'RFQ',
-      subStatus: 'NEW',
-      woId: null,
-      prId: null,
-      rfqId: null,
-      poId: null,
-      comments: 'NEW',
+      status: 'Draft',
     }
 
     try {
@@ -266,7 +237,9 @@ const CreateRfqModal = ({
                 showDaysOutsideCurrentMonth
                 sx={dateFilterStyling}
                 value={plannedDate}
+                format="DD/MM/YYYY"
                 id="shipment-date"
+                disablePast="true"
                 onChange={(newValue) => setPlannedDate(newValue)}
               />
             </div>
