@@ -15,6 +15,7 @@ import {
   addAllItems,
 } from '../../../features/MaterialIndent/MaterialSlice'
 import NewLinesComponent from './NewLinesComponent'
+import axios from 'axios'
 
 const dataOfAddItems = [
   {
@@ -70,7 +71,7 @@ const dataOfNewLines = [
   },
 ]
 
-const ItemsComponent = ({ rfqId }) => {
+const ItemsComponent = ({ rfqId, setLoading }) => {
   const dispatch = useDispatch()
   const {
     rfqNewLines,
@@ -81,15 +82,30 @@ const ItemsComponent = ({ rfqId }) => {
   const [showAddItems, setShowAddItems] = useState(false)
   const [showNewLines, setShowNewLines] = useState(false)
 
-  const [addItems, setAdditems] = useState([...dataOfAddItems])
-  const [newLines, setNewLines] = useState([...dataOfNewLines])
+  const [addItems, setAdditems] = useState([])
+  const [newLines, setNewLines] = useState([])
 
   const addItemsToAddItemsList = (newLine) => {
     dispatch(addToItemsList(newLine))
   }
 
-  const addAllItemsToAddItemList = () => {
-    dispatch(addAllItems())
+  const addAllItemsToAddItemList = async () => {
+    const reqbody = rfqNewLines.map((line) => line.id)
+
+    try {
+      setLoading(true)
+      const resp = await axios.post(
+        `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
+        reqbody
+      )
+      console.log(resp.data)
+      setLoading(false)
+      dispatch(addAllItems())
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+      console.log('some error occued while adding items to add items list')
+    }
   }
 
   if (isGetPurchaseLinesLoading) {
@@ -126,7 +142,7 @@ const ItemsComponent = ({ rfqId }) => {
 
           {rfqAddItems.length > 0 && (
             <div className="right-wrapper">
-              <button className="save-btn">Save</button>
+              {/* <button className="save-btn">Save</button> */}
               <button
                 className="drop-down-btn"
                 onClick={() => setShowAddItems(!showAddItems)}
@@ -304,6 +320,7 @@ const LoadingWrapper = styled.div`
 
 const Wrapper = styled.div`
   padding: 2rem;
+  position: relative;
 
   .payments-container {
     background-color: var(--white);

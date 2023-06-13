@@ -2,9 +2,13 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { useState } from 'react'
 import ItemsComponent from './tabcomponents/ItemsComponent'
 import styled from 'styled-components'
+import ReactLoading from 'react-loading'
 
 const ProjectTabsComponent = ({ rfqId }) => {
   const [index, setIndex] = useState(0)
+
+  const [addingAllItemsLoading, setAddingAllItemsLoading] = useState(false)
+
   return (
     <Wrapper>
       <Tabs
@@ -43,7 +47,11 @@ const ProjectTabsComponent = ({ rfqId }) => {
           <h4>Overview</h4>
         </TabPanel> */}
         <TabPanel>
-          <ItemsComponent rfqId={rfqId} />
+          <ItemsComponent
+            rfqId={rfqId}
+            loading={addingAllItemsLoading}
+            setLoading={setAddingAllItemsLoading}
+          />
         </TabPanel>
         <TabPanel className="tab-panel">
           <h4>Criteria</h4>
@@ -64,6 +72,20 @@ const ProjectTabsComponent = ({ rfqId }) => {
           <h4>Conversion Details</h4>
         </TabPanel>
       </Tabs>
+
+      {addingAllItemsLoading && (
+        <div className="loading-overlay">
+          <div className="loading-container">
+            <ReactLoading
+              type="balls"
+              color="var(--grey-500)"
+              height={50}
+              width={50}
+            />
+            <h4>Adding all items to add items list</h4>
+          </div>
+        </div>
+      )}
     </Wrapper>
   )
 }
@@ -101,5 +123,28 @@ const Wrapper = styled.div`
     text-align: center;
     color: var(--grey-600);
     margin-top: 5rem;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+
+    z-index: 30;
+  }
+
+  .loading-container {
+    background-color: var(--white);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    color: var(--grey-700);
+    width: 90%;
+    max-width: 50rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `

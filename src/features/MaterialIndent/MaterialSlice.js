@@ -124,7 +124,7 @@ export const getPurchaseLines = createAsyncThunk(
 )
 
 export const getAddedLines = createAsyncThunk(
-  'MaterialIndent/getPurchaseLines',
+  'MaterialIndent/getAddedLines',
   async ({ rfqId }, thunkApi) => {
     try {
       const getAddedLinesUrl = `${url}/material-indent/rfq/${rfqId}`

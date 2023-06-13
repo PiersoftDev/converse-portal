@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import {
   addToItemsList,
   addAllItems,
@@ -18,6 +19,7 @@ const LineComponent = ({ newline, rfqId }) => {
   const addItemsToAddItemsList = async (newLine) => {
     try {
       setLoading(true)
+
       const reqbody = [id]
       const resp = await axios.post(
         `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
@@ -27,6 +29,7 @@ const LineComponent = ({ newline, rfqId }) => {
       setLoading(false)
       dispatch(addToItemsList(newLine))
     } catch (error) {
+      setLoading(false)
       console.log(error)
       console.log('some error occued while adding items to add items list')
     }
@@ -41,17 +44,32 @@ const LineComponent = ({ newline, rfqId }) => {
         <button
           className="add-items-btn"
           onClick={() => addItemsToAddItemsList(newline)}
+          disabled={loading}
+          loading={loading}
         >
-          Add to items
-          {/* <ReactLoading
-            type="balls"
-            color="var(--grey-500)"
-            height={15}
-            width={25}
-          /> */}
+          <div className="add-item-btn-content">
+            {loading && (
+              <span className="loading-icon">
+                <ReactLoading
+                  type="balls"
+                  color="var(--grey-500)"
+                  height={15}
+                  width={25}
+                />
+              </span>
+            )}
+
+            <div>Add to items</div>
+          </div>
         </button>
       </td>
     </tr>
   )
 }
 export default LineComponent
+
+const Wrapper = styled.div`
+  .add-items-btn {
+    opacity: 0.5;
+  }
+`
