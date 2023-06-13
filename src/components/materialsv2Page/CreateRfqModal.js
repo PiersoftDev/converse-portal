@@ -239,7 +239,7 @@ const CreateRfqModal = ({
                 value={plannedDate}
                 format="DD/MM/YYYY"
                 id="shipment-date"
-                disablePast="true"
+                disablePast={true}
                 onChange={(newValue) => setPlannedDate(newValue)}
               />
             </div>
