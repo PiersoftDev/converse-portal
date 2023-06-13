@@ -14,6 +14,7 @@ import {
   addToItemsList,
   addAllItems,
 } from '../../../features/MaterialIndent/MaterialSlice'
+import NewLinesComponent from './NewLinesComponent'
 
 const dataOfAddItems = [
   {
@@ -69,7 +70,7 @@ const dataOfNewLines = [
   },
 ]
 
-const ItemsComponent = () => {
+const ItemsComponent = ({ rfqId }) => {
   const dispatch = useDispatch()
   const {
     rfqNewLines,
@@ -235,7 +236,9 @@ const ItemsComponent = () => {
         </div> */}
       </div>
 
-      {rfqNewLines.length > 0 &&
+      <NewLinesComponent showNewLines={showNewLines} rfqId={rfqId} />
+
+      {/* {rfqNewLines.length > 0 &&
         showNewLines &&
         (isGetPurchaseLinesLoading ? (
           <h4>Still Loading ...</h4>
@@ -277,7 +280,7 @@ const ItemsComponent = () => {
               </tbody>
             </Table>
           </div>
-        ))}
+        ))} */}
     </Wrapper>
   )
 }
