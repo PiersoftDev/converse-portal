@@ -105,7 +105,7 @@ const CreateRfqModal = ({
       console.log(resp.data)
       setIsLoading(false)
       setShowModal(false)
-      saveStatusChangeForRfq({ destination, draggableId, temp })
+      await saveStatusChangeForRfq({ draggableId, rfqId: resp.data.id })
       navigate(`/rfqdetails/123`, {
         state: {
           ...resp.data,

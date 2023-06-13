@@ -64,25 +64,21 @@ const DragAndDropComponent = () => {
     setHomeIndex(columnsOrder.indexOf(source.droppableId))
   }
 
-  const saveStatusChangeForRfq = async ({ destination, draggableId, temp }) => {
+  const saveStatusChangeForRfq = async ({ draggableId, rfqId }) => {
     try {
       setStatusPersistIsLoading(true)
-      setDroppableId(destination.droppableId)
-      const tempitem = items.find(({ id }) => `${id}` === draggableId)
-      const { subStatus, id, projectId, categoryId } = tempitem
-
-      await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
+      const reqbody = [draggableId]
+      const resp = await axios.post(
+        `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
+        reqbody
       )
-
+      console.log(resp.data)
+      console.log(reqbody)
       setStatusPersistIsLoading(false)
-      return
     } catch (error) {
       setStatusPersistIsLoading(false)
       console.log(error)
-      dispatch(setColumns(temp))
-      toast.error('Some error occured while changing the status')
-      return
+      console.log('some error occured while adding items to add items list')
     }
   }
 

@@ -36,8 +36,8 @@ const RfqDecisionModal = ({
 
   const { destination, draggableId, temp } = rfqFlowState
 
-  const openRfqDetails = () => {
-    saveStatusChangeForRfq({ destination, draggableId, temp })
+  const openRfqDetails = async () => {
+    await saveStatusChangeForRfq({ draggableId, rfqId: id })
     // dispatch(setColumns(temp))
     navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
   }
