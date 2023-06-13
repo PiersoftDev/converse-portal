@@ -329,6 +329,7 @@ const DragAndDropComponent = () => {
         setCreateRfq={setCreateRfq}
         rfqFlowState={rfqFlowState}
         setColumns={setColumns}
+        draftedRfq={draftedRfq}
         saveStatusChangeForRfq={saveStatusChangeForRfq}
       />
       <NoRfqDecisionModal

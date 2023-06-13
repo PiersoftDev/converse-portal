@@ -15,6 +15,7 @@ const RfqDecisionModal = ({
   rfqFlowState,
   setColumns,
   saveStatusChangeForRfq,
+  draftedRfq,
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -29,11 +30,15 @@ const RfqDecisionModal = ({
     projectCode: 'random code',
   }
 
+  console.log(draftedRfq)
+
+  const { id } = draftedRfq[0]
+
   const { destination, draggableId, temp } = rfqFlowState
 
   const openRfqDetails = () => {
     saveStatusChangeForRfq({ destination, draggableId, temp })
-    navigate(`/rfqdetails/${item.id}`, { state: { ...item } })
+    navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
   }
 
   const handleNo = () => {
@@ -63,7 +68,7 @@ const RfqDecisionModal = ({
             <p className="decision-text">
               There exists an RFQ
               <span className="rfq-details-link" onClick={openRfqDetails}>
-                <span>#123RFDE </span>
+                <span>{`RFQId-${id} `} </span>
                 <span className="icon">
                   <RiShareBoxLine />
                 </span>
