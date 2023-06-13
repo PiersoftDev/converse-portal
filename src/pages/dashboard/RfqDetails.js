@@ -6,14 +6,17 @@ import {
   ProjectTabsComponent,
 } from '../../components/projectPage'
 import { useLocation } from 'react-router-dom'
-import { getPurchaseLines } from '../../features/MaterialIndent/MaterialSlice'
+import {
+  getPurchaseLines,
+  getAddedLines,
+} from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
 
 const RfqDetails = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const { projectId, categoryId } = location.state
+  const { projectId, categoryId, id } = location.state
 
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
@@ -21,6 +24,7 @@ const RfqDetails = () => {
 
   useEffect(() => {
     dispatch(getPurchaseLines({ categoryId, projectId }))
+    dispatch(getAddedLines({ rfqId: id }))
   }, [])
 
   if (!authenticated) {
@@ -33,7 +37,7 @@ const RfqDetails = () => {
         <h4>RFQ Details</h4>
       </div>
       <ProjectImpInfoComponent {...location.state} />
-      <ProjectTabsComponent />
+      <ProjectTabsComponent rfqId={id} />
     </Wrapper>
   )
 }

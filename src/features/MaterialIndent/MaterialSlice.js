@@ -43,6 +43,8 @@ const initialState = {
   isGetRfqByCodeError: false,
   isGetPurchaseLinesLoading: false,
   isGetPurchaseLinesError: false,
+  isAddedLinesLoading: false,
+  isAddedLinesError: false,
   items: [],
   columns: { ...columnsData },
   rfqList: [],
@@ -110,6 +112,24 @@ export const getPurchaseLines = createAsyncThunk(
       const getPurchaseLinesUrl = `${url}/material-indent/pr/${projectId}/${categoryId}`
       console.log(getPurchaseLinesUrl)
       const resp = await axios.get(getPurchaseLinesUrl)
+
+      console.log(resp.data)
+      return resp.data
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        'Some thing went wrong while fetching data'
+      )
+    }
+  }
+)
+
+export const getAddedLines = createAsyncThunk(
+  'MaterialIndent/getPurchaseLines',
+  async ({ rfqId }, thunkApi) => {
+    try {
+      const getAddedLinesUrl = `${url}/material-indent/rfq/${rfqId}`
+      console.log(getAddedLinesUrl)
+      const resp = await axios.get(getAddedLinesUrl)
 
       console.log(resp.data)
       return resp.data
@@ -211,6 +231,18 @@ const materialSlice = createSlice({
     [getPurchaseLines.rejected]: (state, action) => {
       state.isGetPurchaseLinesLoading = false
       state.isGetPurchaseLinesError = true
+    },
+    [getAddedLines.pending]: (state, action) => {
+      state.isAddedLinesLoading = true
+    },
+    [getAddedLines.fulfilled]: (state, action) => {
+      state.isAddedLinesLoading = false
+      console.log(action.payload)
+      state.rfqAddItems = action.payload
+    },
+    [getAddedLines.rejected]: (state, action) => {
+      state.isAddedLinesLoading = false
+      state.isAddedLinesError = true
     },
     [getRfqList.pending]: (state, action) => {
       state.rfqItemsLoading = true

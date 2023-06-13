@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ItemsComponent from './tabcomponents/ItemsComponent'
 import styled from 'styled-components'
 
-const ProjectTabsComponent = () => {
+const ProjectTabsComponent = ({ rfqId }) => {
   const [index, setIndex] = useState(0)
   return (
     <Wrapper>
@@ -43,7 +43,7 @@ const ProjectTabsComponent = () => {
           <h4>Overview</h4>
         </TabPanel> */}
         <TabPanel>
-          <ItemsComponent />
+          <ItemsComponent rfqId={rfqId} />
         </TabPanel>
         <TabPanel className="tab-panel">
           <h4>Criteria</h4>
