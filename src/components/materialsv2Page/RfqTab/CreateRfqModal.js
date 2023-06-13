@@ -177,11 +177,9 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
       console.log(reqBody)
       setIsLoading(true)
       setIsError(false)
-
       const resp = await axios.post(url, reqBody)
       setIsLoading(false)
       setShowModal(false)
-
       setNewRfqState(initialState)
       dispatch(addRfqToRfqItemsList(resp.data))
       toast.success('A New RFQ is created')
