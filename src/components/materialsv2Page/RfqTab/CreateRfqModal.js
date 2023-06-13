@@ -350,7 +350,7 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 value={newRfqState.plannedDate}
                 format="DD/MM/YYYY"
                 id="shipment-date"
-                disablePast="true"
+                disablePast={true}
                 onChange={(newValue) =>
                   setNewRfqState({ ...newRfqState, plannedDate: newValue })
                 }
