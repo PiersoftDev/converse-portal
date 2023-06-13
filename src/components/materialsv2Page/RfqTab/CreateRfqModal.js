@@ -152,11 +152,14 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
     } = idState
 
     if (!project || !category || !warehouse || !plannedDate) {
+      console.log(newRfqState)
       toast.error('Pls enter all the values')
       return
     }
 
     let { $D, $M, $y } = plannedDate
+
+    $M = $M + 1
 
     if ($D < 10) $D = `0${$D}`
 
@@ -345,7 +348,9 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
                 showDaysOutsideCurrentMonth
                 sx={dateFilterStyling}
                 value={newRfqState.plannedDate}
+                format="DD/MM/YYYY"
                 id="shipment-date"
+                disablePast="true"
                 onChange={(newValue) =>
                   setNewRfqState({ ...newRfqState, plannedDate: newValue })
                 }
