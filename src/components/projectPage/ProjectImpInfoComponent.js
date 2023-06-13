@@ -10,8 +10,17 @@ import { Tooltip } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 
 const ProjectImpInfoComponent = ({
-  category,
+  id,
+  projectId,
+  projectDesc,
+  warehouseId,
+  warehouseDesc,
+  categoryId,
+  categoryDesc,
+  createdDate,
   plannedDate,
+  status,
+  category,
   projectCode,
   warehouseCode,
 }) => {
@@ -41,7 +50,7 @@ const ProjectImpInfoComponent = ({
               <span>
                 <NumbersIcon />
               </span>
-              <p>RFQ123456</p>
+              <p>{`RFQ-${id}`}</p>
             </div>
           </Tooltip>
 
@@ -66,7 +75,7 @@ const ProjectImpInfoComponent = ({
               <span>
                 <RoofingIcon />
               </span>
-              <p>ESI, Sanath Nagar</p>
+              <p>{projectDesc}</p>
             </div>
           </Tooltip>
 
@@ -91,7 +100,32 @@ const ProjectImpInfoComponent = ({
               <span>
                 <ConstructionIcon />
               </span>
-              <p>{warehouseCode}</p>
+              <p>{warehouseDesc}</p>
+            </div>
+          </Tooltip>
+
+          <Tooltip
+            title="Category"
+            placement="bottom-start"
+            PopperProps={{
+              sx: {
+                '& .MuiTooltip-tooltip': {
+                  backgroundColor: 'f0f4f8',
+                  letterSpacing: '0.1rem',
+                  padding: `0.5 1`,
+                  backgroundColor: '#334e68',
+                  position: 'relative',
+                  margin: '0',
+                  bottom: '0.75rem',
+                },
+              },
+            }}
+          >
+            <div className="project-value">
+              <span>
+                <WarehouseIcon />
+              </span>
+              <p>{categoryDesc}</p>
             </div>
           </Tooltip>
 
@@ -117,31 +151,6 @@ const ProjectImpInfoComponent = ({
                 <CalendarTodayIcon />
               </span>
               <p>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</p>
-            </div>
-          </Tooltip>
-
-          <Tooltip
-            title="Category"
-            placement="bottom-start"
-            PopperProps={{
-              sx: {
-                '& .MuiTooltip-tooltip': {
-                  backgroundColor: 'f0f4f8',
-                  letterSpacing: '0.1rem',
-                  padding: `0.5 1`,
-                  backgroundColor: '#334e68',
-                  position: 'relative',
-                  margin: '0',
-                  bottom: '0.75rem',
-                },
-              },
-            }}
-          >
-            <div className="project-value">
-              <span>
-                <WarehouseIcon />
-              </span>
-              <p>{category}</p>
             </div>
           </Tooltip>
         </div>
