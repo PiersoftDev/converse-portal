@@ -146,7 +146,7 @@ const materialSlice = createSlice({
       state.columns = action.payload
     },
     addRfqToRfqItemsList: (state, action) => {
-      state.rfqItems = [...state.rfqItems, action.payload]
+      state.rfqItems = [action.payload, ...state.rfqItems]
     },
     persistStatusChange: async (state, action) => {
       const { items, columns } = state
