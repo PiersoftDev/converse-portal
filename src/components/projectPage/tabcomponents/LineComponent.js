@@ -14,7 +14,7 @@ const LineComponent = ({ newline, rfqId }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const { id, itemDesc, quantity, plannedDate } = newline
+  const { id, itemDesc, quantity,uom,  plannedDate } = newline
 
   const addItemsToAddItemsList = async (newLine) => {
     try {
@@ -39,6 +39,7 @@ const LineComponent = ({ newline, rfqId }) => {
       <td>{id}</td>
       <td>{itemDesc}</td>
       <td>{quantity}</td>
+      <td>{uom}</td>
       <td className="date-column">
         <span>{`${plannedDate[2]}/${plannedDate[1]}/${plannedDate[0]}`}</span>
         <button

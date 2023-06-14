@@ -46,6 +46,7 @@ const NewLinesComponent = ({ showNewLines, rfqId }) => {
                   <th>S.No</th>
                   <th>Item Description</th>
                   <th>Quantity</th>
+                  <th>UOM</th>
                   <th>PlannedDate</th>
                 </tr>
               </thead>
