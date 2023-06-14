@@ -1,6 +1,7 @@
 import { Table } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import styled from 'styled-components'
+import { useState } from 'react'
 
 const dummyData = [
   {
@@ -31,6 +32,17 @@ const dummyData = [
 ]
 
 const TermsAndConditionsComponent = () => {
+  const [termsAndConditions, setTermsAndConditions] = useState([...dummyData])
+
+  const addNewRow = () => {
+    const newRow = {
+      id: termsAndConditions.length + 1,
+      terms: `New Term - ${termsAndConditions.length + 1}`,
+      description: 'New Description',
+    }
+    setTermsAndConditions([...termsAndConditions, newRow])
+  }
+
   return (
     <Wrapper>
       <Table responsive>
@@ -42,7 +54,7 @@ const TermsAndConditionsComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyData.map(({ id, terms, description }) => {
+          {termsAndConditions.map(({ id, terms, description }) => {
             return (
               <tr key={id}>
                 <td>{id}</td>
@@ -55,7 +67,9 @@ const TermsAndConditionsComponent = () => {
       </Table>
 
       <div className="btn-container">
-        <button className="add-row-btn">Add row</button>
+        <button className="add-row-btn" onClick={addNewRow}>
+          Add row
+        </button>
       </div>
     </Wrapper>
   )
