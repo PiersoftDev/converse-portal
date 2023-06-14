@@ -94,7 +94,7 @@ const CreateRfqModal = ({
       warehouseId: warehouse.id,
       warehouseDesc: warehouse.desc,
       plannedDate: `${$y}-${$M}-${$D}`,
-      status: 'Draft',
+      status: 'DRAFT',
     }
 
     try {
