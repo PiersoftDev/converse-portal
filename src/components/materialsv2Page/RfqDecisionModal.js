@@ -37,6 +37,11 @@ const RfqDecisionModal = ({
   const { destination, draggableId, temp } = rfqFlowState
 
   const openRfqDetails = async () => {
+    navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
+    dispatch(setColumns(temp))
+  }
+
+  const handleYes = async () => {
     await saveStatusChangeForRfq({ draggableId, rfqId: id })
     // dispatch(setColumns(temp))
     navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
@@ -77,7 +82,7 @@ const RfqDecisionModal = ({
               . Do you want to add this line to RFQ ?
             </p>
             <div className="btns-container">
-              <button className="yes-btn" onClick={openRfqDetails}>
+              <button className="yes-btn" onClick={handleYes}>
                 Yes, Take me to RFQ
               </button>
               <button className="no-btn" onClick={handleNo}>
