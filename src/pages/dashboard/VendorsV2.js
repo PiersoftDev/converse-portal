@@ -21,7 +21,7 @@ const VendorsV2 = () => {
   return (
     <Wrapper>
       <div className="header">
-        <h4>Purchase</h4>
+        <h4>Vendors Page</h4>
       </div>
 
       <div className="tabs-component">

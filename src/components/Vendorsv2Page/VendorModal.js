@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { ImCross } from 'react-icons/im'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import ReactLoading from 'react-loading'
 
 import styled from 'styled-components'
 import {
@@ -20,13 +21,22 @@ import {
 //   pocWhatsappNo: '',
 // }
 
+// const initial = {
+//   gst: '30AAACR5055K1ZK',
+//   aadhaar: '670258073448',
+//   pan: 'AAACR5055',
+//   pocName: 'Sai',
+//   pocWhatsappNo: '919945014010',
+//   pocEmail: 'gsmreddy3@gmail.com',
+// }
+
 const initial = {
-  gst: '30AAACR5055K1ZK',
-  aadhaar: '670258073448',
-  pan: 'AAACR5055',
-  pocName: 'Sai',
-  pocWhatsappNo: '919945014010',
-  pocEmail: 'gsmreddy3@gmail.com',
+  gst: '',
+  aadhaar: '',
+  pan: '',
+  pocName: '',
+  pocWhatsappNo: '',
+  pocEmail: '',
 }
 
 const url = 'http://13.232.221.196:9060/v1/vm/onboard'
@@ -34,6 +44,8 @@ const url = 'http://13.232.221.196:9060/v1/vm/onboard'
 const VendorModal = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()
   const [vendorInfo, setVendorInfo] = useState(initial)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const { showMultipleGstUnderSamePanModal, onBoardAll } = useSelector(
     (store) => store.vendor
@@ -56,8 +68,11 @@ const VendorModal = ({ showModal, setShowModal }) => {
     }
 
     try {
+      setIsLoading(true)
+      console.log(vendorInfo)
       const resp = await axios.post(url, vendorInfo)
       console.log(resp.data)
+      setIsLoading(false)
 
       const { data, ['message_code']: message } = resp.data
 
@@ -73,6 +88,7 @@ const VendorModal = ({ showModal, setShowModal }) => {
         setShowModal(false)
       }
     } catch (error) {
+      setIsLoading(false)
       console.log(error)
       toast.error(`Some error occured while onboarding ${vendorInfo.pocName} `)
     }
@@ -93,6 +109,16 @@ const VendorModal = ({ showModal, setShowModal }) => {
     <Wrapper>
       <div className={`vendor-modal ${showModal ? 'show' : ''} `}>
         <div className="vendor-modal-content">
+          {isLoading && (
+            <div className="onboard-vendor-loading">
+              <ReactLoading
+                type="balls"
+                color="var(--grey-500)"
+                height={50}
+                width={50}
+              />
+            </div>
+          )}
           {showMultipleGstUnderSamePanModal ? (
             <div>
               <div className="header">
@@ -385,5 +411,19 @@ const Wrapper = styled.div`
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  .onboard-vendor-loading {
+    color: var(--white);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 32;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
   }
 `
