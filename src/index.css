@@ -363,3 +363,8 @@ input:focus {
     --progress-value-2: 67;
   }
 }
+/* 
+.left-wrapper,
+.right-wrapper {
+  border: 1px solid red;
+} */

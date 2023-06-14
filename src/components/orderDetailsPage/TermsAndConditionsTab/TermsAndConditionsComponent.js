@@ -53,16 +53,23 @@ const TermsAndConditionsComponent = () => {
           })}
         </tbody>
       </Table>
+
+      <div className="btn-container">
+        <button className="add-row-btn">Add row</button>
+      </div>
     </Wrapper>
   )
 }
 export default TermsAndConditionsComponent
 
 const Wrapper = styled.div`
-  background-color: var(--white);
-  border-radius: 10px;
-  border: 1px solid var(--grey-100);
   margin: 2rem;
+
+  .table-responsive {
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow-1);
+  }
 
   th,
   td {
@@ -82,5 +89,27 @@ const Wrapper = styled.div`
   td,
   th {
     text-align: center;
+  }
+
+  .btn-container {
+    margin-top: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .add-row-btn {
+    border: 1px solid var(--grey-300);
+    border-radius: 5px;
+    background-color: var(--primary-400);
+    color: var(--white);
+    padding: 0.2rem 1rem;
+    font-size: 0.9rem;
+    transition: var(--transition);
+  }
+
+  .add-row-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-500);
   }
 `
