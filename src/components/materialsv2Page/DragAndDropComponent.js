@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ColumnContainer from './ColumnContainer'
 import { DragDropContext } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { setColumns } from '../../features/MaterialIndent/MaterialSlice'
+import {
+  getMaterialItems,
+  setColumns,
+} from '../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
 import ReactLoading from 'react-loading'
 import axios from 'axios'
@@ -21,6 +24,8 @@ const DragAndDropComponent = () => {
 
   const [statusPersistIsLoading, setStatusPersistIsLoading] = useState(false)
   // const [statusPersistIsError, setStatusPersistIsError] = useState(false)
+
+  const [isAddLinesLoading, setIsAddLinesLoading] = useState(false)
 
   const [droppableId, setDroppableId] = useState(null)
 
@@ -66,7 +71,7 @@ const DragAndDropComponent = () => {
 
   const saveStatusChangeForRfq = async ({ draggableId, rfqId }) => {
     try {
-      setStatusPersistIsLoading(true)
+      setIsAddLinesLoading(true)
       const reqbody = [draggableId]
       const resp = await axios.post(
         `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
@@ -74,9 +79,9 @@ const DragAndDropComponent = () => {
       )
       console.log(resp.data)
       console.log(reqbody)
-      setStatusPersistIsLoading(false)
+      setIsAddLinesLoading(false)
     } catch (error) {
-      setStatusPersistIsLoading(false)
+      setIsAddLinesLoading(false)
       console.log(error)
       console.log('some error occured while adding items to add items list')
     }
@@ -245,6 +250,10 @@ const DragAndDropComponent = () => {
     saveStatusChange(destination, draggableId, temp)
   }
 
+  // useEffect(() => {
+  //   dispatch(getMaterialItems())
+  // }, [])
+
   if (isLoading) {
     return (
       <LoadingWrapper>
@@ -323,6 +332,8 @@ const DragAndDropComponent = () => {
         setShowModal={setRfqDecision}
         createRfq={createRfq}
         setCreateRfq={setCreateRfq}
+        isAddLinesLoading={isAddLinesLoading}
+        setIsAddLinesLoading={setIsAddLinesLoading}
         rfqFlowState={rfqFlowState}
         setColumns={setColumns}
         draftedRfq={draftedRfq}
@@ -333,6 +344,8 @@ const DragAndDropComponent = () => {
         setShowModal={setNoRfqDecision}
         createRfq={createRfq}
         setCreateRfq={setCreateRfq}
+        isAddLinesLoading={isAddLinesLoading}
+        setIsAddLinesLoading={setIsAddLinesLoading}
         rfqFlowState={rfqFlowState}
         setColumns={setColumns}
         saveStatusChangeForRfq={saveStatusChangeForRfq}

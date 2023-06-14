@@ -6,6 +6,7 @@ import { RiShareBoxLine } from 'react-icons/ri'
 import { useState } from 'react'
 import CreateRfqModal from './RfqTab/CreateRfqModal'
 import { useDispatch } from 'react-redux'
+import ReactLoading from 'react-loading'
 
 const NoRfqDecisionModal = ({
   showModal,
@@ -16,6 +17,8 @@ const NoRfqDecisionModal = ({
   setColumns,
   saveStatusChangeForRfq,
   draftedRfq,
+  isAddLinesLoading,
+  setIsAddLinesLoading,
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -71,6 +74,17 @@ const NoRfqDecisionModal = ({
           className="material-modal-content"
           onClick={(e) => e.stopPropagation()}
         >
+          {isAddLinesLoading && (
+            <div className="rfq-loading">
+              <ReactLoading
+                type="balls"
+                color="var(--grey-500)"
+                height={50}
+                width={50}
+              />
+            </div>
+          )}
+
           <button onClick={handleCloseModal} className="close-modal-btn">
             <ImCross />
           </button>
@@ -263,5 +277,19 @@ const Wrapper = styled.div`
   .icon {
     display: grid;
     place-items: center;
+  }
+
+  .rfq-loading {
+    color: var(--white);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 32;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
   }
 `
