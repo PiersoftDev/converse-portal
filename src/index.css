@@ -363,16 +363,3 @@ input:focus {
     --progress-value-2: 67;
   }
 }
-
-.add-item-btn-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-}
-
-.loading-icon {
-  position: absolute;
-  top: -25%;
-}

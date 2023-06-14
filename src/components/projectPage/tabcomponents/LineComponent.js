@@ -14,7 +14,7 @@ const LineComponent = ({ newline, rfqId }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const { id, itemDesc, quantity,uom,  plannedDate } = newline
+  const { id, itemDesc, quantity, uom, plannedDate } = newline
 
   const addItemsToAddItemsList = async (newLine) => {
     try {
@@ -71,5 +71,18 @@ export default LineComponent
 const Wrapper = styled.div`
   .add-items-btn {
     opacity: 0.5;
+  }
+
+  .add-item-btn-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  .loading-icon {
+    position: absolute;
+    top: -25%;
   }
 `

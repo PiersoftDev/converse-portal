@@ -2,6 +2,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { useState } from 'react'
 import styled from 'styled-components'
 import ItemsComponent from './OrderTabs/ItemsComponent'
+import TaxHoldingComponent from './TaxAndHoldingTab/TaxHoldingComponent'
+import TermsAndConditionsComponent from './TermsAndConditionsTab/TermsAndConditionsComponent'
 
 const OrderTabsComponent = () => {
   const [index, setIndex] = useState(0)
@@ -43,10 +45,10 @@ const OrderTabsComponent = () => {
           <h4>Business Partner Info</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Terms & Conditions</h4>
+         <TermsAndConditionsComponent/>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Tax and Holding</h4>
+          <TaxHoldingComponent />
         </TabPanel>
         <TabPanel className="tab-panel">
           <h4>Notes</h4>
