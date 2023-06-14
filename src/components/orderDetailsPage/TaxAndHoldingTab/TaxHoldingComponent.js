@@ -88,6 +88,7 @@ const Wrapper = styled.div`
   background-color: var(--white);
   padding: 1rem;
   border-radius: 10px;
+  min-height: 50rem;
 
   .top-wrapper {
     display: grid;
@@ -196,7 +197,7 @@ const Wrapper = styled.div`
   .content-center {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .content-center .content {
