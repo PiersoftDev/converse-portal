@@ -10,58 +10,58 @@ const TaxHoldingComponent = () => {
         <div className="left-wrapper">
           <div className="content">
             <p>Sub total : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>SGST : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>CGST : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>IGST : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>UTGST : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>CESS : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
         </div>
 
         <div className="right-wrapper">
           <div className="content">
             <p>FSD HOLDINGS : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>HOLDINGS : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>LABCESS : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>ROYAL : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>CBF : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>WHWF : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>GST HOLD : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
         </div>
       </div>
@@ -70,11 +70,11 @@ const TaxHoldingComponent = () => {
         <div className="content-center">
           <div className="content">
             <p>GRAND TOTAL OF PO: </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
           <div className="content">
             <p>GRAND TOTAL IN WORDS : </p>
-            <div className="content-value"></div>
+            <input className="content-value"></input>
           </div>
         </div>
       </div>
@@ -94,6 +94,7 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 30rem;
+    margin: 0 5rem;
   }
 
   .left-wrapper,
@@ -105,7 +106,10 @@ const Wrapper = styled.div`
 
   .content {
     display: grid;
-    grid-template-columns: 2fr 3fr;
+    justify-content: center;
+    gap: 1rem;
+    grid-template-columns: 20% 80%;
+    justify-items: left;
     align-items: center;
   }
 
@@ -123,23 +127,21 @@ const Wrapper = styled.div`
   }
 
   .content-value {
-    background-color: var(--grey-100);
+    /* background-color: var(--grey-100); */
+    display: block;
+    border: 1px solid var(--grey-200);
+    color: var(--grey-700);
+    font-size: 0.9rem;
     border-radius: 5px;
     padding: 0.2rem 0.5rem;
     justify-self: left;
-    width: 75%;
+    width: 80%;
     min-height: 1.5rem;
     color: var(--grey-900);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
   }
 
-  .content-value p {
-    text-align: center;
-    margin-bottom: 0;
-    font-size: 0.9rem;
-    color: var(--grey-700);
+  .content-value:focus {
+    border: 1px solid var(--grey-400);
   }
 
   .check-icon {
@@ -198,10 +200,13 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 90%;
+    max-width: 550px;
   }
 
   .content-center .content {
     gap: 3rem;
+    grid-template-columns: 50% 50%;
   }
 
   .content-center .content-value {
