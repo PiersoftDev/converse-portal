@@ -8,6 +8,8 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt'
 import NumbersIcon from '@mui/icons-material/Numbers'
 import { Tooltip } from '@mui/material'
 import { useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const ProjectImpInfoComponent = ({
   id,
@@ -24,6 +26,32 @@ const ProjectImpInfoComponent = ({
   projectCode,
   warehouseCode,
 }) => {
+  const [approveClickCallLoading, setApproveClickCallLoading] = useState(false)
+
+  const {
+    rfqNewLines,
+    rfqAddItems,
+    isGetPurchaseLinesLoading,
+    isGetPurchaseLinesError,
+  } = useSelector((store) => store.material)
+
+  const approveClick = async () => {
+    try {
+      setApproveClickCallLoading(true)
+
+      const response = await fetch(
+        `http://13.232.221.196:9090/v1/purchase/rfq/approve/${id}`
+      )
+
+      setApproveClickCallLoading(false)
+    } catch (error) {
+      setApproveClickCallLoading(false)
+
+      console.log(error)
+      console.log('some error occued')
+    }
+  }
+
   return (
     <Wrapper>
       <div className="left-wrapper">
@@ -98,8 +126,7 @@ const ProjectImpInfoComponent = ({
           >
             <div className="project-value">
               <span>
-              <WarehouseIcon />
-                
+                <WarehouseIcon />
               </span>
               <p>{warehouseDesc}</p>
             </div>
@@ -124,7 +151,7 @@ const ProjectImpInfoComponent = ({
           >
             <div className="project-value">
               <span>
-              <ConstructionIcon />
+                <ConstructionIcon />
               </span>
               <p>{categoryDesc}</p>
             </div>
@@ -177,12 +204,18 @@ const ProjectImpInfoComponent = ({
             </span>
             Bulk Upload
           </button> */}
-          <button className="btn-newContact">
+          <ApproveButton
+            onClick={approveClick}
+            disabled={
+              approveClickCallLoading || (rfqAddItems.length > 0 ? false : true)
+            }
+            rfqAddItems={rfqAddItems}
+          >
             <span>
               <ThumbUpIcon />
             </span>
             Approve
-          </button>
+          </ApproveButton>
           <button className="btn-decline">
             <span>
               <ThumbDownAltIcon />
@@ -195,6 +228,30 @@ const ProjectImpInfoComponent = ({
   )
 }
 export default ProjectImpInfoComponent
+
+const ApproveButton = styled.button`
+  padding: 0.4rem 0.5rem;
+  background-color: ${({ rfqAddItems }) => {
+    return rfqAddItems.length > 0 ? 'var(--primary-500)' : 'var(--primary-300)'
+  }};
+  border: 1px solid var(--grey-100);
+  border-radius: 5px;
+  display: flex;
+  gap: 0.5rem;
+  color: var(--grey-50);
+  cursor: pointer;
+
+  span {
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    background-color: var(--primary-600);
+    transform: scale(1.05);
+  }
+`
 
 const Wrapper = styled.div`
   display: flex;

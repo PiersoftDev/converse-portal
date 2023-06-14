@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
@@ -11,13 +11,19 @@ import { FiFilter } from 'react-icons/fi'
 import { GrFormAdd } from 'react-icons/gr'
 import VendorTableComponent from './VendorTableComponent'
 import VendorModal from './VendorModal'
+import { getVendors } from '../../features/vendors/VendorSlice'
 
 const DirectoryComponent = () => {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
   const { vendorsList, isLoading, isError } = useSelector(
     (store) => store.vendor
   )
+
+  useEffect(() => {
+    dispatch(getVendors())
+  }, [])
 
   if (isLoading) {
     return (

@@ -16,8 +16,8 @@ const SharedLayout = () => {
 
   useEffect(() => {
     dispatch(getMaterialItems())
-    dispatch(getRfqList())
-    dispatch(getVendors())
+    // dispatch(getRfqList())
+    // dispatch(getVendors())
   }, [])
 
   return (

@@ -8,15 +8,22 @@ import { FiFilter } from 'react-icons/fi'
 import ReactLoading from 'react-loading'
 import OrderComponent from '../purchaseTab/OrderComponent'
 import SingleRfq from './SingleRfq'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CreateRfqModal from './CreateRfqModal'
+import { useDispatch } from 'react-redux'
+import { getRfqList } from '../../../features/MaterialIndent/MaterialSlice'
 
 const RfqComponent = () => {
+  const dispatch = useDispatch()
   const { rfqItems, rfqItemsLoading, rfqItemsError } = useSelector(
     (store) => store.material
   )
 
   const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    dispatch(getRfqList())
+  }, [])
 
   if (rfqItemsLoading) {
     return (
