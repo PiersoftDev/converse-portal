@@ -79,8 +79,8 @@ const ItemsComponent = ({ rfqId, setLoading }) => {
     isGetPurchaseLinesLoading,
     isGetPurchaseLinesError,
   } = useSelector((store) => store.material)
-  const [showAddItems, setShowAddItems] = useState(false)
-  const [showNewLines, setShowNewLines] = useState(false)
+  const [showAddItems, setShowAddItems] = useState(true)
+  const [showNewLines, setShowNewLines] = useState(true)
 
   const [addItems, setAdditems] = useState([])
   const [newLines, setNewLines] = useState([])
