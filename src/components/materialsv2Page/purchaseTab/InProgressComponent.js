@@ -8,6 +8,57 @@ import CreateOrderModal from './CreateOrderModal'
 import { useSelector } from 'react-redux'
 import ReactLoading from 'react-loading'
 
+const dummyRfqItems = [
+  {
+    id: 236,
+    projectId: '3100_1079',
+    projectDesc: 'APTIDCO-AMARAVATHI',
+    categoryId: 'A02',
+    categoryDesc: 'A02',
+    plannedDate: [2023, 6, 17],
+    warehouseId: '1083',
+    warehouseDesc: 'Regional Office - Vijayawada',
+    status: 'APPROVED',
+    createdDate: [2023, 6, 14],
+  },
+  {
+    id: 235,
+    projectId: '3100_1079',
+    projectDesc: 'APTIDCO-AMARAVATHI',
+    categoryId: 'CV',
+    categoryDesc: 'CV',
+    plannedDate: [2023, 6, 16],
+    warehouseId: '1530',
+    warehouseDesc: 'CPWD-200 BED ESIC SANATHNAGAR',
+    status: 'Draft',
+    createdDate: [2023, 6, 14],
+  },
+  {
+    id: 234,
+    projectId: '3100_16005',
+    projectDesc: 'SWDBCD-RESIDENTIAL COMPLEX RAN',
+    categoryId: 'CV',
+    categoryDesc: 'CV',
+    plannedDate: [2023, 6, 15],
+    warehouseId: '16005',
+    warehouseDesc: 'SWDBCD-RESIDENTIAL COMPLEX RAN',
+    status: 'Draft',
+    createdDate: [2023, 6, 14],
+  },
+  {
+    id: 233,
+    projectId: '3100_1079',
+    projectDesc: 'APTIDCO-AMARAVATHI',
+    categoryId: 'A02',
+    categoryDesc: 'A02',
+    plannedDate: [2023, 6, 30],
+    warehouseId: '1082',
+    warehouseDesc: 'APTIDCO - GUDIVADA',
+    status: 'APPROVED',
+    createdDate: [2023, 6, 14],
+  },
+]
+
 const InProgressComponent = () => {
   const [showModal, setShowModal] = useState(false)
 
@@ -56,7 +107,7 @@ const InProgressComponent = () => {
       </div>
 
       <div className="orders-container">
-        {rfqItems.map((item) => {
+        {dummyRfqItems.map((item) => {
           return <OrderComponent key={item.id} item={item} />
         })}
       </div>
