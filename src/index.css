@@ -368,3 +368,21 @@ input:focus {
 .right-wrapper {
   border: 1px solid red;
 } */
+
+.icon {
+  color: var(--primary-500);
+  border: none;
+}
+
+.table-row {
+  position: relative;
+}
+
+/* .save-loading {
+  width: 6rem;
+  height: 6rem;
+  border: 5px solid var(--grey-400);
+  border-radius: 50%;
+  border-top-color: var(--primary-500);
+  animation: spinner 2s linear infinite;
+} */

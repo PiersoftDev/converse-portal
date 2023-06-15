@@ -107,6 +107,10 @@ const MaterialCard = ({ material, index }) => {
       color: '#a28b09',
       backgroundColor: '#ffeb80',
     },
+    APPROVED: {
+      color: '#1c7430',
+      backgroundColor: '#c6f6d5',
+    },
   }
 
   const handleRaiseQuery = () => {
