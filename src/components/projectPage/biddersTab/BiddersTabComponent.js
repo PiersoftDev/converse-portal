@@ -8,6 +8,7 @@ import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
 import { Table } from 'react-bootstrap'
 import BusinessPartnerViewComponent from './BusinessPartnerViewComponent'
 import LineViewComponent from './LineViewComponent'
+import Toggle from 'react-styled-toggle'
 
 const BiddersTabComponent = ({ rfqId }) => {
   const [lineList, setLineList] = useState({})
@@ -88,9 +89,13 @@ const BiddersTabComponent = ({ rfqId }) => {
     <Wrapper>
       <div className="bidders-tab-header">
         <h4> {toggle ? 'Business partner view' : 'Line Description view'}</h4>
-        <button className="toggle-btn" onClick={() => setToggle(!toggle)}>
+        {/* <button className="toggle-btn" onClick={() => setToggle(!toggle)}>
           toggle
-        </button>
+        </button> */}
+        <Toggle
+          onChange={() => setToggle(!toggle)}
+          backgroundColorUnchecked="#00a400"
+        />
       </div>
       {toggle ? (
         <div className="bussiness-partner-container">
