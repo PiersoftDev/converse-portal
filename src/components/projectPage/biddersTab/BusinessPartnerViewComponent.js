@@ -46,7 +46,8 @@ const BusinessPartnerViewComponent = ({ vendor, vendorId }) => {
                   {
                     lineId,
                     itemDescription,
-                    totalAmount,
+                    unitPrice,
+                    uom,
                     possibleDeliveryDate,
                   },
                   index
@@ -57,7 +58,7 @@ const BusinessPartnerViewComponent = ({ vendor, vendorId }) => {
                     <tr key={index}>
                       <td>{lineId}</td>
                       <td>{itemDescription}</td>
-                      <td>{`Rs ${totalAmount}`}</td>
+                      <td>{`Rs ${unitPrice} Per ${uom}` }</td>
                       <td>{`${d}-${m}-${y}`}</td>
                     </tr>
                   )

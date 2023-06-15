@@ -36,17 +36,17 @@ const LineViewComponent = ({ line, lineId }) => {
               <tr>
                 <th>Business Partner</th>
                 <th>Price Quoted</th>
-                <th>Possible DeliveryDate</th>
+                <th>Possible Delivery Date</th>
               </tr>
             </thead>
             <tbody>
               {line.map(
-                ({ vendorName, totalAmount, possibleDeliveryDate }, index) => {
+                ({ vendorName, unitPrice,uom, possibleDeliveryDate }, index) => {
                   const [y, m, d] = possibleDeliveryDate
                   return (
                     <tr key={index}>
                       <td>{vendorName}</td>
-                      <td>{`Rs ${totalAmount}`}</td>
+                      <td>{`Rs ${unitPrice} Per ${uom}`}</td>
                       <td>{`${d}-${m}-${y}`}</td>
                     </tr>
                   )

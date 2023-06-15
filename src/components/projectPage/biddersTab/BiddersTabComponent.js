@@ -22,18 +22,18 @@ const BiddersTabComponent = ({ rfqId }) => {
 
   const segregateElements = (data) => {
     const lineList = data.reduce((acc, item) => {
-      if (!acc[item.itemId]) {
-        acc[item.itemId] = []
+      if (!acc[item.itemDescription]) {
+        acc[item.itemDescription] = []
       }
-      acc[item.itemId].push(item)
+      acc[item.itemDescription].push(item)
       return acc
     }, {})
 
     const vendorList = data.reduce((acc, item) => {
-      if (!acc[item.vendorId]) {
-        acc[item.vendorId] = []
+      if (!acc[item.vendorName]) {
+        acc[item.vendorName] = []
       }
-      acc[item.vendorId].push(item)
+      acc[item.vendorName].push(item)
       return acc
     }, {})
 
