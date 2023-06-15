@@ -3,6 +3,7 @@ import { useState } from 'react'
 import ItemsComponent from './tabcomponents/ItemsComponent'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
+import BiddersTabComponent from './biddersTab/BiddersTabComponent'
 
 const ProjectTabsComponent = ({ rfqId }) => {
   const [index, setIndex] = useState(0)
@@ -57,7 +58,7 @@ const ProjectTabsComponent = ({ rfqId }) => {
           <h4>Criteria</h4>
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Bidders</h4>
+          <BiddersTabComponent rfqId={rfqId} />
         </TabPanel>
         <TabPanel className="tab-panel">
           <h4>Price Comparisons</h4>
