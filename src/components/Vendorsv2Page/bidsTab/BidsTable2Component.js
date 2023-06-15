@@ -89,53 +89,70 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
       return
     }
 
-    const newData = [...bidsList]
-    const index = newData.findIndex((item) => row.key === item.key)
-    const item = newData[index]
+    // const newItemState = { ...item, ...editData }
 
-    const newItemState = { ...item, ...editData }
+    // const {
+    //   projectDesc,
+    //   plannedDate,
+    //   itemDesc,
+    //   itemId,
+    //   id,
+    //   quantity,
+    //   rfqId,
+    //   status,
+    //   uom,
+    //   warehouseId,
+    //   warehouseName,
+    //   vendorDate,
+    //   vendorId,
+    //   vendorName,
+    //   vendorPrice,
+    // } = newItemState
 
-    console.log('newItemState', newItemState)
+    // const { year, month, day } = vendorDate
 
-    const {
-      projectDesc,
-      plannedDate,
-      itemDesc,
-      itemId,
-      id,
-      quantity,
-      rfqId,
-      status,
-      uom,
-      warehouseId,
-      warehouseName,
-      vendorDate,
-      vendorId,
-      vendorName,
-      vendorPrice,
-    } = newItemState
+    // const reqbody = [
+    //   {
+    //     bidCreatedDate: '2023-06-15',
+    //     bidUpdatedDate: '2023-06-15',
+    //     currency: 'INR',
+    //     itemDescription: itemDesc,
+    //     itemId,
+    //     lineId: id,
+    //     possibleDeliveryDate: `${year}-${month}-${day}`,
+    //     quantity,
+    //     rfqId,
+    //     status,
+    //     totalAmount: vendorPrice * quantity,
+    //     unitPrice: vendorPrice,
+    //     uom,
+    //     vendorId,
+    //     vendorName,
+    //     warehouseId,
+    //     warehouseName,
+    //   },
+    // ]
 
-    const { year, month, day } = vendorDate
-
-    const reqbody = [
+    const dummyReqbody = [
       {
-        bidCreatedDate: '2023-06-15',
-        bidUpdatedDate: '2023-06-15',
+        id: 261,
+        rfqId: 241,
+        lineId: 237,
+        itemId: 'CV00000012',
+        itemDescription: 'Std. Reinforcement TMT',
+        quantity: 1000,
+        uom: 'MT',
+        vendorId: '14880',
+        vendorName: 'CAUVERY TARPAULINS',
+        warehouseId: '',
+        warehouseName: '',
+        unitPrice: 200,
+        totalAmount: 200000,
         currency: 'INR',
-        itemDescription: itemDesc,
-        itemId,
-        lineId: id,
-        possibleDeliveryDate: `${year}-${month}-${day}`,
-        quantity,
-        rfqId,
-        status,
-        totalAmount: vendorPrice * quantity,
-        unitPrice: vendorPrice,
-        uom,
-        vendorId,
-        vendorName,
-        warehouseId,
-        warehouseName,
+        status: 'RFQ',
+        possibleDeliveryDate: [2023, 6, 23],
+        bidCreatedDate: [2023, 6, 15],
+        bidUpdatedDate: [2023, 6, 15],
       },
     ]
 
@@ -143,8 +160,12 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
       setIsSaveLoading(true)
       const resp = await axios.post(
         `http://13.232.221.196:9090/v1/purchase/bids/save-bids`,
-        reqbody
+        dummyReqbody
       )
+
+      const newData = [...bidsList]
+      const index = newData.findIndex((item) => row.key === item.key)
+      const item = newData[index]
 
       newData.splice(index, 1, { ...item, ...editData })
       setIsSaveLoading(false)
@@ -181,9 +202,6 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
         const response = await axios(
           `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
         )
-
-        console.log('response', response)
-
         setSuggestions(response.data)
       } catch (error) {
         console.log(error)

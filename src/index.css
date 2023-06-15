@@ -363,26 +363,9 @@ input:focus {
     --progress-value-2: 67;
   }
 }
-/* 
-.left-wrapper,
-.right-wrapper {
-  border: 1px solid red;
-} */
 
-.icon {
-  color: var(--primary-500);
-  border: none;
+/* .bussiness-partner-container */
+
+.line-description-container {
+  /* border: 1px solid red; */
 }
-
-.table-row {
-  position: relative;
-}
-
-/* .save-loading {
-  width: 6rem;
-  height: 6rem;
-  border: 5px solid var(--grey-400);
-  border-radius: 50%;
-  border-top-color: var(--primary-500);
-  animation: spinner 2s linear infinite;
-} */
