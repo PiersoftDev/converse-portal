@@ -26,10 +26,12 @@ const BidsTabComponent = () => {
 
       const data = response.data.map((item) => ({
         ...item,
-        vendor: '',
+        vendorId: '',
+        vendorName: '',
         vendorPrice: '',
         vendorDate: '',
-        warehouse: '',
+        warehouseId: '',
+        warehouseName: '',
         key: item.id,
       }))
 

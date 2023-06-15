@@ -15,9 +15,10 @@ import { BsCheck2Square } from 'react-icons/bs'
 import { Tooltip } from '@mui/material'
 
 const initialEditData = {
-  vendor: '',
+  vendorName: '',
+  vendorId: '',
   vendorPrice: '',
-  vendorDate: '',
+  vendorDate: { year: '', month: '', day: '' },
 }
 
 const toolTipStyle = {
@@ -83,30 +84,58 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
   const handleSave = async (row) => {
     if (editingRow !== row.key) return
 
-    if (!editData.vendor || !editData.vendorPrice || !editData.vendorDate) {
+    if (!editData.vendorName || !editData.vendorPrice || !editData.vendorDate) {
       toast.error('Please add the vendor and vendorPrice')
       return
     }
+
+    const newData = [...bidsList]
+    const index = newData.findIndex((item) => row.key === item.key)
+    const item = newData[index]
+
+    const newItemState = { ...item, ...editData }
+
+    console.log('newItemState', newItemState)
+
+    const {
+      projectDesc,
+      plannedDate,
+      itemDesc,
+      itemId,
+      id,
+      quantity,
+      rfqId,
+      status,
+      uom,
+      warehouseId,
+      warehouseName,
+      vendorDate,
+      vendorId,
+      vendorName,
+      vendorPrice,
+    } = newItemState
+
+    const { year, month, day } = vendorDate
 
     const reqbody = [
       {
         bidCreatedDate: '2023-06-15',
         bidUpdatedDate: '2023-06-15',
-        currency: 'string',
-        itemDescription: 'string',
-        itemId: 'string',
-        lineId: 0,
-        possibleDeliveryDate: '2023-06-15',
-        quantity: 0,
-        rfqId: 0,
-        status: 'string',
-        totalAmount: 0,
-        unitPrice: 0,
-        uom: 'string',
-        vendorId: 'string',
-        vendorName: 'string',
-        warehouseId: 'string',
-        warehouseName: 'string',
+        currency: 'INR',
+        itemDescription: itemDesc,
+        itemId,
+        lineId: id,
+        possibleDeliveryDate: `${year}-${month}-${day}`,
+        quantity,
+        rfqId,
+        status,
+        totalAmount: vendorPrice * quantity,
+        unitPrice: vendorPrice,
+        uom,
+        vendorId,
+        vendorName,
+        warehouseId,
+        warehouseName,
       },
     ]
 
@@ -116,9 +145,7 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
         `http://13.232.221.196:9090/v1/purchase/bids/save-bids`,
         reqbody
       )
-      const newData = [...bidsList]
-      const index = newData.findIndex((item) => row.key === item.key)
-      const item = newData[index]
+
       newData.splice(index, 1, { ...item, ...editData })
       setIsSaveLoading(false)
       setBidsList(newData)
@@ -142,7 +169,7 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
     const { name, value } = e.target
     setEditData({ ...editData, [name]: value })
 
-    if (name === 'vendor') {
+    if (name === 'vendorName') {
       await fetchData(name, value)
     }
   }
@@ -168,9 +195,10 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
 
   const handleSearchItemsClick = (result) => {
     console.log(result)
+
     setSuggestions([])
 
-    setEditData({ ...editData, vendor: result.bpDesc })
+    setEditData({ ...editData, vendorName: result.bpDesc, vendorId: result.id })
   }
 
   const columns = [
@@ -206,8 +234,8 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
             <div className="input-item">
               <input
                 type="text"
-                name="vendor"
-                value={editData.vendor}
+                name="vendorName"
+                value={editData.vendorName}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={editingRow === record.key && isSaveLoading}
@@ -259,13 +287,15 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
       dataIndex: 'vendorDate',
       render: (text, record) => {
         if (editingRow === record.key) {
+          const date = editData.vendorDate
+
           return (
             <div className="input-item vendor-date">
               <DatePicker
                 slotProps={{ textField: { size: 'small' } }}
                 showDaysOutsideCurrentMonth
                 sx={dateFilterStyling}
-                value={editData.vendorDate}
+                value={`${date.day}-${date.month}-${date.year}`}
                 format="DD/MM/YYYY"
                 id="shipment-date"
                 disablePast={true}
@@ -278,7 +308,7 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
 
                   setEditData({
                     ...editData,
-                    vendorDate: `${$D}-${$M}-${$y}`,
+                    vendorDate: { day: $D, month: $M, year: $y },
                   })
                 }}
               />
