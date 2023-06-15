@@ -27,14 +27,14 @@ const HeaderComponent = () => {
           </div>
         </div>
 
-        <div className="btns-container">
+        {/* <div className="btns-container">
           <button>
             <span>
               <BsFillPlusCircleFill />
             </span>
             Create
           </button>
-        </div>
+        </div> */}
       </div>
     </Wrapper>
   )

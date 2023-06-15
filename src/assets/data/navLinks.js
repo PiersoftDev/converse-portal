@@ -6,6 +6,7 @@ import { MdOutlineLocalShipping } from 'react-icons/md'
 import { BsReceiptCutoff } from 'react-icons/bs'
 import { MdOutlineAssignmentInd } from 'react-icons/md'
 import { BsShop } from 'react-icons/bs'
+import { BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs'
 
 const navLinks = [
   {
@@ -50,6 +51,12 @@ const navLinks = [
     path: '/user',
     text: 'UserName',
     icon: <MdOutlineAssignmentInd />,
+  },
+  {
+    id: 8,
+    path: '/paymentAdviceSlip',
+    text: 'PaymentAdviceSlip',
+    icon: <BsFillFileEarmarkSpreadsheetFill />,
   },
 ]
 

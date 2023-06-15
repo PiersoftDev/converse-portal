@@ -2,32 +2,57 @@ import { ImCross } from 'react-icons/im'
 import AsnModalInputContainer from './AsnModalInputContainer'
 import DeliveryContainer from './DeliveryContainer'
 import styled from 'styled-components'
+import { useState } from 'react'
+
+const initialState = {
+  warehouse: '',
+  deliveryDate: '',
+  shipmentNumber: '',
+  driverContact: '',
+  shipmentDate: '',
+  driverName: '',
+  shippingMode: '',
+  vehicleNumber: '',
+  carrierAwb: '',
+  businessPartner: '',
+}
 
 const AsnModal = ({ showModal, setShowModal }) => {
+  const [newAsnState, setNewAsnState] = useState(initialState)
+
+  const closeModal = () => {
+    setShowModal(false)
+    setNewAsnState(initialState)
+  }
+
+  const handleSubmit = () => {
+    console.log('newAsnState', newAsnState)
+
+    setNewAsnState(initialState)
+    setShowModal(false)
+  }
+
   return (
     <Wrapper>
       <div
         className={`asn-modal ${showModal ? 'show' : ''} `}
-        onClick={() => setShowModal(false)}
+        onClick={closeModal}
       >
         <div className="asn-modal-content" onClick={(e) => e.stopPropagation()}>
           <h4 className="asn-modal-header">New ASN</h4>
-          <AsnModalInputContainer />
+          <AsnModalInputContainer
+            newAsnState={newAsnState}
+            setNewAsnState={setNewAsnState}
+          />
           <DeliveryContainer />
-          <button
-            onClick={() => setShowModal(false)}
-            className="close-modal-btn"
-          >
+          <button onClick={closeModal} className="close-modal-btn">
             <ImCross />
           </button>
           <div className="btns-container">
-            <button className="discard-btn">Discard</button>
-            <button
-              className="submit-btn"
-              onClick={() => {
-                setShowModal(false)
-              }}
-            >
+            <button className="discard-btn" onClick={closeModal}>
+              Discard
+            </button>
+            <button className="submit-btn" onClick={handleSubmit}>
               Submit
             </button>
           </div>

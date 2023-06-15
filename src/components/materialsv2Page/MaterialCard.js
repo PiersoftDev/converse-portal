@@ -26,12 +26,16 @@ import QueryModal from './QueryModal'
 import RejectModal from './RejectModal'
 import CommentsModal from './CommentsModal'
 import { useEffect } from 'react'
+import LocationUpdateModal from './LocationUpdateModal'
+import { ImLocation2 } from 'react-icons/im'
 
 const MaterialCard = ({ material, index }) => {
   const [showMaterialModal, setShowMaterialModal] = useState(false)
   const [showRejectModal, setShowRejectModal] = useState(false)
   const [showQueryModal, setShowQueryModal] = useState(false)
   const [showCommentsModal, setShowCommentsModal] = useState(false)
+
+  const [showLocationModal, setShowLocationModal] = useState(false)
 
   const {
     id,
@@ -144,6 +148,12 @@ const MaterialCard = ({ material, index }) => {
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
+          <span
+            className="location-icon"
+            onClick={() => setShowLocationModal(true)}
+          >
+            <ImLocation2 />
+          </span>
           <div className="content">
             <span>
               <MdFoundation />
@@ -273,6 +283,11 @@ const MaterialCard = ({ material, index }) => {
             showModal={showCommentsModal}
             setShowModal={setShowCommentsModal}
             comments={commentsState}
+          />
+
+          <LocationUpdateModal
+            showLocationModal={showLocationModal}
+            setShowLocationModal={setShowLocationModal}
           />
         </Wrapper>
       )}
@@ -411,6 +426,19 @@ const Wrapper = styled.div`
 
   .comments-btn:hover {
     color: var(--grey-700);
+    transform: scale(1.2);
+  }
+
+  .location-icon {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--primary-500);
+  }
+
+  .location-icon:hover {
     transform: scale(1.2);
   }
 `
