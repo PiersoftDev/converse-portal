@@ -34,9 +34,11 @@ const vendorsSlice = createSlice({
   reducers: {
     makeShowMultipleGstUnderSamePanModalFalse: (state) => {
       state.showMultipleGstUnderSamePanModal = false
+      state.onBoardAll = 'No'
     },
     makeShowMultipleGstUnderSamePanModalTrue: (state) => {
       state.showMultipleGstUnderSamePanModal = true
+      state.onBoardAll = 'Yes'
     },
     makeOnBoardAllNo: (state) => {
       state.onBoardAll = 'No'

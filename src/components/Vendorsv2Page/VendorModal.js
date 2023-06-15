@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import {
   makeOnBoardAllNo,
   makeOnBoardAllYes,
+  makeShowMultipleGstUnderSamePanModalFalse,
   makeShowMultipleGstUnderSamePanModalTrue,
 } from '../../features/vendors/VendorSlice'
 
@@ -21,23 +22,23 @@ import {
 //   pocWhatsappNo: '',
 // }
 
-// const initial = {
-//   gst: '30AAACR5055K1ZK',
-//   aadhaar: '670258073448',
-//   pan: 'AAACR5055',
-//   pocName: 'Sai',
-//   pocWhatsappNo: '919945014010',
-//   pocEmail: 'gsmreddy3@gmail.com',
-// }
-
 const initial = {
-  gst: '',
-  aadhaar: '',
-  pan: '',
-  pocName: '',
-  pocWhatsappNo: '',
-  pocEmail: '',
+  gst: '30AAACR5055K1ZK',
+  aadhaar: '670258073448',
+  pan: 'AAACR5055',
+  pocName: 'Sai',
+  pocWhatsappNo: '919945014010',
+  pocEmail: 'gsmreddy3@gmail.com',
 }
+
+// const initial = {
+//   gst: '',
+//   aadhaar: '',
+//   pan: '',
+//   pocName: '',
+//   pocWhatsappNo: '',
+//   pocEmail: '',
+// }
 
 const url = 'http://13.232.221.196:9060/v1/vm/onboard'
 
@@ -98,9 +99,13 @@ const VendorModal = ({ showModal, setShowModal }) => {
     e.preventDefault()
     setVendorInfo(initial)
     setShowModal(false)
+    setTimeout(() => {
+      dispatch(makeShowMultipleGstUnderSamePanModalFalse())
+    }, 500)
   }
 
   const handleClose = () => {
+    dispatch(makeShowMultipleGstUnderSamePanModalFalse())
     setShowModal(false)
     setVendorInfo(initial)
   }

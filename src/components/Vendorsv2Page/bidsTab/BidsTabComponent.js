@@ -3,20 +3,51 @@ import { FiFilter } from 'react-icons/fi'
 import styled from 'styled-components'
 
 import { GrFormAdd } from 'react-icons/gr'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux'
 import ReactLoading from 'react-loading'
 
 import BidsTableComponent from './BidsTableComponent'
 import BidsTable2Component from './BidsTable2Component'
+import axios from 'axios'
 
 const BidsTabComponent = () => {
-  const { rfqItems, rfqItemsLoading, rfqItemsError } = useSelector(
-    (store) => store.material
-  )
+  const [bidsList, setBidsList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
-  if (rfqItemsLoading) {
+  const fetchBidsDate = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axios(
+        'http://13.232.221.196:9090/v1/purchase/material-indent/rfq/all-approved'
+      )
+
+      const data = response.data.map((item) => ({
+        ...item,
+        vendor: '',
+        vendorPrice: '',
+        vendorDate: '',
+        warehouse: '',
+        key: item.id,
+      }))
+
+      setBidsList(data)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      setIsError(true)
+      console.log(error)
+      console.log('Some error occured while fetching bids data ...')
+    }
+  }
+
+  useEffect(() => {
+    fetchBidsDate()
+  }, [])
+
+  if (isLoading) {
     return (
       <LoadingWrapper>
         <ReactLoading
@@ -29,7 +60,7 @@ const BidsTabComponent = () => {
     )
   }
 
-  if (rfqItemsError) {
+  if (isError) {
     return (
       <ErrorWrapper>
         <h4>Something went wrong while fetching data ...</h4>
@@ -48,7 +79,7 @@ const BidsTabComponent = () => {
         </div>
       </div>
       {/* <BidsTableComponent /> */}
-      <BidsTable2Component />
+      <BidsTable2Component bidsList={bidsList} setBidsList={setBidsList} />
     </Wrapper>
   )
 }
