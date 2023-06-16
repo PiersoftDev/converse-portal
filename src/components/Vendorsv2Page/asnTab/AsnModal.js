@@ -5,9 +5,11 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import axios from 'axios'
 import ReactLoading from 'react-loading'
+import { toast } from 'react-toastify'
 
 const initialState = {
   warehouse: '',
+  warehouseId: '',
   deliveryDate: '',
   shipmentNumber: '',
   driverContact: '',
@@ -17,6 +19,7 @@ const initialState = {
   vehicleNumber: '',
   carrierAwb: '',
   businessPartner: '',
+  businessPartnerId: '',
 }
 
 const AsnModal = ({ showModal, setShowModal, setQrImage, setShowQrModal }) => {
@@ -29,29 +32,75 @@ const AsnModal = ({ showModal, setShowModal, setQrImage, setShowQrModal }) => {
     setNewAsnState(initialState)
   }
 
+  const getDate = (date) => {
+    let { $D, $M, $y } = date
+
+    $M = $M + 1
+
+    if ($D < 10) $D = `0${$D}`
+
+    if ($M < 10) $M = `0${$M}`
+
+    return `${$y}-${$M}-${$D}`
+  }
+
   const handleSubmit = async () => {
     console.log('newAsnState', newAsnState)
 
-    const dummyRequest = {
-      businessPartnerDesc: 'string',
-      businessPartnerId: 'string',
-      carrierAWB: 'string',
-      deliveryDate: '2023-06-16',
-      driverContact: 'string',
-      driverName: 'string',
-      shipmentDate: '2023-06-16',
-      shipmentMode: 'string',
-      shipmentNumber: 'string',
-      vehicleNumber: 'string',
-      warehouseDesc: 'string',
-      warehouseId: 'string',
+    const {
+      warehouse: warehouseDesc,
+      warehouseId,
+      deliveryDate,
+      shipmentNumber,
+      driverContact,
+      shipmentDate,
+      driverName,
+      shippingMode: shipmentMode,
+      vehicleNumber,
+      carrierAwb: carrierAWB,
+      businessPartner: businessPartnerDesc,
+      businessPartnerId,
+    } = newAsnState
+
+    if (
+      !warehouseId ||
+      !businessPartnerId ||
+      !shipmentNumber ||
+      !shipmentDate ||
+      !deliveryDate ||
+      !driverName ||
+      !driverContact ||
+      !vehicleNumber ||
+      !carrierAWB ||
+      !shipmentMode ||
+      !warehouseDesc ||
+      !businessPartnerDesc
+    ) {
+      toast.error('Please fill all the fields')
+      return
+    }
+
+    const reqbody = {
+      businessPartnerDesc,
+      businessPartnerId,
+      carrierAWB,
+      deliveryDate: getDate(deliveryDate),
+      driverContact,
+      driverName,
+      shipmentDate: getDate(shipmentDate),
+      shipmentMode,
+      shipmentNumber,
+      vehicleNumber,
+      warehouseDesc,
+      warehouseId,
     }
 
     try {
       setIsLoading(true)
+      console.log('reqbody', reqbody)
       const response = await axios.post(
         'http://13.232.221.196:9090/v1/purchase/asn/create-asn',
-        dummyRequest
+        reqbody
       )
       console.log(response.data)
       setIsLoading(false)

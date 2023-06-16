@@ -91,14 +91,22 @@ const AsnModalInputContainer = ({ newAsnState, setNewAsnState }) => {
   const handleSearchItemsClick = (name, result) => {
     switch (name) {
       case 'warehouse':
-        setNewAsnState({ ...newAsnState, [name]: result.whDesc })
+        setNewAsnState({
+          ...newAsnState,
+          [name]: result.whDesc,
+          warehouseId: result.whCode,
+        })
 
         setWareHouseSuggestions([])
 
         break
 
       case 'businessPartner':
-        setNewAsnState({ ...newAsnState, [name]: result.bpDesc })
+        setNewAsnState({
+          ...newAsnState,
+          [name]: result.bpDesc,
+          businessPartnerId: result.bpCode,
+        })
         setBusinessPartnerSuggestions([])
         break
 
@@ -135,14 +143,19 @@ const AsnModalInputContainer = ({ newAsnState, setNewAsnState }) => {
           </ul>
         )}
       </div>
-      <div className="input-item ">
+      <div className="shipment-date-container ">
         <label htmlFor="deliveryDate">Delivery Date </label>
-        <input
-          type="text"
-          id="deliveryDate"
-          name="deliveryDate"
+        <DatePicker
+          slotProps={{ textField: { size: 'small' } }}
+          showDaysOutsideCurrentMonth
+          sx={dateFilterStyling}
           value={newAsnState.deliveryDate}
-          onChange={handleChange}
+          format="DD/MM/YYYY"
+          id="deliveryDate"
+          disablePast={true}
+          onChange={(newValue) => {
+            setNewAsnState({ ...newAsnState, deliveryDate: newValue })
+          }}
         />
       </div>
       <div className="input-item ">
