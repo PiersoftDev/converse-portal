@@ -89,85 +89,85 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
       return
     }
 
-    // const newItemState = { ...item, ...editData }
+    const newData = [...bidsList]
+    const index = newData.findIndex((item) => row.key === item.key)
+    const item = newData[index]
 
-    // const {
-    //   projectDesc,
-    //   plannedDate,
-    //   itemDesc,
-    //   itemId,
-    //   id,
-    //   quantity,
-    //   rfqId,
-    //   status,
-    //   uom,
-    //   warehouseId,
-    //   warehouseName,
-    //   vendorDate,
-    //   vendorId,
-    //   vendorName,
-    //   vendorPrice,
-    // } = newItemState
+    const newItemState = { ...item, ...editData }
 
-    // const { year, month, day } = vendorDate
+    const {
+      projectDesc,
+      plannedDate,
+      itemDesc,
+      itemId,
+      id,
+      quantity,
+      rfqId,
+      status,
+      uom,
+      warehouseId,
+      warehouseName,
+      vendorDate,
+      vendorId,
+      vendorName,
+      vendorPrice,
+    } = newItemState
 
-    // const reqbody = [
-    //   {
-    //     bidCreatedDate: '2023-06-15',
-    //     bidUpdatedDate: '2023-06-15',
-    //     currency: 'INR',
-    //     itemDescription: itemDesc,
-    //     itemId,
-    //     lineId: id,
-    //     possibleDeliveryDate: `${year}-${month}-${day}`,
-    //     quantity,
-    //     rfqId,
-    //     status,
-    //     totalAmount: vendorPrice * quantity,
-    //     unitPrice: vendorPrice,
-    //     uom,
-    //     vendorId,
-    //     vendorName,
-    //     warehouseId,
-    //     warehouseName,
-    //   },
-    // ]
+    const { year, month, day } = vendorDate
 
-    const dummyReqbody = [
+    const reqbody = [
       {
-        id: 261,
-        rfqId: 241,
-        lineId: 237,
-        itemId: 'CV00000012',
-        itemDescription: 'Std. Reinforcement TMT',
-        quantity: 1000,
-        uom: 'MT',
-        vendorId: '14880',
-        vendorName: 'CAUVERY TARPAULINS',
-        warehouseId: '',
-        warehouseName: '',
-        unitPrice: 200,
-        totalAmount: 200000,
+        bidCreatedDate: '2023-06-15',
+        bidUpdatedDate: '2023-06-15',
         currency: 'INR',
-        status: 'RFQ',
-        possibleDeliveryDate: [2023, 6, 23],
-        bidCreatedDate: [2023, 6, 15],
-        bidUpdatedDate: [2023, 6, 15],
+        itemDescription: itemDesc,
+        itemId,
+        lineId: id,
+        possibleDeliveryDate: `${year}-${month}-${day}`,
+        quantity,
+        rfqId,
+        status,
+        totalAmount: vendorPrice * quantity,
+        unitPrice: vendorPrice,
+        uom,
+        vendorId,
+        vendorName,
+        warehouseId,
+        warehouseName,
       },
     ]
+
+    // const dummyReqbody = [
+    //   {
+    //     id: 261,
+    //     rfqId: 241,
+    //     lineId: 237,
+    //     itemId: 'CV00000012',
+    //     itemDescription: 'Std. Reinforcement TMT',
+    //     quantity: 1000,
+    //     uom: 'MT',
+    //     vendorId: '14880',
+    //     vendorName: 'CAUVERY TARPAULINS',
+    //     warehouseId: '',
+    //     warehouseName: '',
+    //     unitPrice: 200,
+    //     totalAmount: 200000,
+    //     currency: 'INR',
+    //     status: 'RFQ',
+    //     possibleDeliveryDate: [2023, 6, 23],
+    //     bidCreatedDate: [2023, 6, 15],
+    //     bidUpdatedDate: [2023, 6, 15],
+    //   },
+    // ]
 
     try {
       setIsSaveLoading(true)
       const resp = await axios.post(
         `http://13.232.221.196:9090/v1/purchase/bids/save-bids`,
-        dummyReqbody
+        reqbody
       )
 
-      const newData = [...bidsList]
-      const index = newData.findIndex((item) => row.key === item.key)
-      const item = newData[index]
-
-      newData.splice(index, 1, { ...item, ...editData })
+      newData.splice(index, 1, newItemState)
       setIsSaveLoading(false)
       setBidsList(newData)
       setEditingRow(null)
