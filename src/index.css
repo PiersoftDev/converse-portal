@@ -369,3 +369,20 @@ input:focus {
 .line-description-container {
   /* border: 1px solid red; */
 }
+
+.negotiations-component {
+  display: flex;
+  justify-content: center;
+}
+
+.negotiations-component img {
+  display: block;
+  width: 100rem;
+  box-shadow: var(--shadow-4);
+}
+
+.price-comparison {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}

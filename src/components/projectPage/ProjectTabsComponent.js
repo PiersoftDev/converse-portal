@@ -4,6 +4,8 @@ import ItemsComponent from './tabcomponents/ItemsComponent'
 import styled from 'styled-components'
 import ReactLoading from 'react-loading'
 import BiddersTabComponent from './biddersTab/BiddersTabComponent'
+import PriceComparisonComponent from './comparisonsTab/PriceComparisonComponent'
+import NegotiationsComponent from './negotiationsTab/NegotiationsComponent'
 
 const ProjectTabsComponent = ({ rfqId }) => {
   const [index, setIndex] = useState(0)
@@ -61,10 +63,10 @@ const ProjectTabsComponent = ({ rfqId }) => {
           <BiddersTabComponent rfqId={rfqId} />
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Price Comparisons</h4>
+          <PriceComparisonComponent />
         </TabPanel>
         <TabPanel className="tab-panel">
-          <h4>Negotiations</h4>
+          <NegotiationsComponent />
         </TabPanel>
         <TabPanel className="tab-panel">
           <h4>Approvals</h4>
@@ -94,7 +96,7 @@ export default ProjectTabsComponent
 
 const Wrapper = styled.div`
   .tabs-container {
-    overflow: scroll;
+    /* overflow: scroll; */
   }
 
   .account-tabs {
@@ -132,7 +134,6 @@ const Wrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
     display: grid;
     place-items: center;
-
     z-index: 30;
   }
 
