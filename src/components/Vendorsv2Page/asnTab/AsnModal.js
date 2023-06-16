@@ -3,6 +3,8 @@ import AsnModalInputContainer from './AsnModalInputContainer'
 import DeliveryContainer from './DeliveryContainer'
 import styled from 'styled-components'
 import { useState } from 'react'
+import axios from 'axios'
+import ReactLoading from 'react-loading'
 
 const initialState = {
   warehouse: '',
@@ -17,19 +19,55 @@ const initialState = {
   businessPartner: '',
 }
 
-const AsnModal = ({ showModal, setShowModal }) => {
+const AsnModal = ({ showModal, setShowModal, setQrImage, setShowQrModal }) => {
   const [newAsnState, setNewAsnState] = useState(initialState)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const closeModal = () => {
     setShowModal(false)
     setNewAsnState(initialState)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('newAsnState', newAsnState)
 
-    setNewAsnState(initialState)
-    setShowModal(false)
+    const dummyRequest = {
+      businessPartnerDesc: 'string',
+      businessPartnerId: 'string',
+      carrierAWB: 'string',
+      deliveryDate: '2023-06-16',
+      driverContact: 'string',
+      driverName: 'string',
+      shipmentDate: '2023-06-16',
+      shipmentMode: 'string',
+      shipmentNumber: 'string',
+      vehicleNumber: 'string',
+      warehouseDesc: 'string',
+      warehouseId: 'string',
+    }
+
+    try {
+      setIsLoading(true)
+      const response = await axios.post(
+        'http://13.232.221.196:9090/v1/purchase/asn/create-asn',
+        dummyRequest
+      )
+      console.log(response.data)
+      setIsLoading(false)
+      setQrImage(response.data)
+      setNewAsnState(initialState)
+      setShowModal(false)
+      setTimeout(() => {
+        setShowQrModal(true)
+      }, 300)
+    } catch (error) {
+      setIsLoading(false)
+      setNewAsnState(initialState)
+      setShowModal(false)
+      console.log(error)
+      console.log('some error occuured while creating asn')
+    }
   }
 
   return (
@@ -39,6 +77,17 @@ const AsnModal = ({ showModal, setShowModal }) => {
         onClick={closeModal}
       >
         <div className="asn-modal-content" onClick={(e) => e.stopPropagation()}>
+          {isLoading && (
+            <div className="create-asn-loading">
+              <ReactLoading
+                type="balls"
+                color="var(--grey-500)"
+                height={50}
+                width={50}
+              />
+            </div>
+          )}
+
           <h4 className="asn-modal-header">New ASN</h4>
           <AsnModalInputContainer
             newAsnState={newAsnState}
@@ -145,5 +194,19 @@ const Wrapper = styled.div`
     color: var(--red-dark);
     transform: scale(1.05);
     border: 1px solid var(--grey-100);
+  }
+
+  .create-asn-loading {
+    color: var(--white);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 32;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
   }
 `

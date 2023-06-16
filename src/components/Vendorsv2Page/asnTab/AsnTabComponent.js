@@ -10,9 +10,12 @@ import ReactLoading from 'react-loading'
 
 import AsnTableComponent from './AsnTableComponent'
 import AsnModal from './AsnModal'
+import QrCodeModal from './QrCodeModal'
 
 const AsnTabComponent = () => {
   const [showModal, setShowModal] = useState(false)
+  const [showQrModal, setShowQrModal] = useState(false)
+  const [qrImage, setQrImage] = useState(null)
 
   const { rfqItems, rfqItemsLoading, rfqItemsError } = useSelector(
     (store) => store.material
@@ -57,7 +60,19 @@ const AsnTabComponent = () => {
         </button>
       </div>
       <AsnTableComponent />
-      <AsnModal showModal={showModal} setShowModal={setShowModal} />
+      <AsnModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setQrImage={setQrImage}
+        setShowQrModal={setShowQrModal}
+      />
+
+      <QrCodeModal
+        showModal={showQrModal}
+        setShowModal={setShowQrModal}
+        setQrImage={setQrImage}
+        qrImage={qrImage}
+      />
     </Wrapper>
   )
 }
