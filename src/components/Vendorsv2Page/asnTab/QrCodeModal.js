@@ -6,6 +6,19 @@ import { useState } from 'react'
 import axios from 'axios'
 import ReactLoading from 'react-loading'
 import { FaRegShareSquare } from 'react-icons/fa'
+import { Tooltip } from '@mui/material'
+
+const toolTipStyle = {
+  sx: {
+    '& .MuiTooltip-tooltip': {
+      backgroundColor: 'f0f4f8',
+      padding: `0.5 1`,
+      backgroundColor: '#334e68',
+      top: '0.4rem',
+      fontSize: '0.6rem',
+    },
+  },
+}
 
 const QrCodeModal = ({ showModal, setShowModal, setQrImage, qrImage }) => {
   const closeModal = () => {
@@ -32,9 +45,16 @@ const QrCodeModal = ({ showModal, setShowModal, setQrImage, qrImage }) => {
           </div>
 
           <div className="btns-container">
-            <span>
-              <FaRegShareSquare />
-            </span>
+            <Tooltip
+              title="Share the QR code with your vendor"
+              placement="top"
+              arrow
+              PopperProps={toolTipStyle}
+            >
+              <span>
+                <FaRegShareSquare />
+              </span>
+            </Tooltip>
           </div>
         </div>
       </div>
@@ -102,7 +122,7 @@ const Wrapper = styled.div`
   .qrImage-container img {
     display: block;
     width: 90%;
-    max-width: 300px;
+    max-width: 200px;
   }
 
   .btns-container {
