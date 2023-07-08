@@ -1,11 +1,11 @@
 import {
   DragAndDropComponent,
   DummyTabContent,
-} from '../../components/materialsv2Page'
+} from '../../components/materialsv2Page/indentsTab'
 
-import PurchaseTabComponent from '../../components/materialsv2Page/purchaseTab/PurchaseTabComponent'
+import PurchaseTabComponent from '../../components/materialsv2Page/purchaseOrderTab/PurchaseTabComponent'
 
-import InProgressComponent from '../../components/materialsv2Page/purchaseTab/InProgressComponent'
+import InProgressComponent from '../../components/materialsv2Page/purchaseOrderTab/InProgressComponent'
 import RfqComponent from '../../components/materialsv2Page/RfqTab/RfqComponent'
 
 const materialv2Tabs = [

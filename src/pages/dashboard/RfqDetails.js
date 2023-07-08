@@ -16,7 +16,7 @@ const RfqDetails = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const { projectId, categoryId, id } = location.state
+  const { projectId, categoryId, id } = location?.state
 
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
@@ -32,7 +32,7 @@ const RfqDetails = () => {
   }
 
   return (
-    <Wrapper className="Projects-page">
+    <Wrapper>
       <div className="header">
         <h4>RFQ Details</h4>
       </div>

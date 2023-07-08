@@ -37,6 +37,15 @@ const ActivePlansComponent = () => {
           </div>
           <div className="line"></div>
         </div>
+
+        <div className="plan plan-2">
+          <div className="plan-content">
+            <span className="plan-type">Pharmacy</span>
+            <div className="plan-name">CarePlus PHD5000</div>
+            <button className="view-btn">VIEW MORE</button>
+          </div>
+          <div className="line"></div>
+        </div>
       </div>
     </Wrapper>
   )
@@ -55,13 +64,13 @@ const Wrapper = styled.div`
 
   .plans-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, minmax(200px, 1fr));
     gap: 2rem;
     padding-top: 1rem;
     grid-template-rows: 1fr;
   }
 
-  @media screen and (min-width: 1550px) {
+  /* @media screen and (min-width: 1550px) {
     .plans-container {
       grid-template-columns: repeat(5, 1fr);
     }
@@ -71,7 +80,7 @@ const Wrapper = styled.div`
     .plans-container {
       grid-template-columns: repeat(6, 1fr);
     }
-  }
+  } */
 
   .plan {
     background-color: var(--white);
@@ -143,7 +152,7 @@ const Wrapper = styled.div`
     border-radius: 5px;
 
     z-index: -1;
-    transition: transform 0.7s;
+    transition: transform 0.9s;
   }
   /* .plan:hover::after {
     transform: scaleY(1);

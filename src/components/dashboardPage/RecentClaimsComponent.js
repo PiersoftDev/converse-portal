@@ -236,7 +236,7 @@ const Wrapper = styled.div`
       rgba(255, 255, 255, 0.5) 10px
     );
 
-    animation: move 3s linear infinite;
+    animation: move 2s linear infinite;
     will-change: background-position;
     border-radius: 5px;
   }

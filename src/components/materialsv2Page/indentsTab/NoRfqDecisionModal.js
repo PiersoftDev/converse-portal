@@ -1,14 +1,10 @@
 import { ImCross } from 'react-icons/im'
 import styled from 'styled-components'
-import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 import { useNavigate } from 'react-router-dom'
-import { RiShareBoxLine } from 'react-icons/ri'
-import { useState } from 'react'
-import CreateRfqModal from './RfqTab/CreateRfqModal'
 import { useDispatch } from 'react-redux'
 import ReactLoading from 'react-loading'
 
-const RfqDecisionModal = ({
+const NoRfqDecisionModal = ({
   showModal,
   setShowModal,
   createRfq,
@@ -22,6 +18,7 @@ const RfqDecisionModal = ({
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const item = {
     id: 123,
     projectId: 'random',
@@ -33,26 +30,30 @@ const RfqDecisionModal = ({
     projectCode: 'random code',
   }
 
-  console.log(draftedRfq)
-
-  const { id } = draftedRfq[0]
+  const {
+    projectId,
+    projectDesc,
+    categoryId,
+    categoryDesc,
+    warehouseId,
+    warehouseDesc,
+  } = draftedRfq[0]
 
   const { destination, draggableId, temp } = rfqFlowState
 
   const openRfqDetails = async () => {
-    navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
-    dispatch(setColumns(temp))
+    await saveStatusChangeForRfq({ destination, draggableId, temp })
+    navigate(`/rfqdetails/${item.id}`, { state: { ...item } })
   }
 
-  const handleYes = async () => {
-    await saveStatusChangeForRfq({ draggableId, rfqId: id })
-    // dispatch(setColumns(temp))
-    navigate(`/rfqdetails/${id}`, { state: { ...draftedRfq[0] } })
+  const handleYes = () => {
+    setCreateRfq(true)
+    setShowModal(false)
   }
 
   const handleNo = () => {
-    setCreateRfq(true)
     setShowModal(false)
+    dispatch(setColumns(temp))
   }
 
   const handleCloseModal = () => {
@@ -86,21 +87,14 @@ const RfqDecisionModal = ({
 
           <div className="decision-content">
             <p className="decision-text">
-              There exists an RFQ
-              <span className="rfq-details-link" onClick={openRfqDetails}>
-                <span>{`RFQId-${id} `} </span>
-                <span className="icon">
-                  <RiShareBoxLine />
-                </span>
-              </span>
-              . Do you want to add this line to RFQ ?
+              {`There is no RFQ for this ${projectDesc} and ${categoryId}. Do you want to create a new RFQ?`}
             </p>
             <div className="btns-container">
               <button className="yes-btn" onClick={handleYes}>
-                Yes, Take me to RFQ
+                Yes
               </button>
               <button className="no-btn" onClick={handleNo}>
-                No, Create a new RFQ
+                No
               </button>
             </div>
           </div>
@@ -109,7 +103,7 @@ const RfqDecisionModal = ({
     </Wrapper>
   )
 }
-export default RfqDecisionModal
+export default NoRfqDecisionModal
 
 const Wrapper = styled.div`
   .material-modal {

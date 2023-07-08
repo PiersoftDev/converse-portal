@@ -1,5 +1,5 @@
-import DummyPurchaseOrderTab from '../../components/materialsv2Page/purchaseTab/DummyPurchaseOrderTab'
-import InProgressComponent from '../../components/materialsv2Page/purchaseTab/InProgressComponent'
+import DummyPurchaseOrderTab from '../../components/materialsv2Page/purchaseOrderTab/DummyPurchaseOrderTab'
+import InProgressComponent from '../../components/materialsv2Page/purchaseOrderTab/InProgressComponent'
 
 const purchaseordertabs = [
   {
