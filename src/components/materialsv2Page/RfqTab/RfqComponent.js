@@ -6,7 +6,7 @@ import { GrFormAdd } from 'react-icons/gr'
 import { FiFilter } from 'react-icons/fi'
 
 import ReactLoading from 'react-loading'
-import OrderComponent from '../purchaseTab/OrderComponent'
+import OrderComponent from '../purchaseOrderTab/OrderComponent'
 import SingleRfq from './SingleRfq'
 import { useEffect, useState } from 'react'
 import CreateRfqModal from './CreateRfqModal'

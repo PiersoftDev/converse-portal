@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import {
   getMaterialItems,
   setColumns,
-} from '../../features/MaterialIndent/MaterialSlice'
+} from '../../../features/MaterialIndent/MaterialSlice'
 import { useDispatch } from 'react-redux'
 import ReactLoading from 'react-loading'
 import axios from 'axios'
@@ -23,7 +23,6 @@ const DragAndDropComponent = () => {
   )
 
   const [statusPersistIsLoading, setStatusPersistIsLoading] = useState(false)
-  // const [statusPersistIsError, setStatusPersistIsError] = useState(false)
 
   const [isAddLinesLoading, setIsAddLinesLoading] = useState(false)
 
@@ -101,10 +100,6 @@ const DragAndDropComponent = () => {
         const response = await axios(
           `http://13.232.221.196:9090/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
         )
-
-        // const response = await axios(
-        //   `http://13.232.221.196:9090/v1/purchase/rfq/drafted/EXE000022/A05`
-        // )
 
         if (response.data.length > 0) {
           setDraftedRfq(response.data)
@@ -249,10 +244,6 @@ const DragAndDropComponent = () => {
 
     saveStatusChange(destination, draggableId, temp)
   }
-
-  // useEffect(() => {
-  //   dispatch(getMaterialItems())
-  // }, [])
 
   if (isLoading) {
     return (

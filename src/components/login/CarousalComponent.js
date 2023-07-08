@@ -108,7 +108,7 @@ const Wrapper = styled.div`
     left: 0;
     position: absolute;
     transform: translateX(100%);
-    transition: var(--transition);
+    transition: 0.8s ease-in-out all;
   }
 
   .footer-nav {
