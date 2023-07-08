@@ -381,8 +381,4 @@ input:focus {
   box-shadow: var(--shadow-4);
 }
 
-.price-comparison {
-  display: flex;
-  justify-content: center;
-  margin-top: 5rem;
-}
+/* RfqDetails tabs */
