@@ -16,7 +16,7 @@ const RfqDetails = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const { projectId, categoryId, id } = location?.state
+  const { projectId, categoryId, id } = location?.state || {}
 
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
@@ -56,5 +56,6 @@ const Wrapper = styled.div`
     background-color: var(--white);
     padding: 2rem;
     margin-bottom: 0;
+    border-top-left-radius: 2rem;
   }
 `

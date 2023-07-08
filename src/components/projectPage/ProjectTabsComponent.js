@@ -8,73 +8,77 @@ import PriceComparisonComponent from './comparisonsTab/PriceComparisonComponent'
 import NegotiationsComponent from './negotiationsTab/NegotiationsComponent'
 
 const ProjectTabsComponent = ({ rfqId }) => {
-  const [index, setIndex] = useState(0)
-
   const [addingAllItemsLoading, setAddingAllItemsLoading] = useState(false)
+
+  const [selectedTab, setSelectedTab] = useState(1)
+
+  const rfqDetailsTabs = [
+    {
+      id: 1,
+      tabName: 'Items',
+      component: (
+        <ItemsComponent
+          rfqId={rfqId}
+          loading={addingAllItemsLoading}
+          setLoading={setAddingAllItemsLoading}
+        />
+      ),
+    },
+    {
+      id: 2,
+      tabName: 'Criteria',
+      component: 'dummy Criteria',
+    },
+    {
+      id: 3,
+      tabName: 'Bidders',
+      component: <BiddersTabComponent rfqId={rfqId} />,
+    },
+    {
+      id: 4,
+      tabName: 'Price Comparisons',
+      component: <PriceComparisonComponent />,
+    },
+    {
+      id: 5,
+      tabName: 'Negotiations',
+      component: <NegotiationsComponent />,
+    },
+    {
+      id: 6,
+      tabName: 'Approvals',
+      component: 'dummy approvals',
+    },
+    {
+      id: 7,
+      tabName: 'Conversion Details',
+
+      component: 'dummy conversion details',
+    },
+  ]
+
+  let { component: tabContent } = rfqDetailsTabs.find(
+    ({ id }) => id === selectedTab
+  )
 
   return (
     <Wrapper>
-      <Tabs
-        defaultIndex={0}
-        onSelect={(index) => setIndex(index)}
-        // focusTabOnClick=false
-        className="tabs-container"
-      >
-        <TabList className="account-tabs">
-          {/* <Tab selectedClassName="selected-tab" className="tab">
-            Overview
-          </Tab> */}
-          <Tab selectedClassName="selected-tab" className="tab">
-            Items
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Criteria
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Bidders
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Price Comparisons
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Negotiations
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Approvals
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Conversion Details
-          </Tab>
-        </TabList>
-        {/* <TabPanel className="tab-panel">
-          <h4>Overview</h4>
-        </TabPanel> */}
-        <TabPanel>
-          <ItemsComponent
-            rfqId={rfqId}
-            loading={addingAllItemsLoading}
-            setLoading={setAddingAllItemsLoading}
-          />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Criteria</h4>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <BiddersTabComponent rfqId={rfqId} />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <PriceComparisonComponent />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <NegotiationsComponent />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Approvals</h4>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Conversion Details</h4>
-        </TabPanel>
-      </Tabs>
+      <ul className="tabs-container">
+        {rfqDetailsTabs.map(({ id, tabName }) => {
+          return (
+            <li
+              key={id}
+              className={selectedTab === id ? 'tab selected' : 'tab'}
+              onClick={() => setSelectedTab(id)}
+            >
+              <p>{tabName}</p>
+              <div></div>
+            </li>
+          )
+        })}
+      </ul>
+
+      {tabContent}
 
       {addingAllItemsLoading && (
         <div className="loading-overlay">
@@ -95,37 +99,33 @@ const ProjectTabsComponent = ({ rfqId }) => {
 export default ProjectTabsComponent
 
 const Wrapper = styled.div`
-  .tabs-container {
-    /* overflow: scroll; */
-  }
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow-y: scroll;
 
-  .account-tabs {
-    position: sticky;
+  .tabs-container {
     display: flex;
-    top: 0rem;
     gap: 2rem;
-    color: var(--grey-500);
-    cursor: pointer;
+    border-top: 1px solid var(--grey-100);
+    border-bottom: 1px solid var(--grey-100);
+    margin-bottom: 0;
     background-color: var(--white);
-    padding-left: 2rem;
-    box-shadow: var(--shadow-1);
-    width: 100%;
-  }
-  .selected-tab {
-    color: var(--primary-500);
-    border-bottom: 2px solid var(--primary-500);
   }
 
   .tab {
-    color: var(--grey-400);
-    font-weight: 600;
-    padding-bottom: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding-top: 1rem;
   }
 
-  .tab-panel h4 {
-    text-align: center;
-    color: var(--grey-600);
-    margin-top: 5rem;
+  .selected {
+    color: var(--primary-500);
+  }
+
+  .selected div {
+    height: 3px;
+    background-color: var(--primary-500);
+    border-radius: 10px;
   }
 
   .loading-overlay {

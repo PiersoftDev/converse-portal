@@ -28,6 +28,10 @@ const ProjectImpInfoComponent = ({
 }) => {
   const [approveClickCallLoading, setApproveClickCallLoading] = useState(false)
 
+  if (!plannedDate) {
+    plannedDate = []
+  }
+
   const {
     rfqNewLines,
     rfqAddItems,
