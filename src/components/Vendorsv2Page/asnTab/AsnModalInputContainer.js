@@ -65,14 +65,14 @@ const AsnModalInputContainer = ({ newAsnState, setNewAsnState }) => {
         switch (name) {
           case 'warehouse':
             response = await axios.post(
-              `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+              `http://14.98.177.102:9001/v1/masters/warehouse/searchWarehouse/${value}`
             )
             setWareHouseSuggestions(response.data)
             break
 
           case 'businessPartner':
             response = await axios(
-              `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
+              `http://14.98.177.102:9001/v1/masters/business-partner/searchBusinessPartner/${value}`
             )
             setBusinessPartnerSuggestions(response.data)
             break

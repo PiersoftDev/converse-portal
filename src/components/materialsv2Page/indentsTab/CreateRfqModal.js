@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Warehouse } from '@mui/icons-material'
 
-const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
+const url = 'http://14.98.177.102:9004/v1/purchase/rfq/create-rfq'
 
 const CreateRfqModal = ({
   showModal,
@@ -51,7 +51,7 @@ const CreateRfqModal = ({
     debounce(async (name, value) => {
       try {
         let response = await axios.post(
-          `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+          `http://14.98.177.102:9001/v1/masters/warehouse/searchWarehouse/${value}`
         )
         setSuggestions(response.data)
       } catch (error) {

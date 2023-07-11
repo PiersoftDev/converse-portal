@@ -163,7 +163,7 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
     try {
       setIsSaveLoading(true)
       const resp = await axios.post(
-        `http://13.232.221.196:9090/v1/purchase/bids/save-bids`,
+        `http://14.98.177.102:9004/v1/purchase/bids/save-bids`,
         reqbody
       )
 
@@ -200,7 +200,7 @@ const BidsTable2Component = ({ bidsList, setBidsList }) => {
       try {
         console.log('value', value)
         const response = await axios(
-          `http://13.232.221.196:9070/v1/masters/business-partner/searchBusinessPartner/${value}`
+          `http://14.98.177.102:9001/v1/masters/business-partner/searchBusinessPartner/${value}`
         )
         setSuggestions(response.data)
       } catch (error) {

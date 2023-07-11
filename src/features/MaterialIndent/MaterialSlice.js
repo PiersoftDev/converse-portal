@@ -56,12 +56,12 @@ const initialState = {
   rfqItemsError: false,
 }
 
-const url = 'http://13.232.221.196:9090/v1/purchase'
+const url = 'http://14.98.177.102:9004/v1/purchase'
 
 // const url =
 //   'https://6aad-49-43-201-220.ngrok-free.app/v1/purchase/material-indent/'
 
-const rfqListUrl = 'http://13.232.221.196:9090/v1/purchase/rfq/list-all-rfqs'
+const rfqListUrl = 'http://14.98.177.102:9004/v1/purchase/rfq/list-all-rfqs'
 
 export const getRfqList = createAsyncThunk(
   'Quotations/getRfqList',
@@ -180,7 +180,7 @@ const materialSlice = createSlice({
           ({ itemId }) => itemId === draggableId
         )
         await axios.put(
-          `http://13.232.221.196:9090/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
+          `http://14.98.177.102:9004/v1/purchase/material-indent/${id}/${droppableId}/${subStatus}`
         )
       } catch (error) {
         console.log(error)

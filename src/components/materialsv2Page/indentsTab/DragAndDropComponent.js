@@ -73,7 +73,7 @@ const DragAndDropComponent = () => {
       setIsAddLinesLoading(true)
       const reqbody = [draggableId]
       const resp = await axios.post(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
+        `http://14.98.177.102:9004/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
         reqbody
       )
       console.log(resp.data)
@@ -98,7 +98,7 @@ const DragAndDropComponent = () => {
         // Some api call to check whether line falls in to existing RFQ or not
 
         const response = await axios(
-          `http://13.232.221.196:9090/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
+          `http://14.98.177.102:9004/v1/purchase/rfq/drafted/${projectId}/${categoryId}`
         )
 
         if (response.data.length > 0) {
@@ -124,7 +124,7 @@ const DragAndDropComponent = () => {
       }
 
       await axios.put(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
+        `http://14.98.177.102:9004/v1/purchase/material-indent/updateStatus/${id}/${destination.droppableId}/${subStatus}`
       )
 
       setStatusPersistIsLoading(false)

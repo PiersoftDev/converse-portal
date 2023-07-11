@@ -99,7 +99,7 @@ const AsnModal = ({ showModal, setShowModal, setQrImage, setShowQrModal }) => {
       setIsLoading(true)
       console.log('reqbody', reqbody)
       const response = await axios.post(
-        'http://13.232.221.196:9090/v1/purchase/asn/create-asn',
+        'http://14.98.177.102:9004/v1/purchase/asn/create-asn',
         reqbody
       )
       console.log(response.data)

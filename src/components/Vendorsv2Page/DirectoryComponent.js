@@ -61,7 +61,7 @@ const DirectoryComponent = () => {
           <span className="create-order-icon">
             <GrFormAdd />
           </span>
-          <span className="create-order-text">Create Order</span>
+          <span className="create-order-text">Onboard Vendor</span>
         </button>
       </div>
 

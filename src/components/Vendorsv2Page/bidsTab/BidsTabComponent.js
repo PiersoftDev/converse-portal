@@ -21,7 +21,7 @@ const BidsTabComponent = () => {
     try {
       setIsLoading(true)
       const response = await axios(
-        'http://13.232.221.196:9090/v1/purchase/material-indent/rfq/all-approved'
+        'http://14.98.177.102:9004/v1/purchase/material-indent/rfq/all-approved'
       )
 
       const data = response.data.map((item) => ({

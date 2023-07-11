@@ -29,7 +29,7 @@ const initialIdState = {
   warehouse: '',
 }
 
-const url = 'http://13.232.221.196:9090/v1/purchase/rfq/create-rfq'
+const url = 'http://14.98.177.102:9004/v1/purchase/rfq/create-rfq'
 
 const CreateRfqModal = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch()
@@ -58,17 +58,17 @@ const CreateRfqModal = ({ showModal, setShowModal }) => {
           switch (name) {
             case 'project':
               response = await axios(
-                `http://13.232.221.196:9070/v1/masters/projects/searchProject/${value}`
+                `http://14.98.177.102:9001/v1/masters/projects/searchProject/${value}`
               )
               break
             case 'category':
               response = await axios(
-                `http://13.232.221.196:9070/v1/masters/item-group/searchItemGroup/${value}`
+                `http://14.98.177.102:9001/v1/masters/item-group/searchItemGroup/${value}`
               )
               break
             case 'warehouse':
               response = await axios.post(
-                `http://13.232.221.196:9070/v1/masters/warehouse/searchWarehouse/${value}`
+                `http://14.98.177.102:9001/v1/masters/warehouse/searchWarehouse/${value}`
               )
               break
 

@@ -95,7 +95,7 @@ const ItemsComponent = ({ rfqId, setLoading }) => {
     try {
       setLoading(true)
       const resp = await axios.post(
-        `http://13.232.221.196:9090/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
+        `http://14.98.177.102:9004/v1/purchase/material-indent/rfq/addLines/${rfqId}`,
         reqbody
       )
       console.log(resp.data)
