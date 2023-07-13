@@ -6,6 +6,7 @@ import ReactLoading from 'react-loading'
 import BiddersTabComponent from './biddersTab/BiddersTabComponent'
 import PriceComparisonComponent from './comparisonsTab/PriceComparisonComponent'
 import NegotiationsComponent from './negotiationsTab/NegotiationsComponent'
+import TermsAndConditionsComponent from './TermsAndConditionsTab/TermsAndConditionsComponent'
 
 const ProjectTabsComponent = ({ rfqId }) => {
   const [addingAllItemsLoading, setAddingAllItemsLoading] = useState(false)
@@ -27,7 +28,7 @@ const ProjectTabsComponent = ({ rfqId }) => {
     {
       id: 2,
       tabName: 'Criteria',
-      component: 'dummy Criteria',
+      component: <TermsAndConditionsComponent />,
     },
     {
       id: 3,

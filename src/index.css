@@ -382,3 +382,10 @@ input:focus {
 }
 
 /* Terms and conditions tabs */
+
+.text-limit {
+  color: var(--grey-500);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
