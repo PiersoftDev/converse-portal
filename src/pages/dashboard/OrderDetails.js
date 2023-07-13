@@ -15,7 +15,7 @@ const OrderDetails = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const { projectId, categoryId } = location.state
+  const { projectId, categoryId } = location?.state || {}
 
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('auth')
@@ -34,7 +34,7 @@ const OrderDetails = () => {
       <div className="header">
         <h4>Order Details</h4>
       </div>
-      <OrderImpInfoComponent {...location.state} />
+      <OrderImpInfoComponent {...location?.state} />
       <OrderTabsComponent />
     </Wrapper>
   )
@@ -54,5 +54,6 @@ const Wrapper = styled.div`
     background-color: var(--white);
     padding: 2rem;
     margin-bottom: 0;
+    border-top-left-radius: 2rem;
   }
 `

@@ -15,6 +15,9 @@ const OrderImpInfoComponent = ({
   projectCode,
   warehouseCode,
 }) => {
+  if (!plannedDate) {
+    plannedDate = []
+  }
   return (
     <Wrapper>
       <div className="left-wrapper">
