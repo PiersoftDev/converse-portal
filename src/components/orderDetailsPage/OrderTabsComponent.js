@@ -7,89 +7,118 @@ import TermsAndConditionsComponent from './TermsAndConditionsTab/TermsAndConditi
 
 const OrderTabsComponent = () => {
   const [index, setIndex] = useState(0)
+
+  const [selectedTab, setSelectedTab] = useState(1)
+
+  const orderDetailsTabs = [
+    {
+      id: 1,
+      tabName: 'Overview',
+      component: <h4>Overview</h4>,
+    },
+    {
+      id: 2,
+      tabName: 'Items',
+      component: <ItemsComponent />,
+    },
+    {
+      id: 3,
+      tabName: 'Business Partner Info',
+      component: <h4>Business partner Info</h4>,
+    },
+    {
+      id: 4,
+      tabName: 'Terms & Conditions',
+      component: <TermsAndConditionsComponent />,
+    },
+    {
+      id: 5,
+      tabName: 'Tax and Holding',
+      component: <TaxHoldingComponent />,
+    },
+    {
+      id: 6,
+      tabName: 'Notes',
+      component: <h4>Notes</h4>,
+    },
+  ]
+
+  let { component: tabContent } = orderDetailsTabs.find(
+    ({ id }) => id === selectedTab
+  )
+
   return (
     <Wrapper>
-      <Tabs
-        defaultIndex={0}
-        onSelect={(index) => setIndex(index)}
-        // focusTabOnClick=false
-        className="tabs-container"
-      >
-        <TabList className="account-tabs">
-          {/* <Tab selectedClassName="selected-tab" className="tab">
-            Overview
-          </Tab> */}
-          <Tab selectedClassName="selected-tab" className="tab">
-            Items
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Business Partner Info
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Terms & Conditions
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Tax and Holding
-          </Tab>
-          <Tab selectedClassName="selected-tab" className="tab">
-            Notes
-          </Tab>
-        </TabList>
-        {/* <TabPanel className="tab-panel">
-          <h4>Overview</h4>
-        </TabPanel> */}
-        <TabPanel>
-          <ItemsComponent />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Business Partner Info</h4>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-         <TermsAndConditionsComponent/>
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <TaxHoldingComponent />
-        </TabPanel>
-        <TabPanel className="tab-panel">
-          <h4>Notes</h4>
-        </TabPanel>
-      </Tabs>
+      <ul className="tabs-container">
+        {orderDetailsTabs.map(({ id, tabName }) => {
+          return (
+            <li
+              key={id}
+              className={selectedTab === id ? 'tab selected' : 'tab'}
+              onClick={() => setSelectedTab(id)}
+            >
+              <p>{tabName}</p>
+              <div></div>
+            </li>
+          )
+        })}
+      </ul>
+
+      {tabContent}
     </Wrapper>
   )
 }
 export default OrderTabsComponent
 
 const Wrapper = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow-y: auto;
   .tabs-container {
-    overflow: scroll;
-  }
-
-  .account-tabs {
-    position: sticky;
     display: flex;
-    top: 0rem;
     gap: 2rem;
-    color: var(--grey-500);
-    cursor: pointer;
+    border-top: 1px solid var(--grey-100);
+    border-bottom: 1px solid var(--grey-100);
+    margin-bottom: 0;
     background-color: var(--white);
-    padding-left: 2rem;
-    box-shadow: var(--shadow-1);
-    width: 100%;
-  }
-  .selected-tab {
-    color: var(--primary-500);
-    border-bottom: 2px solid var(--primary-500);
   }
 
   .tab {
-    color: var(--grey-400);
-    font-weight: 600;
-    padding-bottom: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding-top: 1rem;
   }
 
-  .tab-panel h4 {
-    text-align: center;
-    color: var(--grey-600);
-    margin-top: 5rem;
+  .selected {
+    color: var(--primary-500);
+  }
+
+  .selected div {
+    height: 3px;
+    background-color: var(--primary-500);
+    border-radius: 10px;
+  }
+
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 30;
+  }
+
+  .loading-container {
+    background-color: var(--white);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    color: var(--grey-700);
+    width: 90%;
+    max-width: 50rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `

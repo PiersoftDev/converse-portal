@@ -1,75 +1,110 @@
-import { Table } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
 import styled from 'styled-components'
 import { useState } from 'react'
+import { BsFillPlusCircleFill } from 'react-icons/bs'
+import { AiFillMinusCircle } from 'react-icons/ai'
 
-const dummyData = [
+const termsAndConditionsData = [
   {
     id: 1,
-    terms: 'Payment Terms',
-    description: 'Payment Terms',
+    title: 'packing and Forwarding',
+    description:
+      "The construction company shall be responsible for the proper packaging and forwarding of all materials and equipment required for the project, ensuring safe transportation and delivery to the designated site. Any damage or loss during packing and forwarding shall be the company's liability.",
+    selected: false,
   },
   {
     id: 2,
-    terms: 'Delivery Terms',
-    description: 'Delivery Terms',
+    title: 'Credit costs',
+    description: `The credit card company will securely package and forward credit cards to the cardholders' registered address. The company holds no responsibility for any loss or damage during the packing and forwarding process, and any such incidents shall be addressed by the shipping provider or courier service.`,
+    selected: false,
   },
   {
     id: 3,
-    terms: 'Penalty Terms',
-    description: 'Penalty Terms',
+    title: 'Defects during transit',
+    description: `The construction company shall be responsible for inspecting all materials and equipment upon delivery and notifying the supplier within [specified timeframe] of any defects or damages incurred during transit. The supplier will bear the cost of replacing or repairing the defective items.`,
+    selected: false,
   },
   {
     id: 4,
-    terms: 'Liquidated Damages',
-    description: 'Liquidated Damages',
+    title: 'Loading',
+    description: `The construction company shall be responsible for ensuring the proper and safe loading of materials and equipment onto transport vehicles. The company shall take necessary precautions to prevent any damage or loss during the loading process and shall be liable for any incidents arising from improper loading practices.`,
+    selected: false,
   },
   {
     id: 5,
-    terms: 'Retention Money',
-    description: 'Retention Money',
+    title: 'Unloading',
+    description: `The construction company shall be responsible for the safe and efficient unloading of materials and equipment upon arrival at the designated site. The company shall exercise caution during the unloading process to prevent any damage or accidents. Any damages incurred during unloading shall be the responsibility of the construction company.`,
+    selected: false,
+  },
+  {
+    id: 6,
+    title: 'Transit Insurance',
+    description: `The construction company shall arrange for appropriate insurance coverage to protect materials and equipment during transit. Any loss, damage, or theft of goods during transit shall be covered by the insurance policy, and the construction company shall be responsible for filing necessary claims and providing supporting documentation.`,
+    selected: false,
+  },
+  {
+    id: 7,
+    title: 'Delivery Date',
+    description: `The construction company shall make reasonable efforts to meet the agreed-upon delivery date for materials and equipment. However, unforeseen circumstances such as weather conditions or supplier delays may affect the delivery schedule. In such cases, the company will communicate any changes to the delivery date promptly and make reasonable efforts to minimize any resulting inconvenience.`,
+    selected: false,
   },
 ]
 
 const TermsAndConditionsComponent = () => {
-  const [termsAndConditions, setTermsAndConditions] = useState([...dummyData])
+  const [termsAndConditions, setTermsAndConditions] = useState(
+    termsAndConditionsData
+  )
 
-  const addNewRow = () => {
-    const newRow = {
-      id: termsAndConditions.length + 1,
-      terms: `New Term - ${termsAndConditions.length + 1}`,
-      description: 'New Description',
-    }
-    setTermsAndConditions([...termsAndConditions, newRow])
+  const handleSelectTerm = (id) => {
+    const updatedTermsAndConditions = termsAndConditions.map((term) => {
+      if (term.id === id) {
+        return { ...term, selected: !term.selected }
+      }
+      return term
+    })
+    setTermsAndConditions(updatedTermsAndConditions)
   }
 
   return (
     <Wrapper>
-      <Table responsive>
-        <thead>
-          <tr>
-            <th style={{ width: '5%' }}>S.No</th>
-            <th style={{ width: '20%' }}>Terms</th>
-            <th style={{ width: '50%' }}>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {termsAndConditions.map(({ id, terms, description }) => {
+      <div className="select-terms-outer-container">
+        <div className="select-terms-title">Select terms </div>
+        <div className="select-terms-container">
+          {termsAndConditions.map(({ id, title, description, selected }) => {
             return (
-              <tr key={id}>
-                <td>{id}</td>
-                <td>{terms}</td>
-                <td>{description}</td>
-              </tr>
+              <div key={id} className="select-term-container">
+                <button
+                  className={
+                    selected
+                      ? 'select-term-btn remove-btn-style'
+                      : 'select-term-btn add-btn-style'
+                  }
+                  onClick={() => handleSelectTerm(id)}
+                >
+                  {selected ? <AiFillMinusCircle /> : <BsFillPlusCircleFill />}
+                </button>
+                <p>{title}</p>
+              </div>
             )
           })}
-        </tbody>
-      </Table>
-
-      <div className="btn-container">
-        <button className="add-row-btn" onClick={addNewRow}>
-          Add row
-        </button>
+        </div>
+      </div>
+      <div className="terms-selected-outer-container">
+        <div className="selected-terms-title">Terms Selected</div>
+        <div className="terms-selected-container">
+          {termsAndConditions.map(({ id, title, description, selected }) => {
+            return (
+              <div
+                key={id}
+                className={
+                  selected ? 'term-selected-container' : 'hide-term-selected'
+                }
+              >
+                <div className="term-title">{title}</div>
+                <div className="term-description">{description}</div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </Wrapper>
   )
@@ -77,53 +112,95 @@ const TermsAndConditionsComponent = () => {
 export default TermsAndConditionsComponent
 
 const Wrapper = styled.div`
-  margin: 2rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: var(--white);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  height: 100%;
+  overflow-y: auto;
 
-  .table-responsive {
-    background-color: var(--white);
+  .select-terms-outer-container {
+    border: 1px solid var(--grey-100);
     border-radius: 10px;
-    box-shadow: var(--shadow-1);
+    padding: 1rem 2rem;
   }
 
-  th,
-  td {
-    color: var(--grey-700);
-    padding: 0.5rem 1rem !important ;
+  .select-terms-title {
+    font-size: 2rem;
   }
 
-  .table-hover tbody tr:hover td,
-  .table-hover tbody tr:hover th {
-    background-color: #f9fcff;
+  .select-terms-container {
+    margin-top: 1rem;
   }
 
-  .table {
+  .select-term-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .select-term-btn {
+    background: transparent;
+    border: none;
+    display: grid;
+    place-items: center;
+  }
+
+  .add-btn-style {
+    color: var(--green-dark);
+  }
+  .remove-btn-style {
+    color: var(--red-dark);
+  }
+
+  .select-term-container p {
     margin-bottom: 0;
   }
 
-  td,
-  th {
-    text-align: center;
+  .terms-selected-outer-container {
+    border: 1px solid var(--grey-100);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    height: 100%;
+    overflow-y: auto;
   }
 
-  .btn-container {
-    margin-top: 2rem;
-    margin-right: 2rem;
-    display: flex;
-    justify-content: flex-end;
+  .selected-terms-title {
+    font-size: 2rem;
   }
 
-  .add-row-btn {
-    border: 1px solid var(--grey-300);
-    border-radius: 5px;
-    background-color: var(--primary-400);
-    color: var(--white);
-    padding: 0.2rem 1rem;
-    font-size: 0.9rem;
-    transition: var(--transition);
+  .terms-selected-container {
+    margin-top: 1rem;
+    height: calc(100% - 3rem);
+    overflow-y: auto;
   }
 
-  .add-row-btn:hover {
-    transform: scale(1.05);
-    background-color: var(--primary-500);
+  .term-selected-container {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--grey-100);
+    padding-bottom: 0.5rem;
+  }
+
+  .term-selected-container:last-child {
+    border-bottom: none;
+  }
+
+  .hide-term-selected {
+    display: none;
+  }
+
+  .term-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .term-description {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
   }
 `
